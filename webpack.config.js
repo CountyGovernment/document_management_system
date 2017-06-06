@@ -7,19 +7,19 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './index.html',
   filename: 'index.html',
-  inject: 'body'
-})
+  inject: 'body',
+});
 
 module.exports = {
   entry: './server.js',
   output: {
     path: path.resolve('dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     loaders: [
       { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ }
-    ]
-  }
-}
+      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+    ],
+  },
+};

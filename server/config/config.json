@@ -1,20 +1,21 @@
 {
   "development": {
-    "username": "wanja",
-    "password": "9Watermelon",
-    "shelf": "shelf_development",
+    "username": "juliemugira",
+    "password": null,
+    "database": "database_development",
     "host": "127.0.0.1",
+    "port": 5432,
     "dialect": "postgres"
   },
   "test": {
-    "username": "wanja",
+    "username": "juliemugira",
     "password": "9Watermelon",
     "shelf": "shelf_test",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },
   "production": {
-    "username": "wanja",
+    "username": "juliemugira",
     "password": "9Watermelon",
     "shelf": "shelf_production",
     "host": "127.0.0.1",

@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon ./bin/www",
-    "test": "test"
+    "test": "test",
+    "script": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all"
   },
   "author": "Julie Wanja",
   "license": "MIT",
