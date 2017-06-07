@@ -93,7 +93,7 @@ class DocController {
   */
   list(req, res) {
     const privateDocs = req.data;
-    if (req.query.limit || req.query.offset) { // to restrict the number of rows
+    if (req.query.limit || req.query.offset) { // pagination
       return Document
         .findAll({
           limit: req.query.limit,

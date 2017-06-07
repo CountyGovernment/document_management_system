@@ -25,6 +25,7 @@ class UserController {
         secondName: req.body.secondName,
         password: req.body.password,
         email: req.body.email,
+        roleId: req.body.role || 2,
       })
       .then((user) => { // response
         res.status(200).json({ // request was successful
@@ -152,10 +153,11 @@ class UserController {
     * @return { object } - A response to the user
   */
   findByName(req, res) {
-    return User
+    if (req.query.q) {
+      return User
       .findAll({
         where: {
-          username: req.query.username,
+          username: { $eq: req.query.q },
         },
       })
       .then((user) => {
@@ -169,6 +171,7 @@ class UserController {
       .catch((error) => {
         res.status(400).json(error);
       });
+    }
   }
 }
 
