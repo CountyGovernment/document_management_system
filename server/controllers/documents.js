@@ -23,7 +23,7 @@ class DocController {
         title: req.body.title,
         content: req.body.content,
         access: req.body.access || 'private',
-        userId: req.user.id,
+        userId: req.body.user_id,
       })
       .then((document) => { // response
         res.status(200).json({ // request was successful

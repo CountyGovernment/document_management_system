@@ -10,7 +10,7 @@ Router.route('/documents/:id')
   .get(Document.find);
 
 /* search/documents routes */
-Router.route('/search/documents')
+Router.route('/search/documents/')
   .get(Document.findByTitle);
 
 module.exports.DocumentRouter = Router;

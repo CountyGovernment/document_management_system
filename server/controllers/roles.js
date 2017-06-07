@@ -18,7 +18,7 @@ class RolesController {
       });
     }
     return Roles.create({
-      name: req.body.name,
+      title: req.body.title,
     })
       .then(role => res.status(201).json({
         message: 'You have created a role!',
