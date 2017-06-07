@@ -42,16 +42,17 @@ class DocController {
     * @return { object } - A response to the user
   */
   findByTitle(req, res) {
-    return Document
+    if (req.query.q) {
+      return Document
       .findAll({
         where: {
-          title: req.query.title,
+          title: { $eq: req.query.q },
         },
       })
       .then((document) => {
         if (document.length === 0) {
           return res.status(404).json({
-            message: 'We could not find this document :(',
+            message: 'Document is not available',
           });
         }
         return res.status(200).json(document);
@@ -59,6 +60,7 @@ class DocController {
       .catch((error) => {
         res.status(400).json(error);
       });
+    }
   }
 
    /**
@@ -74,7 +76,7 @@ class DocController {
       .then((document) => {
         if (!document) {
           return res.status(404).json({
-            message: 'document not available',
+            message: 'Document is not available',
           });
         }
         return res.status(200).json(document);
@@ -100,7 +102,7 @@ class DocController {
         .then((document) => {
           if (!document) {
             return res.status(404).json({
-              message: 'Document not available',
+              message: 'Document is not available',
             });
           }
           res.status(200).json(document);
@@ -140,7 +142,7 @@ class DocController {
         },
       })
       .then(() => res.status(200).json({
-        message: 'Successfully updated!',
+        message: 'Document Successfully updated!',
       }))
       .catch((error) => {
         res.status(400).json(error);
