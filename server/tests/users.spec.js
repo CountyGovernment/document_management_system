@@ -2,7 +2,7 @@
 process.env.NODE_ENV = 'test';
 
 // Dev Dependencies
-const server = require('../../server');
+const server = require('../../server').default;
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 
