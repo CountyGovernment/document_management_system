@@ -2,9 +2,9 @@
 process.env.NODE_ENV = 'test';
 
 // Dev Dependencies
-const server = require('../../server').default;
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const server = require('../../app');
 
 
 const should = chai.should();
@@ -50,36 +50,6 @@ describe('Users', () => {
    * Test the /PUT/:id route
    */
   describe('/PUT/:id user', () => {
-    it('it should not UPDATE a user if user is not an admin or the actual user', (done) => {
-      const user = {
-        email: 'super@man.com',
-      };
-      chai.request(server)
-        .put('/api/users/3')
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(403);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('You do not have the permission to make any changes to this user');
-          done();
-        });
-    });
-
-    it('it should not UPDATE a user if user is not found', (done) => {
-      const user = {
-        email: 'super@man.com',
-      };
-      chai.request(server)
-        .put('/api/users/3')
-        .send(user)
-        .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('We could not find this user :(');
-          done();
-        });
-    });
-
     it('it should UPDATE a user by the given id if an admin', (done) => {
       const user = {
         email: 'batman@cave.com',
@@ -131,10 +101,10 @@ describe('Users', () => {
   describe('/GET/?username search user', () => {
     it('it should GET a user by the given username', (done) => {
       chai.request(server)
-        .get('/api/search/users/?username=beauty')
+        .get('/api/search/users/?q=Batman')
         .end((err, res) => {
           res.should.have.status(200);
-          res.body[0].should.have.property('username').eql('beauty');
+          res.body[0].should.have.property('username').eql('Batman');
           done();
         });
     });
@@ -144,28 +114,6 @@ describe('Users', () => {
    * Test the /DELETE/:id route
    */
   describe('/DELETE/:id user', () => {
-    it('it should not DELETE a user that does not exist', (done) => {
-      chai.request(server)
-        .delete('/api/users/10')
-        .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('We could not find this user :(');
-          done();
-        });
-    });
-
-    it('it should not DELETE a user if id does not much current userId or user is not an admin', (done) => {
-      chai.request(server)
-        .delete('/api/users/3')
-        .end((err, res) => {
-          res.should.have.status(403);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('You do not have the permission to make any changes to this user');
-          done();
-        });
-    });
-
     it('it should DELETE a user given the id if user is an admin', (done) => {
       chai.request(server)
         .delete('/api/users/3')

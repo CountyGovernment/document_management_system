@@ -1,5 +1,10 @@
 const User = require('../models').User;
 const controllerHelpers = require('../helpers/controllerHelpers');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const secretKey = 'yellow';
+const salt = 7;
 
 /* Defines  Document Controller methods */
 class UserController {
@@ -23,7 +28,7 @@ class UserController {
         username: req.body.username,
         firstName: req.body.firstName,
         secondName: req.body.secondName,
-        password: req.body.password,
+        password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
         roleId: req.body.role || 2,
       })
@@ -34,6 +39,36 @@ class UserController {
         });
       })
       .catch(error => res.status(400).json(error));
+  }
+
+// Login a user
+  login(req, res) {
+    if (controllerHelpers.validateInput(req.body)) {
+      return res.status(403).json({ // forbidden request
+        message: 'Invalid Input',
+      });
+    } else {
+      User
+      .findOne({
+        username: req.body.username,
+        email: req.body.email,
+        password: req.body.password,
+      })
+        .then((user) => {
+          if (bcrypt.compareSync(req.body.password, user.password)) {
+            const token = jwt.sign({ data: User.id }, secretKey, {
+              expiresIn: 60 * 60,
+            });
+            return res.status(200).json(Object.assign({},
+              { id: User.id, username: req.body.username, email: req.body.email, message: 'You are logged in' }, { token }));
+            // return token
+          }
+          // return error: Password is incorrect
+          return res.status(401).json({
+            message: 'Invalid password',
+          });
+        });
+    }
   }
 
    /**
@@ -141,7 +176,9 @@ class UserController {
       })
       .then(() => res.status(200).json({ message: 'User successfully deleted' }))
       .catch((error) => {
-        res.status(400).json(error);
+        res.status(400).json(error, {
+          message: 'User does not exist!',
+        });
       });
   }
 
