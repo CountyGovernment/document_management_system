@@ -30,7 +30,7 @@ class UserController {
         secondName: req.body.secondName,
         password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
-        roleId: req.body.role || 2,
+        role: req.body.role,
       })
       .then((user) => { // response
         res.status(201).json({ // request was successful
@@ -139,7 +139,7 @@ class UserController {
   update(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({
-        message: 'Invalid Input',
+        message: 'No changes made!',
       });
     }
 

@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         // associations can be defined here
         User.belongsTo(models.Role, {
-          foreignKey: 'roleId',
+          foreignKey: 'role',
           onDelete: 'CASCADE',
         });
         User.hasMany(models.Document, {

@@ -1,4 +1,4 @@
-const Role = require('./roles');
+const  = require('./roles');
 const Document = require('./documents');
 const User = require('./users');
 
