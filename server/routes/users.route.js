@@ -5,7 +5,6 @@ const { User } = require('../controllers/controllers');
 /* /users routes */
 Router.route('/users')
   .post(User.create)
-  .post(User.login)
   .get(User.list);
 
 /* /users/:id routes */
@@ -17,5 +16,8 @@ Router.route('/users/:id')
 /* search/users routes */
 Router.route('/search/users')
   .get(User.findByName);
+
+Router.route('/users/login')
+  .post(User.login)
 
 module.exports.UserRouter = Router;

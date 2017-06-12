@@ -19,7 +19,7 @@ class UserController {
   create(req, res) { // route handler
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({ // forbidden request
-        message: 'Invalid Input',
+        message: 'Input fields required!',
       });
     }
 
@@ -33,7 +33,7 @@ class UserController {
         roleId: req.body.role || 2,
       })
       .then((user) => { // response
-        res.status(200).json({ // request was successful
+        res.status(201).json({ // request was successful
           message: 'User created successfully!',
           user,
         });
@@ -45,29 +45,28 @@ class UserController {
   login(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({ // forbidden request
-        message: 'Invalid Input',
+        message: 'Email and Password are required',
       });
     } else {
       User
-      .findOne({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-      })
-        .then((user) => {
+      .findOne(
+        { where: { email: req.body.email}})
+        if (!user) {
+          return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
+        } else if (user) {
           if (bcrypt.compareSync(req.body.password, user.password)) {
-            const token = jwt.sign({ data: User.id }, secretKey, {
-              expiresIn: 60 * 60,
+            const token = jwt.sign({ data: user.id }, secretKey, {
+              expiresIn: 120 * 120,
             });
-            return res.status(200).json(Object.assign({},
-              { id: User.id, username: req.body.username, email: req.body.email, message: 'You are logged in' }, { token }));
+            return res.status(201).json(Object.assign({},
+              { id: user.id, username: user.username, email: user.email, message: 'You are logged in' }, { token }));
             // return token
           }
           // return error: Password is incorrect
           return res.status(401).json({
             message: 'Invalid password',
           });
-        });
+        };
     }
   }
 
