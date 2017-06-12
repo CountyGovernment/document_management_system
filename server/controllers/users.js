@@ -56,7 +56,7 @@ class UserController {
         } else if (user) {
           if (bcrypt.compareSync(req.body.password, user.password)) {
             const token = jwt.sign({ data: user.id }, secretKey, {
-              expiresIn: 120 * 120,
+              expiresIn: '1hr',
             });
             return res.status(201).json(Object.assign({},
               { id: user.id, username: user.username, email: user.email, message: 'You are logged in' }, { token }));
@@ -64,10 +64,19 @@ class UserController {
           }
           // return error: Password is incorrect
           return res.status(401).json({
-            message: 'Invalid password',
+            message: 'Could not log in kindly check your login details',
           });
         };
     }
+  }
+
+  logout(request, response) {
+    response.setHeader['x-access-token'] = ' ';
+    response.status(200)
+      .json({
+        success: true,
+        message: 'User logged out'
+      });
   }
 
    /**

@@ -20,4 +20,7 @@ Router.route('/search/users')
 Router.route('/users/login')
   .post(User.login)
 
+Router.route('/users/login')
+  .post(User.logout)
+
 module.exports.UserRouter = Router;
