@@ -1,16 +1,22 @@
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
+const Role = require('../models').Role;
 
-const secret = 'yellow';
+const secret = process.env.SECRET_KEY;
 
-const Authenticate = {
+class Authenticate {
+    /**
+   * validateToken
+   * @param {Object} request object
+   * @param {Object} response object
+   * @param {Object} next object
+   * @returns {Object} response message
+   */
   validateToken(request, response, next) {
-    const token = request.headers.authorization
-    || request.body.token || request.headers['x-access-token'];
-
+    const token = request.headers['x-access-token'];
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          response.status(400).send({
+          return response.status(400).send({
             status: 'Invalid token',
             message: 'Token authentication failed.'
           });
@@ -19,11 +25,43 @@ const Authenticate = {
         next();
       });
     }
-    return response.status(400).send({
-      status: 400,
-      message: 'Token required to access this route'
-    });
+    else {
+      return response.status(400).send({
+        status: 400,
+        message: 'Token required to access this route'
+      });
+    }
   }
-};
 
-export default Authenticate;
+    /**
+   * validateAdmin
+   * @param {Object} request object
+   * @param {Object} response object
+   * @param {Object} next object
+   * @returns {Object} response message
+   */
+  validateAdmin(request, response, next) {
+    return Role.findById(request.decoded.data)
+    
+      .then((role) => {
+        // if the role does not exist
+        if(!role) {
+          return response.status(401).send({
+            message: 'Role does not exist!'
+          });
+        }
+        //  if not admin
+        if (role.title !== 'admin') {
+          return response.status(401).send({
+            message: 'You are not permitted to perform this action'
+          });
+        } 
+
+        return next()
+      })
+      .catch(error => { console.log(error); response.status(400).json(error)});
+  }
+
+}
+
+module.exports = new Authenticate;

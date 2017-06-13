@@ -2,7 +2,7 @@
 
 module.exports = (sequelize, DataTypes) => {
   const Role = sequelize.define('Role', {
-    role: {
+    title: {
       type: DataTypes.STRING,
       required: true,
     },
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       associate: (models) => {
         // associations can be defined here
         Role.hasMany(models.User, {
-          foreignKey: 'role',
+          foreignKey: 'roleId',
           as: 'user',
         });
       },

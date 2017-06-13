@@ -3,7 +3,7 @@ const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const secretKey = 'yellow';
+const secretKey = process.env.SECRET_KEY;
 const salt = 7;
 
 /* Defines  Document Controller methods */
@@ -30,7 +30,7 @@ class UserController {
         secondName: req.body.secondName,
         password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
-        role: req.body.role,
+        roleId: req.body.roleId || 2,
       })
       .then((user) => { // response
         res.status(201).json({ // request was successful
@@ -51,11 +51,12 @@ class UserController {
       User
       .findOne(
         { where: { email: req.body.email}})
+      .then((user) => {
         if (!user) {
           return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
         } else if (user) {
           if (bcrypt.compareSync(req.body.password, user.password)) {
-            const token = jwt.sign({ data: user.id }, secretKey, {
+            const token = jwt.sign({ data: user.roleId }, secretKey, {
               expiresIn: '1hr',
             });
             return res.status(201).json(Object.assign({},
@@ -67,7 +68,9 @@ class UserController {
             message: 'Could not log in kindly check your login details',
           });
         };
-    }
+    })
+      .catch(error => res.status(400).json(error));
+  }
   }
 
   logout(request, response) {
@@ -110,8 +113,7 @@ class UserController {
       .then((user) => {
         res.status(200).json(user);
       })
-      .catch((error) => {
-        res.status(400).json(error);
+      .catch((error) => { res.status(400).json(error);
       });
   }
 

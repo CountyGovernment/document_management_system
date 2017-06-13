@@ -42,6 +42,7 @@ class DocController {
     * @return { object } - A response to the user
   */
   findByTitle(req, res) {
+    
     if (req.query.q) {
       return Document
       .findAll({
