@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
       required: true,
       validate: {
         isEmail: {
-          msg: 'Email address must be valid',
+          msg: 'Email  must be valid',
         },
       },
     },
@@ -31,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
     classMethods: {
       associate: (models) => {
         // associations can be defined here
-        User.belongTo(models.Role, {
-          foreignKey: 'roleId',
+        User.belongsTo(models.Role, {
+          foreignKey: 'id',
           onDelete: 'CASCADE',
         });
         User.hasMany(models.Document, {
