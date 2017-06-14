@@ -12,7 +12,7 @@
         "no-else-return": 0,
         "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
         "no-console": 0,
-        "class-methods-use-this": ["enabled", { "exceptMethods": ["create", "login", "list", "find", "update", "delete", "findByName"] }],
+        "class-methods-use-this": 0,
         "import/no-unresolved": [2, { "commonjs": true}],
         "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
         "no-underscore-dangle": 0,
