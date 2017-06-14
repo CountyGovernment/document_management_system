@@ -1,5 +1,6 @@
 const Document = require('../models').Document;
 const controllerHelpers = require('../helpers/controllerHelpers');
+const Authenticate = require("../authentication/authentication");
 
 /* Defines  Document Controller methods */
 class DocController {
@@ -42,7 +43,7 @@ class DocController {
     * @return { object } - A response to the user
   */
   findByTitle(req, res) {
-    
+    // if(req.decoded.data == 'admin')
     if (req.query.q) {
       return Document
       .findAll({

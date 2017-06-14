@@ -44,6 +44,7 @@ class Authenticate {
     return Role.findById(request.decoded.data)
     
       .then((role) => {
+        console.log(data,'jjjjj');
         // if the role does not exist
         if(!role) {
           return response.status(401).send({

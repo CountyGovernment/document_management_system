@@ -3,7 +3,7 @@ const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = 'yellow';
 const salt = 7;
 
 /* Defines  Document Controller methods */
@@ -55,10 +55,12 @@ class UserController {
         if (!user) {
           return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
         } else if (user) {
+          // console.log(user, 'uuuuu');
           if (bcrypt.compareSync(req.body.password, user.password)) {
             const token = jwt.sign({ data: user.roleId }, secretKey, {
               expiresIn: '1hr',
             });
+            console.log(token, 'hhhh');
             return res.status(201).json(Object.assign({},
               { id: user.id, username: user.username, email: user.email, message: 'You are logged in' }, { token }));
             // return token
