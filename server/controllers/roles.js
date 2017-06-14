@@ -14,7 +14,7 @@ class RolesController {
   create(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({
-        message: 'Please put a role',
+        message: 'Please input a role',
       });
     }
     return Roles.create({

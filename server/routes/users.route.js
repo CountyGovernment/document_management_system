@@ -7,6 +7,10 @@ Router.route('/users')
   .post(User.create)
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.list);
 
+/* /users/?limit={}&offset={} */
+Router.route('/users')
+  .get(Authenticate.validateToken, Authenticate.validateAdmin, User.list);
+
 /* /users/:id routes */
 Router.route('/users/:id')
   .delete(Authenticate.validateToken, Authenticate.validateAdmin, User.delete)

@@ -1,33 +1,33 @@
 const jwt = require('jsonwebtoken');
 const Role = require('../models').Role;
 
-const secret = process.env.SECRET_KEY;
+const secret = 'yellow';
 
 class Authenticate {
     /**
    * validateToken
-   * @param {Object} request object
-   * @param {Object} response object
+   * @param {Object} req object
+   * @param {Object} res object
    * @param {Object} next object
-   * @returns {Object} response message
+   * @returns {Object} res message
    */
-  validateToken(request, response, next) {
-    const token = request.headers['x-access-token'];
+  validateToken(req, res, next) {
+    const token = req.headers['x-access-token'];
     if (token) {
       jwt.verify(token, secret, (error, decoded) => {
         if (error) {
-          return response.status(400).send({
+          return res.status(401).send({
             status: 'Invalid token',
             message: 'Token authentication failed.'
           });
         }
-        request.decoded = decoded;
+        req.decoded = decoded;
         next();
       });
     }
     else {
-      return response.status(400).send({
-        status: 400,
+      return res.status(401).send({
+        status: 401,
         message: 'Token required to access this route'
       });
     }
@@ -35,32 +35,31 @@ class Authenticate {
 
     /**
    * validateAdmin
-   * @param {Object} request object
-   * @param {Object} response object
+   * @param {Object} req object
+   * @param {Object} res object
    * @param {Object} next object
-   * @returns {Object} response message
+   * @returns {Object} res message
    */
-  validateAdmin(request, response, next) {
-    return Role.findById(request.decoded.data)
+  validateAdmin(req, res, next) {
+    return Role.findById(req.decoded.data)
     
       .then((role) => {
-        console.log(data,'jjjjj');
         // if the role does not exist
         if(!role) {
-          return response.status(401).send({
+          return res.status(404).send({
             message: 'Role does not exist!'
           });
         }
         //  if not admin
         if (role.title !== 'admin') {
-          return response.status(401).send({
+          return res.status(403).send({
             message: 'You are not permitted to perform this action'
           });
         } 
 
         return next()
       })
-      .catch(error => { console.log(error); response.status(400).json(error)});
+      .catch(error => { console.log(error); res.status(400).json(error)});
   }
 
 }
