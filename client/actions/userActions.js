@@ -58,7 +58,7 @@ export function createUser(user) {
   return dispatch => axios.post('api/users', user)
     .then((response) => {
       const token = response.data.token;
-      localStorage.setItem('maiDocsJwtToken', token);
+      localStorage.setItem('yellow', token);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
@@ -73,7 +73,7 @@ export function login(user) {
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
       const token = response.data.token;
-      localStorage.setItem('maiDocsJwtToken', token);
+      localStorage.setItem('yellow', token);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
@@ -86,7 +86,7 @@ export function login(user) {
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem('maiDocsJwtToken');
+    localStorage.removeItem('yellow');
     setAuthorizationToken(false);
     dispatch(signoutUser({}));
   };

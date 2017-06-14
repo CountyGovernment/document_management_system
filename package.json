@@ -4,7 +4,7 @@
   "description": "A document management system",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon ./bin/www",
+    "start": "webpack-dev-server",
     "start:dev": "nodemon ./bin/www",
     "test": "NODE_ENV=test npm run seed && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec ./server/tests --timeout 20000",
     "script": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
