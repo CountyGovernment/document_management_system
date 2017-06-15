@@ -3,8 +3,16 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import path from 'path';
 
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: path.resolve(__dirname, 'client/index.html'),
+  filename: 'index.html',
+  inject: 'body',
+});
+
 const dotEnvPlugin = new Dotenv({
-  path: './.env'
+  path: './.env',
 });
 
 export default {
@@ -16,35 +24,33 @@ export default {
     'eventsource-polyfill',
     // note that it reloads the page if hot module reloading fails.
     'webpack-hot-middleware/client?reload=true',
-    './client/index'
+    './client/index.jsx',
   ],
   target: 'web',
   output: {
     // Note: Physical files are only output by the production build task.
     // Use `npm run build`
-    path: `${__dirname}/dist`,
+    path: path.resolve('dist'),
     publicPath: '/',
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   resolve: {
-    root: __dirname,
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx'],
   },
   devServer: {
-    contentBase: './client'
+    contentBase: './client',
   },
   plugins: [
-    new ExtractTextPlugin('./client/styles/styles.css', {
-      allChunks: true
-    }),
+    new ExtractTextPlugin({ filename: 'css/[name].css', disable: false, allChunks: true }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
-      'window.jQuery': 'jquery'
+      'window.jQuery': 'jquery',
     }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    dotEnvPlugin
+    dotEnvPlugin,
+    [HtmlWebpackPluginConfig],
   ],
   module: {
     loaders: [
@@ -52,34 +58,34 @@ export default {
         test: /\.jsx?$/,
         loader: 'babel-loader',
         query: { presets: ['react', 'es2015'] },
-        exclude: /(node_modules)/
+        exclude: /(node_modules)/,
       },
       {
         test: /\.js$/,
         include: path.join(__dirname, 'client'),
-        loaders: ['babel-loader']
+        loaders: ['babel-loader'],
       },
       {
         test: /(\.css)$/,
-        loaders: ['style', 'css']
+        loaders: ['style', 'css'],
       },
       {
         test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass')
+        loader: ExtractTextPlugin.extract('css!sass'),
       },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file' },
       {
         test: /\.(woff|woff2)$/,
-        loader: 'url?prefix=font/&limit=5000'
+        loader: 'url?prefix=font/&limit=5000',
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=application/octet-stream'
+        loader: 'url?limit=10000&mimetype=application/octet-stream',
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?limit=10000&mimetype=image/svg+xml'
-      }
-    ]
-  }
+        loader: 'url?limit=10000&mimetype=image/svg+xml',
+      },
+    ],
+  },
 };

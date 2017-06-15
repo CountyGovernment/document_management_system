@@ -9,7 +9,7 @@ export default (state = initialState.users, action) => {
     case types.CREATE_USER_SUCCESS:
       return [
         ...state,
-        Object.assign({}, action.user)
+        Object.assign({}, action.user),
       ];
     default:
       return state;

@@ -1,6 +1,5 @@
-const Document = require('../models').Document;
+const { Document } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
-const Authenticate = require("../authentication/authentication");
 
 /* Defines  Document Controller methods */
 class DocController {
@@ -19,7 +18,7 @@ class DocController {
         message: 'Please fill the required fields!',
       });
     }
-    console.log(req.decoded);
+    // console.log(req.decoded);
     return Document
       .create({ // request
         title: req.body.title,
@@ -60,16 +59,15 @@ class DocController {
             }
             return res.status(200).json(document);
           })
-          .catch((error) => res.status(400).json(error));
+          .catch(error => res.status(400).json(error));
       }
-    }
-    else if (req.decoded.data == '2') {
+    } else if (req.decoded.data == '2') {
       if (req.query.q) {
         return Document
           .findAll({
             where: {
               title: { $eq: req.query.q },
-              userId: req.decoded.userId
+              userId: req.decoded.userId,
             },
           })
           .then((document) => {
@@ -80,7 +78,7 @@ class DocController {
             }
             return res.status(200).json(document);
           })
-          .catch((error) => res.status(400).json(error));
+          .catch(error => res.status(400).json(error));
       }
     }
   }
@@ -105,13 +103,12 @@ class DocController {
           return res.status(200).json(document);
         })
         .catch(error => res.status(400).json(error));
-    }
-    else if (req.decoded.data == '2') {
+    } else if (req.decoded.data == '2') {
       return Document
         .findById({
           where: {
             id: req.params.id,
-            userId: req.decoded.userId
+            userId: req.decoded.userId,
           },
         })
         .then((document) => {
@@ -134,7 +131,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    if (req.decoded.data == '1') {
+    if (req.decoded.data === '1') {
       if (req.query.limit || req.query.offset) { // pagination
         return Document
           .findAll({
@@ -149,14 +146,13 @@ class DocController {
             }
             res.status(200).json(document);
           })
-          .catch((error) => res.status(400).json(error));
+          .catch(error => res.status(400).json(error));
       }
       return Document
         .findAll()
         .then(document => res.status(200).json(document))
         .catch(error => res.status(400).json(error));
-    }
-    else if (req.decoded.data == 2) {
+    } else if (req.decoded.data == 2) {
       if (req.query.limit || req.query.offset) { // pagination
         return Document
           .findAll({
@@ -164,7 +160,7 @@ class DocController {
             offset: req.query.offset,
             where: {
               access: 'public',
-            }
+            },
           })
           .then((document) => {
             if (!document) {
@@ -174,13 +170,13 @@ class DocController {
             }
             res.status(200).json(document);
           })
-          .catch((error) => res.status(400).json(error));
+          .catch(error => res.status(400).json(error));
       }
       return Document
         .findAll({
           where: {
             access: 'public',
-          }
+          },
         })
         .then(document => res.status(200).json({ document }))
         .catch(error => res.status(400).json(error));
@@ -206,13 +202,13 @@ class DocController {
       .update(updateDocument, {
         where: {
           id: req.params.id,
-          userId: req.decoded.userId
+          userId: req.decoded.userId,
         },
       })
       .then(() => res.status(201).json({
         message: 'Document Successfully updated!',
       }))
-      .catch((error) => res.status(400).json(error));
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -231,7 +227,7 @@ class DocController {
         },
       })
       .then(() => res.status(200).json({ message: 'Document successfully deleted!' }))
-      .catch((error) => res.status(400).json(error));
+      .catch(error => res.status(400).json(error));
   }
 }
 

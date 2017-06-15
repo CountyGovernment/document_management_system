@@ -1,6 +1,6 @@
 const Router = require('express').Router();
 const { User } = require('../controllers/controllers');
-const Authenticate = require("../authentication/authentication");
+const Authenticate = require('../authentication/authentication');
 
 /* /users routes */
 Router.route('/users')
@@ -22,9 +22,9 @@ Router.route('/search/users')
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.findByName);
 
 Router.route('/users/login')
-  .post(User.login)
+  .post(User.login);
 
 Router.route('/users/logout')
-  .post(Authenticate.validateToken, User.logout)
+  .post(Authenticate.validateToken, User.logout);
 
 module.exports.UserRouter = Router;

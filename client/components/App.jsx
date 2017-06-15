@@ -1,13 +1,22 @@
 /*
     ./client/components/App.jsx
 */
-import React from 'react';
+import React, { PropTypes } from 'react';
+import Header from './common/Header.jsx';
 
-export default class App extends React.Component {
+class App extends React.Component {
   render() {
     return (
-      <div style={{ textAlign: 'center' }}>
-        <h1>Hello World</h1>
-      </div>);
+      <div className="container-fluid">
+        <Header />
+        {this.props.children}
+      </div>
+    );
   }
 }
+
+App.propTypes = {
+  children: PropTypes.element.isRequired,
+};
+
+export default App;

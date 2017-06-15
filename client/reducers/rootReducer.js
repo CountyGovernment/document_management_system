@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import users from './userReducer';
-import roles from './rolesReducer';
+import roles from './roleReducer';
 import documents from './documentReducer';
 
 const rootReducer = combineReducers({
@@ -9,4 +9,5 @@ const rootReducer = combineReducers({
   documents,
 });
 
-export default rootReducer
+export default rootReducer;
+

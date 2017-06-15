@@ -1,4 +1,4 @@
-const Roles = require('../models').Role;
+const { Roles } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
 
 /* Defines Role Controller methods */

@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import jwtDecode from 'jwt-decode';
 import * as types from './actionTypes';
-import setAuthorizationToken from '../utils/authenticate';
+import setAuthorizationToken from '../utils/authentication';
 
 // export function updateDocumentSuccess(document)
 
@@ -79,7 +79,7 @@ export function login(user) {
       axios.defaults.headers.common.Authorization = token;
       dispatch(setCurrentUser(response.data.userData));
     })
-    .catch((error) => {
+    .catch((error) => { 
       throw error;
     });
 }

@@ -1,5 +1,5 @@
 export default {
-    documents: [],
-    users: [],
-    roles: []
-}
+  documents: [],
+  users: [],
+  roles: [],
+};

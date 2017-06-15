@@ -1,10 +1,25 @@
 {
+    "root": true,
     "extends": "airbnb",
     "parser": "babel-eslint",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
     "env": {
         "browser": true,
         "node": true,
-        "es6": true
+        "es6": true,
+        "mocha": true
+    },
+   "parserOptions": {
+       "ecmaVersion": 6,
+       "sourceType": "module",
+       "allowImportExportEverywhere": true,
+       "ecmaFeatures": {
+           "jsx": true
+           }
     },
     "rules": {
         "strict": 0,
@@ -25,13 +40,10 @@
         "react/jsx-uses-vars": 2,
         "react/react-in-jsx-scope": 2,
         "react/prop-types": 0,
-        "react/jsx-first-prop-new-line": 0
+        "react/jsx-first-prop-new-line": 0,
+        "react/forbid-prop-types": 0,
+        "react/prefer-stateless-function": 0
     },
-    "plugins": [
-        "react",
-        "jsx-a11y",
-        "import"
-    ],
     "ecmaFeatures": {
         "jsx": true,
         "modules": true

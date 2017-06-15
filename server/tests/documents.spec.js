@@ -4,12 +4,23 @@ process.env.NODE_ENV = 'test';
 // Dev Dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
+const expect = require('chai');
 const server = require('../../app');
 
 const should = chai.should();
 chai.use(chaiHttp);
 
 describe('documents', () => {
+  describe('not logged in', () => {
+    it('asserts that documents cannot be accessed if not logged in', (done) => {
+      chai.request(server)
+      .get('/api/documents')
+      .end((err, res) => {
+        expect(res.body.message).to.equal('Token required to access this route');
+        done();
+      });
+    });
+  });
   /*
    * Test the /GET route
    */

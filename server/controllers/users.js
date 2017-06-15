@@ -1,4 +1,4 @@
-const User = require('../models').User;
+const { User } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -48,9 +48,8 @@ class UserController {
       return res.status(403).json({ // forbidden req
         message: 'Email and Password are required',
       });
-    }
-    else {
-      User
+    } else {
+      return User
         .findOne(
         { where: { email: req.body.email } })
         .then((user) => {
@@ -63,14 +62,15 @@ class UserController {
                 expiresIn: '1hr',
               });
               return res.status(201).json(Object.assign({},
-                { id: user.id, username: user.username, email: user.email, message: 'You are logged in' }, { token }));
+                { id: user.id, username: user.username, email: user.email, message: 'You are logged in' },
+                { token }));
               // return token
             }
             // return error: Password is incorrect
             return res.status(401).json({
               message: 'Could not log in kindly check your login details',
             });
-          };
+          }
         })
         .catch(error => res.status(400).json(error));
     }
@@ -82,7 +82,7 @@ class UserController {
     res.status(200)
       .json({
         success: true,
-        message: 'User logged out'
+        message: 'User logged out',
       });
   }
 
@@ -108,14 +108,14 @@ class UserController {
           }
           res.status(200).json(user);
         })
-        .catch((error) => res.status(400).json(error));
+        .catch(error => res.status(400).json(error));
     }
     return User
       .all()
       .then((user) => {
         res.status(200).json(user);
       })
-      .catch((error) => res.status(400).json(error));
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -136,7 +136,7 @@ class UserController {
         }
         return res.status(200).json(user);
       })
-      .catch((error) => res.status(400).json(error));
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -149,7 +149,7 @@ class UserController {
   update(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({
-        message: 'No changes made!',
+        message: 'Please make changes in order to update this user.',
       });
     }
 
@@ -164,7 +164,7 @@ class UserController {
       .then(() => res.status(200).json({
         message: 'Your changes have been successfully applied',
       }))
-      .catch((error) => res.status(400).json(error));
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -212,7 +212,7 @@ class UserController {
           }
           return res.status(200).json(user);
         })
-        .catch((error) => res.status(400).json(error));
+        .catch(error => res.status(400).json(error));
     }
   }
 }
