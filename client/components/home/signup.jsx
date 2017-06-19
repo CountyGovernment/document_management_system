@@ -55,9 +55,10 @@ class Signup extends Component {
     });
     this.props.userActions.createUser(this.state.user)
     .then(() => {
+      console.log('zzzzzzz');
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      this.context.router.push('/dashboard');
+      // this.context.router.push('/dashboard');
     })
     .catch(() => {
       this.setState({ isLoading: false });

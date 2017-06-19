@@ -34,21 +34,17 @@ describe('documents', () => {
     .get('/api/users/login')
     .send(admin)
     .end((err, res) => {
-      if (err) { return done(err); }
       token = res.body.token;
-      done();
     });
-  });
 
-  const regular = {
+    const regular = {
       email: 'blackpanther@gmail.com',
       password: 'blackpanther33',
-  };
+    };
     chai.request(server)
     .get('/api/users/login')
     .send(regular)
     .end((err, res) => {
-      if (err) { return done(err); }
       token2 = res.body.token;
       done();
     });

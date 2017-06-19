@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-// import App from './components/App.jsx';
+import App from './components/App.jsx';
 import Four0Four from './components/common/Four0Four.jsx';
 import Login from './components/home/signin.jsx';
 import Dashboard from './components/home/dashboard.jsx';
@@ -14,7 +14,7 @@ import requireAdminRole from './utils/requireAdminRole';
 export default (
   <Router>
     <div>
-      <Route exact path="/" component={Dashboard} />
+      <Route exact path="/" component={Login} />
       <Route path="404" component={Four0Four} />
       <Route path="signup" component={SignupPage} />
       <Route path="dashboard" component={Dashboard} />

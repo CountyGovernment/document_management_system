@@ -169,7 +169,7 @@ class EditUserProfile extends Component {
                           id="updateProfile"
                           type="submit"
                           onClick={this.updateProfile}
-                          className="btn waves-effect waves-light col s2 offset-s5 teal darken-1"
+                          className="btn waves-effect waves-light col s2 offset-s5 pink darken-1"
                         />
 
                         <Link to="/dashboard" className="right btn red">

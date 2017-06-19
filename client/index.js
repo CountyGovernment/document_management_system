@@ -1,7 +1,7 @@
 /*
     ./client/index.js
 */
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import { Provider } from 'react-redux';
 import React from 'react';
 import { render } from 'react-dom';
@@ -24,15 +24,20 @@ import '../node_modules/toastr/build/toastr.min.css';
 
 injectTapEventPlugin();
 const store = configureStore(initialState);
-
-const userToken = localStorage.shelftoken;
-
-if (userToken) {
-  setAuthorizationToken(userToken);
-  axios.defaults.headers.common.Authorization = userToken;
-  store.dispatch(setCurrentUser(jwtDecode(userToken)));
-  store.dispatch(getAllRoles());
+let userToken;
+try {
+  userToken = JSON.parse(localStorage.shelftoken);
+  if (userToken) {
+    console.log(userToken, 'zzzz');
+    setAuthorizationToken(userToken);
+    axios.defaults.headers.common.Authorization = userToken;
+    store.dispatch(setCurrentUser(jwtDecode(userToken)));
+  // store.dispatch(getAllRoles());
+  }
+} catch (error) {
+  console.log(error, 'gggg');
 }
+
 
 render(
   <Provider store={store}>

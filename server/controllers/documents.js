@@ -43,7 +43,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   findByTitle(req, res) {
-    if (req.decoded.data == '1') {
+    if (req.decoded.data === '1') {
       if (req.query.q) {
         return Document
           .findAll({
@@ -61,7 +61,7 @@ class DocController {
           })
           .catch(error => res.status(400).json(error));
       }
-    } else if (req.decoded.data == '2') {
+    } else if (req.decoded.data === '2') {
       if (req.query.q) {
         return Document
           .findAll({
@@ -91,7 +91,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   find(req, res) {
-    if (req.decoded.data == '1') {
+    if (req.decoded.data === '1') {
       return Document
         .findById(req.params.id)
         .then((document) => {
@@ -103,7 +103,7 @@ class DocController {
           return res.status(200).json(document);
         })
         .catch(error => res.status(400).json(error));
-    } else if (req.decoded.data == '2') {
+    } else if (req.decoded.data === '2') {
       return Document
         .findById({
           where: {
@@ -152,7 +152,7 @@ class DocController {
         .findAll()
         .then(document => res.status(200).json(document))
         .catch(error => res.status(400).json(error));
-    } else if (req.decoded.data == 2) {
+    } else if (req.decoded.data === 2) {
       if (req.query.limit || req.query.offset) { // pagination
         return Document
           .findAll({

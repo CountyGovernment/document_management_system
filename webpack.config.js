@@ -14,7 +14,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 });
 
 module.exports = {
-  entry: ['eventsource-polyfill', // necessary for hot reloading with IE
+  entry: [
     'webpack-hot-middleware/client?reload=true',
     // note that it reloads the page if hot module reloading fails.
     path.resolve(__dirname, './client/index'),

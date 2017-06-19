@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "npm-run-all --parallel open:client lint:watch",
-    "open:client": "babel-node ./appServer.js",
+    "open:client": "node bin/www",
     "lint": "node_modules/.bin/esw webpack.config.* client server",
     "lint:watch": "npm run lint -- --watch",
     "start:D": "webpack-dev-server",

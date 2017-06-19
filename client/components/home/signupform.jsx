@@ -11,7 +11,7 @@ const SignupForm = ({ onChange, onSubmit, loading, errors }) =>
       <div className="row">
         <div className="col s4 offset-s2">
           <input
-            name="firstname"
+            name="firstName"
             type="text"
             onChange={onChange}
             placeholder="Your firstname here"
@@ -20,7 +20,7 @@ const SignupForm = ({ onChange, onSubmit, loading, errors }) =>
         </div>
         <div className="col s4">
           <input
-            name="lastname"
+            name="secondName"
             type="text"
             onChange={onChange}
             placeholder="Your lastname here"
@@ -78,7 +78,7 @@ const SignupForm = ({ onChange, onSubmit, loading, errors }) =>
             type="submit"
             disabled={loading}
             value={loading ? 'Creating user profile...' : 'Signup'}
-            className="btn waves-effect waves-light col s2 offset-s5 teal darken-1"
+            className="btn waves-effect waves-light col s2 offset-s5 pink darken-1"
             onClick={onSubmit}
           />
         </div>

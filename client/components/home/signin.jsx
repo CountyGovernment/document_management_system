@@ -48,6 +48,7 @@ class Signin extends Component {
    * @returns {*} no return value
    */
   onSubmit(event) {
+    console.log(event, 'kkkkkk');
     event.preventDefault();
     this.setState({
       errors: {},
@@ -55,13 +56,14 @@ class Signin extends Component {
     });
     this.props.userActions.login(this.state.user)
     .then(() => {
+      console.log('wwwwww');
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      this.context.router.push('/dashboard');
+      // this.context.router.push('/dashboard');
     })
     .catch(() => {
       this.setState({ isLoading: false });
-      toastr.error('Unable to login user, please try again');
+      toastr.error(this.props.message);
     });
   }
 

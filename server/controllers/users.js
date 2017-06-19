@@ -17,6 +17,7 @@ class UserController {
     * @return { object } - A res to the user
   */
   create(req, res) { // route handler
+    console.log(req.body, 'req.user');
     if (controllerHelpers.validateInput(req.body)) {
       // console.log(req.body, 'inputs');
       return res.status(403).json({ // forbidden req

@@ -15,27 +15,24 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
         <div className="row">
           <div className="col s6 offset-s3">
             <h6>Username/Email</h6>
-            <TextInput
-              type="text"
-              label=""
-              name="loginId"
-              icon="person"
+            <input
+              name="email"
+              type="email"
               onChange={onChange}
-              onBlur=""
-              clearError=""
+              placeholder="Your email here"
+              required
             />
           </div>
         </div>
         <div className="row">
           <div className="col s6 offset-s3">
             <h6>Password</h6>
-            <TextInput
-              type="password"
-              label=""
+            <input
               name="password"
-              icon="lock"
+              type="password"
               onChange={onChange}
-              clearError=""
+              placeholder="Your password here"
+              required
             />
           </div>
         </div>
@@ -47,7 +44,7 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
               type="submit"
               disabled={loading}
               value={loading ? 'Please wait...' : 'Login'}
-              className="btn waves-effect waves-light col s4 offset-s4 teal darken-1"
+              className="btn waves-effect waves-light col s4 offset-s4 pink darken-1"
               onClick={onSubmit}
             />
           </div>

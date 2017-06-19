@@ -120,11 +120,6 @@ class Dashboard extends Component {
                 document.viewAccess === 'Public',
               ).length} Public documents</p>
             </div>
-            <div className="card-panel red z-depth-1 col s10">
-              <p className="flow-text">You have {documents.filter(document =>
-                document.viewAccess === 'Role',
-              ).length} Role documents</p>
-            </div>
           </div>
         </div>
       </div>);
@@ -134,7 +129,7 @@ class Dashboard extends Component {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
-            <div className="card-panel teal lighten-3 z-depth-1">
+            <div className="card-panel pink lighten-3 z-depth-1">
               <div className="row valign-wrapper">
                 <div className="col s10">
                   <h3>You have not created any documents</h3>
