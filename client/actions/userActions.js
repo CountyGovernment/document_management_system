@@ -58,7 +58,7 @@ export function createUser(user) {
   return dispatch => axios.post('api/users', user)
     .then((response) => {
       const token = response.data.token;
-      localStorage.setItem('yellow', token);
+      localStorage.setItem('shelftoken', token);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
@@ -73,20 +73,20 @@ export function login(user) {
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
       const token = response.data.token;
-      localStorage.setItem('yellow', token);
+      localStorage.setItem('shelftoken', token);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
       dispatch(setCurrentUser(response.data.userData));
     })
-    .catch((error) => { 
+    .catch((error) => {
       throw error;
     });
 }
 
 export function logout() {
   return (dispatch) => {
-    localStorage.removeItem('yellow');
+    localStorage.removeItem('shelftoken');
     setAuthorizationToken(false);
     dispatch(signoutUser({}));
   };

@@ -28,7 +28,7 @@
         "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
         "no-console": 0,
         "class-methods-use-this": 0,
-        "import/no-unresolved": [2, { "commonjs": true}],
+        "import/no-unresolved": [2, { "commonjs": true }],
         "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
         "no-underscore-dangle": 0,
         "arrow-body-style": 0,
@@ -42,7 +42,9 @@
         "react/prop-types": 0,
         "react/jsx-first-prop-new-line": 0,
         "react/forbid-prop-types": 0,
-        "react/prefer-stateless-function": 0
+        "react/prefer-stateless-function": 0,
+        "react/jsx-filename-extension": 0,
+        "react/require-default-props": 0
     },
     "ecmaFeatures": {
         "jsx": true,

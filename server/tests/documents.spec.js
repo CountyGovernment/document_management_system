@@ -10,17 +10,50 @@ const server = require('../../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe('documents', () => {
-  describe('not logged in', () => {
-    it('asserts that documents cannot be accessed if not logged in', (done) => {
-      chai.request(server)
+let token,
+  token2;
+
+describe('before login', () => {
+  it('asserts that documents cannot be accessed if not logged in', (done) => {
+    chai.request(server)
       .get('/api/documents')
       .end((err, res) => {
         expect(res.body.message).to.equal('Token required to access this route');
         done();
       });
+  });
+});
+
+describe('documents', () => {
+  before((done) => {
+    const admin = {
+      email: 'spiderman@gmail.com',
+      password: 'spidey33',
+    };
+    chai.request(server)
+    .get('/api/users/login')
+    .send(admin)
+    .end((err, res) => {
+      if (err) { return done(err); }
+      token = res.body.token;
+      done();
     });
   });
+
+  const regular = {
+      email: 'blackpanther@gmail.com',
+      password: 'blackpanther33',
+  };
+    chai.request(server)
+    .get('/api/users/login')
+    .send(regular)
+    .end((err, res) => {
+      if (err) { return done(err); }
+      token2 = res.body.token;
+      done();
+    });
+  });
+
   /*
    * Test the /GET route
    */
@@ -28,6 +61,7 @@ describe('documents', () => {
     it('it should GET all documents', (done) => {
       chai.request(server)
         .get('/api/documents')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
@@ -46,6 +80,7 @@ describe('documents', () => {
       };
       chai.request(server)
         .post('/api/documents')
+        .set('x-access-token', token)
         .send(document)
         .end((err, res) => {
           res.should.have.status(200);
@@ -63,6 +98,7 @@ describe('documents', () => {
     it('it should GET a document by the given id', (done) => {
       chai.request(server)
         .get('/api/documents/1')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -77,6 +113,7 @@ describe('documents', () => {
     it('it should not return a document', (done) => {
       chai.request(server)
         .get('/api/documents/0')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(404);
           res.body.should.be.a('object');
@@ -96,6 +133,7 @@ describe('documents', () => {
       };
       chai.request(server)
         .put('/api/documents/2')
+        .set('x-access-token', token)
         .send(document)
         .end((err, res) => {
           res.should.have.status(200);
@@ -111,6 +149,7 @@ describe('documents', () => {
       };
       chai.request(server)
         .put('/api/documents/2')
+        .set('x-access-token', token)
         .send(document)
         .end((err, res) => {
           res.should.have.status(200);
@@ -126,6 +165,7 @@ describe('documents', () => {
       };
       chai.request(server)
         .put('/api/documents/3')
+        .set('x-access-token', token)
         .send(document)
         .end((err, res) => {
           res.should.have.status(200);
@@ -140,6 +180,7 @@ describe('documents', () => {
     it('it should GET documents based on query', (done) => {
       chai.request(server)
         .get('/api/documents/?limit=1&offset=1')
+        .set('x-access-token', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
