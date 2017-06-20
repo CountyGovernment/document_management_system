@@ -7,7 +7,7 @@ Router.use(Authenticate.validateToken);
 /* /documents routes */
 Router.route('/documents')
   .post(Document.create)
-  .get(Document.list);
+  .get(Document.foo);
 
 // Find document using id.
 /* /documents/:id routes */

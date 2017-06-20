@@ -19,8 +19,8 @@ export function searchUsersSuccess(users) {
 export function getUserSuccess(users) {
   return { type: types.GET_ALL_USERS_SUCCESS, users };
 }
-export function getOneUserSuccess(user) {
-  return { type: types.GET_ONE_USERS_SUCCESS, user };
+export function getOneUserSuccess(id) {
+  return { type: types.GET_ONE_USERS_SUCCESS, id };
 }
 
 export function createUserSuccess(user) {
@@ -47,20 +47,30 @@ export function search(queryString) {
 }
 
 export function getAllUsers(users) {
-  console.log('get all users');
+  // console.log('get all users');
   return dispatch => axios.get('/api/users', users)
   .then((response) => {
-    console.log('there everywhere');
-    console.log('users response', response.data);
+    // console.log('there everywhere');
+    // console.log('users response', response.data);
     dispatch(getUserSuccess(response.data));
   })
   .catch((error) => {
-    console.log('here');
+    // console.log('here');
     dispatch(passFailureMessage(error.response.data.message));
     // throw error;
   });
 }
 
+export function getOneUser(id) {
+  return dispatch => axios.get(`/api/users/${id}`, id)
+  .then((response) => {
+    dispatch(getOneUserSuccess(response.data));
+  })
+  .catch((error) => {
+    dispatch(passFailureMessage(error.response.data.message));
+    // throw error;
+  });
+}
 
 export function createUser(user) {
   return dispatch => axios.post('api/users', user)
@@ -120,16 +130,5 @@ export function deleteUser(id) {
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));
-  });
-}
-
-export function getOneUser(id) {
-  return dispatch => axios.get(`/api/users/${id}`)
-  .then((response) => {
-    dispatch(getOneUserSuccess(response.data));
-  })
-  .catch((error) => {
-    dispatch(passFailureMessage(error.response.data.message));
-    throw error;
   });
 }

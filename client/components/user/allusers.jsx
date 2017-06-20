@@ -43,8 +43,8 @@ class AllUsers extends Component {
     console.log('bool', this.props.isAuth.isAuthenticated);
     // if (this.props.isAuth.isAuthenticated) {
     // if (true) {
-      // console.log('bool', this.props.isAuth.isAuthenticated);  
-    console.log('users from component', this.props.users);
+      // console.log('bool', this.props.isAuth.isAuthenticated);
+    // console.log('users from component', this.props.users);
     this.props.actions.getAllUsers(this.props.users);
     // }
   }

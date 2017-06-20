@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import SigninForm from './signinform.jsx';
+import SigninForm from './LoginForm.jsx';
 import * as userActions from '../../actions/userActions';
 
 /**

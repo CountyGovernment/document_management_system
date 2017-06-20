@@ -31,6 +31,7 @@
         "consistent-return": 0,
         "import/no-unresolved": [2, { "commonjs": true }],
         "import/no-dynamic-require": 0,
+        "import/esxtensions": 0,
         "no-unused-vars": [0, { "vars": "all", "args": "none" }],
         "no-underscore-dangle": 0,
         "arrow-body-style": 0,

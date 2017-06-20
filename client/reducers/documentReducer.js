@@ -3,9 +3,14 @@ import initialState from './initialState';
 
 export default (state = initialState.documents, action) => {
   switch (action.type) {
+    // case types.GET_ALL_DOCUMENTS_SUCCESS:
+    //   return action.documents;
     case types.GET_ALL_DOCUMENTS_SUCCESS:
-      return action.documents;
-
+      // console.log('users in reducer', action.users);
+      // return action.users;
+      const documents = action.documents;
+      // console.log('new state', Object.assign([], state, users));
+      return Object.assign([], state, documents);
     case types.CREATE_DOCUMENT_SUCCESS:
       return [
         ...state,

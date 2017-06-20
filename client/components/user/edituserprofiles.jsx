@@ -108,11 +108,11 @@ class EditUserProfile extends Component {
                 <form>
                   <div className="row">
                     <div className="col s6 offset-s3">
-                      <p className="flow-text">Firstname:</p>
+                      <p className="flow-text">FirstName:</p>
                       <input
                         name="firstname"
                         type="text"
-                        value={this.state.user.firstname || user.firstname}
+                        value={this.state.user.firstName || user.firstName}
                         onChange={this.updateUserState}
                         placeholder="Your firstname here"
                         required
@@ -122,11 +122,11 @@ class EditUserProfile extends Component {
 
                   <div className="row">
                     <div className="col s6 offset-s3">
-                      <p className="flow-text">Lastname:</p>
+                      <p className="flow-text">secondName:</p>
                       <input
                         name="lastname"
                         type="text"
-                        value={this.state.user.lastname || user.lastname}
+                        value={this.state.user.secondName || user.secondName}
                         onChange={this.updateUserState}
                         placeholder="Your lastname here"
                         required

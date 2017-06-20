@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
  * @desc component used to display the document form
  */
 const DocumentForm = ({ document, onSave, onChange, saving }) =>
+  // console.log('doc form checkin');
   (<div className="container">
     <div className="row">
       <div className="col s12 m12">
@@ -28,7 +29,7 @@ const DocumentForm = ({ document, onSave, onChange, saving }) =>
                 <div className="input-field col l3 m3 s12">
                   <select name="viewAccess"
                     className="browser-default"
-                    value={document.viewAccess}
+                    value={document.access}
                     onChange={onChange}
                   >
                     <option value="">Choose your option</option>

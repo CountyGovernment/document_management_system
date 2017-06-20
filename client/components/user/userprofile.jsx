@@ -15,7 +15,9 @@ class UserProfile extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    this.props.actions.getOneUser(this.props.userId);
+    // console.log('what?');
+    this.props.actions.getOneUser(this.props.id);
+    // console.log(this.props.id, 'this.props.id');
   }
 
   /**
@@ -31,7 +33,7 @@ class UserProfile extends Component {
             <div className="card">
               <div className="card-image" />
               <div className="card-content">
-                <h1 className="center">{user.firstname} {user.lastname}</h1>
+                <h1 className="center">{user.firstName} {user.secondName}</h1>
                 <p className="center flow-text">Username: {user.username}</p>
                 <p className="center flow-text">Email: {user.email}</p>
               </div>

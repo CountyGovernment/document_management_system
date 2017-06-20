@@ -61,7 +61,7 @@ class DocumentTasks extends Component {
    * @return {*} render the Document task buttons
    */
   render() {
-    if (this.props.ownerId === this.props.loggedInUserID) {
+    if (this.props.userId === this.props.loggedInUserID) {
       return (
         <span>
           <Link
@@ -86,7 +86,7 @@ class DocumentTasks extends Component {
  */
 DocumentTasks.propTypes = {
   documentId: PropTypes.number,
-  ownerId: PropTypes.number,
+  userId: PropTypes.number,
   loggedInUserID: PropTypes.number,
   actions: PropTypes.object.isRequired,
 };

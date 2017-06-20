@@ -172,7 +172,7 @@ class Dashboard extends Component {
           <div className="row">
             <div className="col s12">
               {documents.map(document =>
-                (<DocumentListRow
+                (<DocumentList
                   loggedInUserID={this.props.loggedInUserID}
                   key={document.id}
                   document={document}

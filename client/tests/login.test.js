@@ -2,8 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import Login from './client/components/Auth/LogIn';
-import TextField from 'material-ui/TextField';
+import Login from '../components/main/Login';
+
 
 describe('Login form', () => {
   const props = {
@@ -11,8 +11,8 @@ describe('Login form', () => {
       isAuthenticated: true,
       isFetching: false,
       credentials: {
-        email: 'jwarugu@gmail.com',
-        password: 'password',
+        email: 'spiderman.com',
+        password: 'spidey33',
       },
       validations: {
         isValid: true,
@@ -25,9 +25,9 @@ describe('Login form', () => {
     onBlur: () => Promise.resolve(),
     reset: () => Promise.resolve(),
   };
-  it('renders two text fields', () => {
+  it('renders a container', () => {
     const wrapper = shallow(<Login {...props} />);
-    expect(wrapper.find(TextField)).to.have.length(2);
+    expect(wrapper.find(container)).to.have.length(2);
   });
   it('renders a email text field', () => {
     const wrapper = shallow(<Login {...props} />);

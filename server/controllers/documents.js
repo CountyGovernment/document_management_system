@@ -123,6 +123,19 @@ class DocController {
     }
   }
 
+  foo(req, res) {
+    return Document
+          .findAll({})
+          .then((document) => {
+            if (!document) {
+              return res.status(404).json({
+                message: 'Document is not available',
+              });
+            }
+            res.status(200).json(document);
+          })
+          .catch(error => res.status(400).json(error));
+  }
   /**
    * list method
    * Lists all documents found in the database
@@ -132,6 +145,7 @@ class DocController {
  */
   list(req, res) {
     if (req.decoded.data === '1') {
+      console.log('Rudeness Episode');
       if (req.query.limit || req.query.offset) { // pagination
         return Document
           .findAll({
