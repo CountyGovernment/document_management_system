@@ -19,6 +19,9 @@ export function searchUsersSuccess(users) {
 export function getUserSuccess(users) {
   return { type: types.GET_ALL_USERS_SUCCESS, users };
 }
+export function getOneUserSuccess(user) {
+  return { type: types.GET_ONE_USERS_SUCCESS, user };
+}
 
 export function createUserSuccess(user) {
   return { type: types.CREATE_USER_SUCCESS, user };
@@ -43,16 +46,21 @@ export function search(queryString) {
   });
 }
 
-export function getAllUsers() {
-  return dispatch => axios.get('/api/users')
+export function getAllUsers(users) {
+  console.log('get all users');
+  return dispatch => axios.get('/api/users', users)
   .then((response) => {
+    console.log('there everywhere');
+    console.log('users response', response.data);
     dispatch(getUserSuccess(response.data));
   })
   .catch((error) => {
+    console.log('here');
     dispatch(passFailureMessage(error.response.data.message));
-    throw error;
+    // throw error;
   });
 }
+
 
 export function createUser(user) {
   return dispatch => axios.post('api/users', user)
@@ -74,7 +82,11 @@ export function login(user) {
     .then((response) => {
       console.log(response, 'response');
       const token = response.data.token;
-      localStorage.setItem('shelftoken', token);
+      const stringyToken = `${token}`;
+      // localStorage.setItem('shelftoken', token);
+      localStorage.setItem('shelftoken', stringyToken);
+      const storedToken = localStorage.shelftoken;
+      console.log('stored token', storedToken);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
@@ -108,5 +120,16 @@ export function deleteUser(id) {
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));
+  });
+}
+
+export function getOneUser(id) {
+  return dispatch => axios.get(`/api/users/${id}`)
+  .then((response) => {
+    dispatch(getOneUserSuccess(response.data));
+  })
+  .catch((error) => {
+    dispatch(passFailureMessage(error.response.data.message));
+    throw error;
   });
 }

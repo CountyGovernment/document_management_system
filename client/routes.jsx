@@ -10,11 +10,14 @@ import EditUserProfile from './components/user/edituserprofiles.jsx';
 import requireAuth from './utils/requireAuthentication';
 import requireAdminRole from './utils/requireAdminRole';
 // import SignupForm from './components/home/signupform';
+// import UserActionBar from './components/user/useractionbar';
+import UserList from './components/user/userlist';
 
 export default (
   <Router>
     <div>
-      <Route exact path="/" component={Login} />
+      <Route exact path="/" component={AllUsers} />
+      { /* <Route exact path="/" component={AllUsers} />*/}
       <Route path="404" component={Four0Four} />
       <Route path="signup" component={SignupPage} />
       <Route path="dashboard" component={Dashboard} />

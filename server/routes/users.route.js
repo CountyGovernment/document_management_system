@@ -2,12 +2,16 @@ const Router = require('express').Router();
 const { User } = require('../controllers/controllers');
 const Authenticate = require('../authentication/authentication');
 
+Router.route('/users/login')
+  .post(User.login);
+
 /* /users routes */
 Router.route('/users')
   .post(User.create)
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.list);
 
 /* /users/?limit={}&offset={} */
+
 Router.route('/users')
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.list);
 
@@ -21,8 +25,6 @@ Router.route('/users/:id')
 Router.route('/search/users')
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.findByName);
 
-Router.route('/users/login')
-  .post(User.login);
 
 Router.route('/users/logout')
   .post(Authenticate.validateToken, User.logout);

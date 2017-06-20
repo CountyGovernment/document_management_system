@@ -13,9 +13,10 @@ import routes from './routes';
 import initialState from './reducers/initialState';
 // import store from './store/configureStore';
 import setAuthorizationToken from './utils/authentication';
-import { setCurrentUser } from './actions/userActions';
+// import { setCurrentUser } from './actions/userActions';
 // import { getAllDocuments } from './actions/documentActions';
-import { getAllRoles } from './actions/roleActions';
+// import { getAllRoles } from './actions/roleActions';
+import { getAllUsers } from './actions/userActions';
 import '../node_modules/materialize-css/dist/js/materialize.min';
 import '../node_modules/materialize-css/dist/css/materialize.min.css';
 import '../node_modules/sweetalert/dist/sweetalert.css';
@@ -26,18 +27,20 @@ injectTapEventPlugin();
 const store = configureStore(initialState);
 let userToken;
 try {
-  userToken = JSON.parse(localStorage.shelftoken);
+  console.log('userToken', localStorage.shelftoken);
+  // userToken = JSON.parse(localStorage.shelftoken);
+  userToken = localStorage.shelftoken;
   if (userToken) {
-    console.log(userToken, 'zzzz');
+    console.log(userToken, 'condition true');
     setAuthorizationToken(userToken);
     axios.defaults.headers.common.Authorization = userToken;
-    store.dispatch(setCurrentUser(jwtDecode(userToken)));
-  // store.dispatch(getAllRoles());
+    // store.dispatch(setCurrentUser(jwtDecode(userToken)));
+    // store.dispatch(getAllRoles());
+    // store.dispatch(getAllUsers());
   }
 } catch (error) {
   console.log(error, 'gggg');
 }
-
 
 render(
   <Provider store={store}>

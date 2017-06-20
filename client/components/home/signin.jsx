@@ -56,12 +56,13 @@ class Signin extends Component {
     });
     this.props.userActions.login(this.state.user)
     .then(() => {
-      console.log('wwwwww');
+      console.log('user logged in', this.state.user);
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
       // this.context.router.push('/dashboard');
     })
     .catch(() => {
+      console.log('Catch triggered', this.props.message);
       this.setState({ isLoading: false });
       toastr.error(this.props.message);
     });

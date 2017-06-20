@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import UserListRow from './userlist.jsx';
+import UserList from './userlist.jsx';
 import UserActionBar from './useractionbar.jsx';
 import * as actions from '../../actions/userActions';
 
@@ -20,6 +20,7 @@ class AllUsers extends Component {
    * @memberof AllUsers
    */
   constructor(props, context) {
+    console.log(props, 'zzzzzz');
     super(props, context);
 
     this.redirectToManageUser = this.redirectToManageUser.bind(this);
@@ -39,17 +40,13 @@ class AllUsers extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    if (this.props.isAuth.isAuthenticated) {
-      this.props.actions.getAllUsers(this.state.offset);
-    }
-  }
-
-  /**
-   * @desc handles the redirecting to the manage documents page
-   * @returns {null} returns no value
-   */
-  redirectToManageUser() {
-    this.context.router.push('/user');
+    console.log('bool', this.props.isAuth.isAuthenticated);
+    // if (this.props.isAuth.isAuthenticated) {
+    // if (true) {
+      // console.log('bool', this.props.isAuth.isAuthenticated);  
+    console.log('users from component', this.props.users);
+    this.props.actions.getAllUsers(this.props.users);
+    // }
   }
 
   /**
@@ -61,6 +58,14 @@ class AllUsers extends Component {
     this.setState({ search: event.target.value });
     this.props.actions.search(event.target.value)
     .catch(() => toastr.error(this.props.message));
+  }
+
+  /**
+   * @desc handles the redirecting to the manage documents page
+   * @returns {null} returns no value
+   */
+  redirectToManageUser() {
+    this.context.router.push('/user');
   }
 
   /**
@@ -82,6 +87,7 @@ class AllUsers extends Component {
           user.roleId === parseInt(this.state.roleType, 10),
         );
       }
+      console.log(filteredUsers);
       return (
         <div className="section">
           <div className="container">
@@ -102,10 +108,11 @@ class AllUsers extends Component {
             <div className="row">
               <div className="col s12">
                 {filteredUsers.map(user =>
-                  (<UserListRow
+                  (<UserList
                     loggedInUserID={this.props.loggedInUserID}
                     key={user.id}
-                    user={user} />),
+                    user={user}
+                  />),
                 )}
               </div>
             </div>
@@ -146,9 +153,9 @@ const mapStateToProps = state => ({
   isAuth: state.isAuth,
   message: state.message,
   searchResults: state.searchResults.users,
-  users: state.users.users,
+  users: state.users,
   metaData: state.users.metaData,
-  loggedInUserID: state.isAuth.loggedInUser.id,
+  // loggedInUserID: state.isAuth.loggedInUser.id,
 });
 
 /**

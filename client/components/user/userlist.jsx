@@ -6,11 +6,11 @@ import UserTasks from './usertasks.jsx';
 /**
  * @desc component used to display the list of users
  */
-const UserListRow = ({ user, roles }) =>
+const UserList = ({ user, roles }) =>
   (<div className="col s12 m6 l4">
     <div className="card medium hoverable z-depth-5">
       <div className="card-content">
-        <h4>{user.firstname} {user.lastname}</h4>
+        <h4>{user.firstName} {user.secondName}</h4>
         <hr />
         <div className="col s12 light">
           <b>Email:</b> {user.email}
@@ -41,7 +41,7 @@ const UserListRow = ({ user, roles }) =>
 /**
  * @desc Set the PropTypes
  */
-UserListRow.propTypes = {
+UserList.propTypes = {
   user: PropTypes.object.isRequired,
   roles: PropTypes.array,
 };
@@ -56,4 +56,4 @@ const mapStateToProps = state => ({
   roles: state.roles,
 });
 
-export default connect(mapStateToProps)(UserListRow);
+export default connect(mapStateToProps)(UserList);

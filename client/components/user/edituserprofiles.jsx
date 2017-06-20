@@ -20,7 +20,7 @@ class EditUserProfile extends Component {
     this.updateProfile = this.updateProfile.bind(this);
 
     this.state = {
-      user: Object.assign({}, props.user),
+      user: Object.assign({}, this.props.user),
       errors: {},
       saving: false,
     };
@@ -80,15 +80,15 @@ class EditUserProfile extends Component {
     });
   }
 
-  /**
-   * @desc handles the redirecting to the dashboard on success
-   * @returns {null} returns no value
-   */
-  redirect() {
-    this.setState({ saving: false });
-    toastr.success(this.props.message);
-    this.context.router.push('/dashboard');
-  }
+  // /**
+  //  * @desc handles the redirecting to the dashboard on success
+  //  * @returns {null} returns no value
+  //  */
+  // redirect() {
+  //   this.setState({ saving: false });
+  //   toastr.success(this.props.message);
+  //   this.context.router.push('/dashboard');
+  // }
 
   /**
    * React Render
@@ -212,11 +212,11 @@ EditUserProfile.contextTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state, ownProps) {
-  const userId = parseInt(ownProps.params.id, 10);
-  let user = {};
+  const userId = ownProps.params.id;
+  let user = { id: '', firstName: '', secondName: '', username: '', email: '', password: '' };
 
-  if (userId && (state.users.id === userId)) {
-    user = state.users;
+  if (userId && (state.user.length > 0)) {
+    user = state.user;
   }
 
   return {
