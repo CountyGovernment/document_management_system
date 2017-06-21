@@ -48,9 +48,9 @@ export function getDocumentSuccess(documents) {
   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
 }
 
-export function getDocumentsSuccess(documents) {
-  return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
-}
+// export function getDocumentsSuccess(documents) {
+//   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
+// }
 
 /**
  *
@@ -145,17 +145,19 @@ export function getOneDocument(id) {
   });
 }
 
-export function getAllDocuments() {
+export function getAllDocuments(documents) {
   console.log('ManDork');
-  return dispatch => axios.get('/api/documents')
+  return dispatch => axios.get('/api/documents', documents)
     .then((response) => {
       // console.log('there everywhere');
-      // console.log('users response', response.data);
-      dispatch(getDocumentsSuccess(response.data));
+      // localStorage.getItem('shelftoken', token);
+      console.log('data response', response);
+      dispatch(getDocumentSuccess(response.data));
     })
     .catch((error) => {
       // console.log('here');
-      dispatch(passFailureMessage(error.response.data.message));
+      // console.log('hahaha', error);
+      dispatch(passFailureMessage(error.response));
       // throw error;
     });
 }

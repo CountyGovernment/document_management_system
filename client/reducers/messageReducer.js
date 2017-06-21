@@ -15,7 +15,7 @@ export default (state = initialState.message, action) => {
       return action.successMessage;
 
     case types.ERROR_MESSAGE:
-      return action.errorMessage;
+      return state;
 
     default:
       return state;

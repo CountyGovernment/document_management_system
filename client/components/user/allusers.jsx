@@ -87,7 +87,7 @@ class AllUsers extends Component {
           user.roleId === parseInt(this.state.roleType, 10),
         );
       }
-      console.log(filteredUsers);
+      console.log(filteredUsers, 'users?');
       return (
         <div className="section">
           <div className="container">

@@ -123,7 +123,7 @@ class DocController {
     }
   }
 
-  foo(req, res) {
+  listall(req, res) {
     return Document
           .findAll({})
           .then((document) => {
@@ -144,31 +144,31 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    if (req.decoded.data === '1') {
-      console.log('Rudeness Episode');
-      if (req.query.limit || req.query.offset) { // pagination
-        return Document
-          .findAll({
-            limit: req.query.limit,
-            offset: req.query.offset,
-          })
-          .then((document) => {
-            if (!document) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            res.status(200).json(document);
-          })
-          .catch(error => res.status(400).json(error));
-      }
+    // if (req.decoded.data === '1') {
+    //   console.log('Rudeness Episode');
+    //   if (req.query.limit || req.query.offset) { // pagination
+    //     return Document
+    //       .findAll({
+    //         limit: req.query.limit,
+    //         offset: req.query.offset,
+    //       })
+    //       .then((document) => {
+    //         if (!document) {
+    //           return res.status(404).json({
+    //             message: 'Document is not available',
+    //           });
+    //         }
+    //         res.status(200).json(document);
+    //       })
+    //       .catch(error => res.status(400).json(error));
+    //   }
+    //   return Document
+    //     .findAll()
+    //     .then(document => res.status(200).json(document))
+    //     .catch(error => res.status(400).json(error));
+    // } else if (req.decoded.data === 2) {
+    if (req.query.limit || req.query.offset) { // pagination
       return Document
-        .findAll()
-        .then(document => res.status(200).json(document))
-        .catch(error => res.status(400).json(error));
-    } else if (req.decoded.data === 2) {
-      if (req.query.limit || req.query.offset) { // pagination
-        return Document
           .findAll({
             limit: req.query.limit,
             offset: req.query.offset,
@@ -185,8 +185,8 @@ class DocController {
             res.status(200).json(document);
           })
           .catch(error => res.status(400).json(error));
-      }
-      return Document
+    }
+    return Document
         .findAll({
           where: {
             access: 'public',
@@ -194,8 +194,8 @@ class DocController {
         })
         .then(document => res.status(200).json({ document }))
         .catch(error => res.status(400).json(error));
-    }
   }
+  // }
 
 
   /**

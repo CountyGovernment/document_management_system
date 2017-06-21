@@ -16,10 +16,11 @@ class Header extends Component {
             <AppBar
               title="Shelf"
             >
-              <Link to="/" style={linkColor}>
-                Home
+              <Link to="/users" style={linkColor}>
+                Users
               </Link>&nbsp;
-              <Link style={linkColor} to="/documents">Documents</Link>
+              <Link style={linkColor} to="/documents">Documents</Link>&nbsp;
+              <Link style={linkColor} to="/login">Login</Link>
             </AppBar>
           </MuiThemeProvider>
         </nav>

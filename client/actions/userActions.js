@@ -93,14 +93,14 @@ export function login(user) {
       console.log(response, 'response');
       const token = response.data.token;
       const stringyToken = `${token}`;
-      // localStorage.setItem('shelftoken', token);
       localStorage.setItem('shelftoken', stringyToken);
       const storedToken = localStorage.shelftoken;
       console.log('stored token', storedToken);
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
-      dispatch(setCurrentUser(response.data.userData));
+      console.log("response set currnt", response.data);
+      dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
       throw dispatch(passFailureMessage(error.response.data.message));

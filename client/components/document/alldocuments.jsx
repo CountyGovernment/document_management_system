@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import ReactPaginate from 'react-paginate';
+// import ReactPaginate from 'react-paginate';
 import DocumentList from './DocumentList';
 import DocumentActionBar from './DocumentActionBar';
 import * as actions from '../../actions/documentActions';
@@ -21,6 +21,7 @@ class AllDocuments extends Component {
    * @memberof AllDocuments
    */
   constructor(props, context) {
+    // console.log('looking for props', props);
     super(props, context);
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
@@ -46,7 +47,7 @@ class AllDocuments extends Component {
   // }
   componentWillMount() {
     // if (this.props.isAuth.isAuthenticated) {
-    this.props.actions.getAllDocuments(this.state.documents);
+    this.props.actions.getAllDocuments(this.props.documents);
     // }
   }
   /**
@@ -57,9 +58,7 @@ class AllDocuments extends Component {
   onSearchChange(event) {
     this.setState({ search: event.target.value });
     this.props.actions.search(event.target.value)
-    .catch(() => {
-      toastr.error(this.props.message);
-    });
+    .catch(() => toastr.error(this.props.message));
   }
 
   /**
@@ -92,66 +91,71 @@ class AllDocuments extends Component {
     console.log('this.props', this.props);
     // const { documents, searchResults, metaData } = this.props;
     // let documentsInfo;
-    const { documents, searchResults } = this.props;
+    const { documents, searchResults, metaData } = this.props;
+    console.log(documents, 'are the documents here?');
     let documentsInfo;
+    // console.log(documentsInfo, 'looking for docs info');
     if (!documents || this.props.message === 'no document found') {
-      return (documentsInfo = (<div className="section">
-        <div className="container">
-          <div className="col s12 m8 offset-m2 l6 offset-l3">
-            <div className="card-panel orange lighten-3 z-depth-1">
-              <div className="row valign-wrapper">
-                <div className="col s10">
-                  <h3>You have not created any documents</h3>
-                  <div className="row">
-                    <div className="col l4 m4 s1 offset-l3">
-                      <a
-                        onClick={this.redirectToManageDocument}
-                        className="waves-effect waves-light btn-large green"
-                      >
-                        <i className="material-icons left">add</i>Add New Document
+      return (documentsInfo = (
+        <div className="section">
+          <div className="container">
+            <div className="col s12 m8 offset-m2 l6 offset-l3">
+              <div className="card-panel orange lighten-3 z-depth-1">
+                <div className="row valign-wrapper">
+                  <div className="col s10">
+                    <h3>You have not created any documents</h3>
+                    <div className="row">
+                      <div className="col l4 m4 s1 offset-l3">
+                        <a
+                          onClick={this.redirectToManageDocument}
+                          className="waves-effect waves-light btn-large green"
+                        >
+                          <i className="material-icons left">add</i>Add New Document
                       </a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>));
+        </div>));
     }
-
-    return (
-      <div className="section">
-        <div className="container">
-          <div className="row">
-            <div className="col l12 m12 s12">
-              <hr />
-              <h1 className="center">Sitewide Documents</h1>
-              <hr />
+    // console.log(documentsInfo, 'looking for docs');
+    if (documents) {
+      console.log(documents, 'docs?');
+      return (
+        <div className="section">
+          <div className="container">
+            <div className="row">
+              <div className="col l12 m12 s12">
+                <hr />
+                <h1 className="center">All Documents</h1>
+                <hr />
+              </div>
             </div>
-          </div>
 
-          <DocumentActionBar
+            {/* <DocumentActionBar
             redirectToManageDocument={this.redirectToManageDocument}
             onViewAccessChange={this.onViewAccessChange}
             onSearchChange={this.onSearchChange}
-            sitewide="sitewide"
-          />
+            sitewide="All Documents"
+          />*/}
 
-          <div className="row">
-            <div className="col s12">
-              {documents.map(document =>
-                (<DocumentList
-                  loggedInUserID={this.props.loggedInUserID}
-                  key={document.id}
-                  document={document}
-                />),
-              )}
+            <div className="row">
+              <div className="col s12">
+                {documents.map(document =>
+                  (<DocumentList
+                    loggedInUserID={this.props.loggedInUserID}
+                    key={document.id}
+                    document={document}
+                  />),
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="center">
-            {/* <ReactPaginate previousLabel={'previous'}
+            {/* <div className="center">
+             <ReactPaginate previousLabel={'previous'}
               nextLabel={'next'}
               breakLabel={<a href="">...</a>}
               breakClassName={'break-me'}
@@ -162,11 +166,12 @@ class AllDocuments extends Component {
               containerClassName={'pagination'}
               subContainerClassName={'pages pagination'}
               activeClassName={'active'}
-            />*/}
+            />
+          </div>*/}
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -197,11 +202,11 @@ AllDocuments.contextTypes = {
 function mapStateToProps(state) {
   console.log('state', state);
   return {
-    // isAuth: state.isAuth,
+    isAuth: state.isAuth,
     message: state.message,
     documents: state.documents,
-    // metaData: state.documents.metaData,
-    // loggedInUserID: state.isAuth.loggedInUser.id,
+    metaData: state.documents.metaData,
+    loggedInUserID: state.isAuth.loggedInUser,
   };
 }
 
