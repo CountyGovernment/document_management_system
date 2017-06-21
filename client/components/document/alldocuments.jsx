@@ -92,7 +92,7 @@ class AllDocuments extends Component {
     // const { documents, searchResults, metaData } = this.props;
     // let documentsInfo;
     const { documents, searchResults, metaData } = this.props;
-    console.log(documents, 'are the documents here?');
+    // console.log(documents, 'are the documents here?');
     let documentsInfo;
     // console.log(documentsInfo, 'looking for docs info');
     if (!documents || this.props.message === 'no document found') {
@@ -123,7 +123,7 @@ class AllDocuments extends Component {
     }
     // console.log(documentsInfo, 'looking for docs');
     if (documents) {
-      console.log(documents, 'docs?');
+      // console.log('Type of>>>', documents, 'docs>>>>>>>>?');
       return (
         <div className="section">
           <div className="container">
@@ -181,7 +181,7 @@ class AllDocuments extends Component {
 AllDocuments.propTypes = {
   documents: PropTypes.array,
   searchResults: PropTypes.array,
-  loggedInUserID: PropTypes.number,
+  loggedInUserID: PropTypes.object,
   search: PropTypes.string,
   message: PropTypes.string,
   actions: PropTypes.object,
@@ -200,7 +200,7 @@ AllDocuments.contextTypes = {
  * @returns {*} props
  */
 function mapStateToProps(state) {
-  console.log('state', state);
+  // console.log('state', state);
   return {
     isAuth: state.isAuth,
     message: state.message,

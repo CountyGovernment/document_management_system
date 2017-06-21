@@ -8,7 +8,8 @@ export default (state = initialState.documents, action) => {
     case types.GET_ALL_DOCUMENTS_SUCCESS:
       // console.log('users in reducer', action.users);
       // return action.users;
-      const documents = action.documents;
+      const documents = action.documents.document;
+      // console.log('reducer .....>>>>>', action.documents.document);
       // console.log('new state', Object.assign([], state, users));
       return Object.assign([], state, documents);
     case types.CREATE_DOCUMENT_SUCCESS:

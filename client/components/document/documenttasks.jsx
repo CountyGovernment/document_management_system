@@ -68,7 +68,6 @@ class DocumentTasks extends Component {
     //   );
     // }
     // return null;
-    
     // if (this.props.userId === this.props.loggedInUserID) {
     return (
       <span>

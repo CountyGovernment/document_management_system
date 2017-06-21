@@ -77,11 +77,11 @@ class DocumentList extends Component {
             <div className="col s12 light">
               <b>Accessibility:</b> {this.props.document.access}
             </div>
-            {/* <div className="col s12 light">
+            {/*<div className="col s12 light">
               <b>Author:</b> {this.props.document.User.firstName} {this.props.document.User.secondName}
             </div>*/}
             <div className="col s12 light">
-              {this.props.document.content}...
+              <b>Content:</b>{this.props.document.content}...
             </div>
           </div>
           <div className="card-action">
@@ -94,8 +94,8 @@ class DocumentList extends Component {
             >View
             </Link>
             &nbsp;&nbsp;*/}
-             <DocumentTasks
-              loggedInUserID={this.props.loggedInUserID.id}
+            <DocumentTasks
+              loggedInUserID={this.props.loggedInUserID}
               userId={this.props.document.userId}
               documentId={this.props.document.id}
             />
