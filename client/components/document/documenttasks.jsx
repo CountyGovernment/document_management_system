@@ -61,69 +61,61 @@ class DocumentTasks extends Component {
    * @return {*} render the Document task buttons
    */
   render() {
-    console.log("props", this.props);
-    // if (this.props.userId === this.props.loggedInUserID) {
-    //   return (
-    //     <div>Hey</div>
-    //   );
-    // }
-    // return null;
-    // if (this.props.userId === this.props.loggedInUserID) {
-    return (
-      <span>
-        <Link
-          to={`/document/${this.props.documentId}`}
-          className="waves-effect waves-light btn green"
-        >Edit
+    if (this.props.userId === this.props.loggedInUserID) {
+      return (
+        <span>
+          <Link
+            to={`/document/${this.props.documentId}`}
+            className="waves-effect waves-light btn green"
+          >Edit
         </Link>
         &nbsp;&nbsp;
-        <a
-          className="waves-effect waves-light btn red"
-          onClick={this.deleteDocument}
-        >
+          <a
+            className="waves-effect waves-light btn red"
+            onClick={this.deleteDocument}
+          >
         Delete
         </a>
-      </span>
-    );
-    // }
-    // return null;
+        </span>
+      );
+    }
+    return null;
   }
 }
 
-// /**
-//  * @desc Set the PropTypes
-//  */
-// DocumentTasks.propTypes = {
-//   documentId: PropTypes.number,
-//   userId: PropTypes.number,
-//   loggedInUserID: PropTypes.number,
-//   actions: PropTypes.object.isRequired,
-// };
+/**
+ * @desc Set the PropTypes
+ */
+DocumentTasks.propTypes = {
+  documentId: PropTypes.number,
+  userId: PropTypes.number,
+  loggedInUserID: PropTypes.number,
+  actions: PropTypes.object.isRequired,
+};
 
-// /**
-//  * @desc Set the contextTypes
-//  */
-// DocumentTasks.contextTypes = {
-//   router: PropTypes.object,
-// };
+/**
+ * @desc Set the contextTypes
+ */
+DocumentTasks.contextTypes = {
+  router: PropTypes.object,
+};
 
-// /**
-//  *
-//  * @param {any} state
-//  * @returns {*} props
-//  */
-// const mapStateToProps = state => ({
-//   loggedInID: state.isAuth.loggedInUser.id,
-// });
+/**
+ *
+ * @param {any} state
+ * @returns {*} props
+ */
+const mapStateToProps = state => ({
+  loggedInID: state.isAuth.loggedInUser.id,
+});
 
-// /**
-//  * @param {any} dispatch
-//  * @returns {any} actions
-//  */
+/**
+ * @param {any} dispatch
+ * @returns {any} actions
+ */
 const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(documentActions, dispatch),
 });
 
 export default connect(null, mapDispatchToProps)(DocumentTasks);
-// export default DocumentTasks;
 

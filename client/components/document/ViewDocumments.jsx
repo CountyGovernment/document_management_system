@@ -23,34 +23,36 @@ class ViewDocument extends Component {
    * @return {*} html
    */
   render() {
-    const { documents } = this.props;
-    // console.log('content', documents.content);
-    // let createdAt;
-    // if (documents.id) {
-    //   createdAt = documents.createdAt.slice(0, 10);
-    // }
-    // if (documents.id) {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col s12 m12">
-            <div className="card large">
-              <div className="card-image" />
-              <div className="card-content">
-                <span>
-                  <h1>Title: {documents.title}</h1>
-                  <div>
-                    {/* Date Created: {createdAt}<br />*/}
-                      User ID: {documents.User.firstName} {documents.User.secondName}<br />
-                      Content: { documents.content }
-                  </div>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+      <div> hey </div>);
+    // const { documents } = this.props;
+    // // console.log('content', documents.content);
+    // // let createdAt;
+    // // if (documents.id) {
+    // //   createdAt = documents.createdAt.slice(0, 10);
+    // // }
+    // // if (documents.id) {
+    // return (
+    //   <div className="container">
+    //     <div className="row">
+    //       <div className="col s12 m12">
+    //         <div className="card large">
+    //           <div className="card-image" />
+    //           <div className="card-content">
+    //             <span>
+    //               <h1>Title: {documents.title}</h1>
+    //               <div>
+    //                 {/* Date Created: {createdAt}<br />*/}
+    //                   User ID: {documents.User.firstName} {documents.User.secondName}<br />
+    //                   Content: { documents.content }
+    //               </div>
+    //             </span>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // );
   }
     // return null
   }

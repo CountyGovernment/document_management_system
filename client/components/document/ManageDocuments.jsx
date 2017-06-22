@@ -73,7 +73,7 @@ class ManageDocument extends Component {
     const authorId = 'userId';
     const document = this.state.document;
     document[field] = event.target.value;
-    document[authorId] = this.props.userId;
+    // document[authorId] = this.props.userId;
     return this.setState({ document });
   }
 
@@ -130,20 +130,20 @@ class ManageDocument extends Component {
   render() {
     // console.log('render check');
     // console.log('this.props', this.props);
-    // const isUpdate = this.props.document.id;
-    // const documentTitle = this.props.document.title;
+    const isUpdate = this.props.documents.id;
+    const documentTitle = this.props.documents.title;
     return (
       <div className="section">
         <div className="container">
-          {/* <h1 className="center flow-text">
+          <h1 className="center flow-text">
             {isUpdate ? `Edit: ${documentTitle}`
               : 'Add new document'}
-          </h1>*/}
+          </h1>
           <DocumentForm
             document={this.state.document}
             onChange={this.updateDocumentState}
             onEditorChange={this.onEditorChange}
-            onSave={this.createDocument}
+            onSave={isUpdate ? this.updateDocument : this.createDocument}
             errors={this.state.errors}
             saving={this.state.saving}
           />
@@ -171,7 +171,6 @@ ManageDocument.contextTypes = {
 /**
  *
  * @param {any} state
- * @param {any} ownProps
  * @returns {*} props
  */
 const mapStateToProps = (state) => {

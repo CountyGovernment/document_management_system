@@ -12,7 +12,6 @@ class Authenticate {
    * @returns {Object} res message
    */
   validateToken(req, res, next) {
-    console.log('request', req);
     // console.log('validate token');
     // console.log('validate token is being called');
     // console.log('validate token', req.headers['x-access-token']);

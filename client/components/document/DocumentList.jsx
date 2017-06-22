@@ -8,6 +8,7 @@ import DocumentTasks from './DocumentTasks';
  */
 class DocumentList extends Component {
   render() {
+    console.log('loggedInUserID', this.props.loggedInUserID);
     return (
       <div className="col s12 m6 l4">
         <div className="card medium hoverable z-depth-5">
@@ -54,7 +55,7 @@ class DocumentList extends Component {
  */
 DocumentList.propTypes = {
   document: PropTypes.object.isRequired,
-  // loggedInUserID: PropTypes.number,
+  loggedInUserID: PropTypes.number,
 };
 
 /**

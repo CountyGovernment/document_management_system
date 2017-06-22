@@ -47,17 +47,10 @@ class DocController {
         return Document
           .findAll({
             where: {
-              title: { $eq: req.query.q },
+              title: { $iLike: `%${req.query.q}%` },
             },
           })
-          .then((document) => {
-            if (document.length === 0) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            return res.status(200).json(document);
-          })
+          .then((document) => { res.status(200).json(document); })
           .catch(error => res.status(400).json(error));
       }
     } else if (req.decoded.data === 2) {
@@ -131,7 +124,7 @@ class DocController {
  */
   list(req, res) {
     if (req.decoded.data === 1) {
-      console.log('Rudeness Episode');
+      // console.log('Rudeness Episode');
       if (req.query.limit || req.query.offset) { // pagination
         return Document
           .findAll({

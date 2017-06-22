@@ -24,7 +24,7 @@ export default (
           <Route path="/user/:id" component={EditUserProfile} />
           <Route path="/documents" component={AllDocuments} />
           <Route path="/document" component={ManageDocumentContainer} />
-          <Route path="document/view/:id" component={ViewDocument} />
+          <Route path="/document/view/:id" component={ViewDocument} />
           <Route path="/document/:id" component={ManageDocumentContainer} />
           <Route path="/signup" component={SignupPage} />
           <Route path="404" component={FourOFour} />

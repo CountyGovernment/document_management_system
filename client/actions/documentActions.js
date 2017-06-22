@@ -78,7 +78,7 @@ export function updateDocumentSuccess(document) {
  * @returns {any} the documents to be fetched.
  */
 export function search(queryString) {
-  return dispatch => axios.get(`/api/search/documents/?search=${queryString}`)
+  return dispatch => axios.get(`/api/search/documents/?q=${queryString}`)
   .then((response) => {
     dispatch(passSuccessMessage(response.data.message));
     dispatch(getDocumentSuccess(response.data));
@@ -163,13 +163,8 @@ export function getAllDocuments(documents) {
 export function createDocument(document) {
   return dispatch => axios.post('api/documents', document)
   .then((response) => {
-    console.log(response, '/////////');
-    console.log(response.data.message, 'response.data.message');
     dispatch(passSuccessMessage(response.data.message));
     dispatch(createDocumentSuccess(response.data.document));
-    console.log(response.data, 'doc');
-
-    console.log(response.data.message, 'response.data.message');
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));

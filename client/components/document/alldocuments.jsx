@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
 import ReactPaginate from 'react-paginate';
 import DocumentList from './DocumentList';
-import DocumentActionBar from './DocumentActionBar';
+import DocumentSearch from './DocumentSearch';
 import * as actions from '../../actions/documentActions';
 
 /**
@@ -55,8 +55,9 @@ class AllDocuments extends Component {
    * @returns {*} no return value
    */
   onSearchChange(event) {
-    this.setState({ search: event.target.value });
-    this.props.actions.search(event.target.value)
+    console.log('zzzzzzzzz', event, 'xxxxxxxxx');
+    this.setState({ search: event.target });
+    this.props.actions.search(event.target)
     .catch(() => toastr.error(this.props.message));
   }
 
@@ -134,7 +135,7 @@ class AllDocuments extends Component {
               </div>
             </div>
 
-            <DocumentActionBar
+            <DocumentSearch
               redirectToManageDocument={this.redirectToManageDocument}
               onViewAccessChange={this.onViewAccessChange}
               onSearchChange={this.onSearchChange}
@@ -145,7 +146,7 @@ class AllDocuments extends Component {
               <div className="col s12">
                 {documents.map(document =>
                   (<DocumentList
-                    loggedInUserID={this.props.loggedInUserID}
+                    loggedInUserID={this.props.loggedInUserID.id}
                     key={document.id}
                     document={document}
                   />),
@@ -198,6 +199,7 @@ AllDocuments.contextTypes = {
  * @returns {*} props
  */
 function mapStateToProps(state) {
+  console.log(state, 'is there metaData???????');
   return {
     isAuth: state.isAuth,
     message: state.message,
