@@ -15,9 +15,9 @@ class ManageDocument extends Component {
    * @desc handles the rendering of the select box.
    * @returns {null} returns no value
    */
-  // static componentDidMount() {
-  //   // $('select').material_select();
-  // }
+  static componentDidMount() {
+    $('select').material_select();
+  }
 
   /**
    * Creates an instance of ManageDocuments.
@@ -34,6 +34,7 @@ class ManageDocument extends Component {
     this.updateDocument = this.updateDocument.bind(this);
 
     this.state = {
+      // document: [],
       document: Object.assign({}, props.document),
       errors: {},
       saving: false,
@@ -72,7 +73,7 @@ class ManageDocument extends Component {
     const authorId = 'userId';
     const document = this.state.document;
     document[field] = event.target.value;
-    document[authorId] = this.props.authorId;
+    document[authorId] = this.props.userId;
     return this.setState({ document });
   }
 
@@ -83,12 +84,13 @@ class ManageDocument extends Component {
    */
   createDocument(event) {
     event.preventDefault();
-    this.setState({ saving: true });
+    this.setState({ errors: {}, saving: true });
     this.props.actions.createDocument(this.state.document)
     .then(() => this.redirect())
+    .then(() => this.state.document)
     .catch(() => {
       this.setState({ saving: false });
-      toastr.error(this.props.message);
+      toastr.success(this.props.message);
     });
   }
 
@@ -102,6 +104,8 @@ class ManageDocument extends Component {
     this.setState({ saving: true });
     this.props.actions.updateDocument(
       this.state.document.id, this.state.document)
+    // .then(() => this.redirect())
+    .then(() => this.state.document)
     .then(() => this.redirect())
     .catch(() => {
       this.setState({ saving: false });
@@ -115,8 +119,8 @@ class ManageDocument extends Component {
    */
   redirect() {
     this.setState({ saving: false });
-    toastr.success(this.props.message);
-    this.context.router.push('/dashboard');
+    toastr.success('saved!');
+    this.context.router.push('/document');
   }
 
   /**
@@ -124,22 +128,22 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
-    console.log('render check');
-    console.log('this.props', this.props);
-    const isUpdate = this.props.document.id;
-    const documentTitle = this.props.document.title;
+    // console.log('render check');
+    // console.log('this.props', this.props);
+    // const isUpdate = this.props.document.id;
+    // const documentTitle = this.props.document.title;
     return (
       <div className="section">
         <div className="container">
-          <h1 className="center flow-text">
+          {/* <h1 className="center flow-text">
             {isUpdate ? `Edit: ${documentTitle}`
               : 'Add new document'}
-          </h1>
+          </h1>*/}
           <DocumentForm
             document={this.state.document}
             onChange={this.updateDocumentState}
             onEditorChange={this.onEditorChange}
-            onSave={isUpdate ? this.updateDocument : this.createDocument}
+            onSave={this.createDocument}
             errors={this.state.errors}
             saving={this.state.saving}
           />
@@ -155,8 +159,6 @@ class ManageDocument extends Component {
 ManageDocument.propTypes = {
   actions: PropTypes.object,
   document: PropTypes.object,
-  authorId: PropTypes.number,
-  message: PropTypes.string,
 };
 
 /**
@@ -172,23 +174,19 @@ ManageDocument.contextTypes = {
  * @param {any} ownProps
  * @returns {*} props
  */
-const mapStateToProps = (state, ownProps) => {
-  console.log('Umleto fomage', state);
-  // const documentId = ownProps.params.id;
-  // const authorId = state.isAuth.loggedInUser.id;
-  // const message = state.message;
+const mapStateToProps = (state) => {
+  const documentId = state.documents.id;
 
-  let document = 'The rain in Spain stays mostly on the plains';
+  let document = { id: '', title: '', content: '', access: '' };
 
   if (documentId && (state.documents.id === documentId)) {
-    document = 'state.documents';
+    document = state.documents;
   }
 
   return {
     documentId,
-    document,
-    authorId,
-    message,
+    documents: state.documents,
+    loggedInUserID: state.isAuth.loggedInUser,
   };
 };
 
@@ -200,4 +198,4 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(documentActions, dispatch),
 });
 
-export default connect(mapStateToProps)(ManageDocument);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageDocument);

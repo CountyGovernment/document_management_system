@@ -48,10 +48,6 @@ export function getDocumentSuccess(documents) {
   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
 }
 
-// export function getDocumentsSuccess(documents) {
-//   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
-// }
-
 /**
  *
  * @desc createDocumentSuccess
@@ -135,8 +131,10 @@ export function getUserDocuments(id, offset) {
  * @returns {object} the document to be fetched.
  */
 export function getOneDocument(id) {
+  console.log('lookie here');
   return dispatch => axios.get(`/api/documents/${id}`)
   .then((response) => {
+    console.log(response, 'here lies a doc example');
     dispatch(getDocumentSuccess(response.data.document));
     dispatch(passSuccessMessage(response.data.message));
   })
@@ -146,19 +144,12 @@ export function getOneDocument(id) {
 }
 
 export function getAllDocuments(documents) {
-  console.log('ManDork');
   return dispatch => axios.get('/api/documents', documents)
     .then((response) => {
-      // console.log('there everywhere');
-      // localStorage.getItem('shelftoken', token);
-      console.log('data response', response);
       dispatch(getDocumentSuccess(response.data));
     })
     .catch((error) => {
-      // console.log('here');
-      // console.log('hahaha', error);
       dispatch(passFailureMessage(error.response));
-      // throw error;
     });
 }
 
@@ -172,11 +163,16 @@ export function getAllDocuments(documents) {
 export function createDocument(document) {
   return dispatch => axios.post('api/documents', document)
   .then((response) => {
-    dispatch(getAllDocuments(0));
+    console.log(response, '/////////');
+    console.log(response.data.message, 'response.data.message');
     dispatch(passSuccessMessage(response.data.message));
+    dispatch(createDocumentSuccess(response.data.document));
+    console.log(response.data, 'doc');
+
+    console.log(response.data.message, 'response.data.message');
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error.response.data.message));
   });
 }
 

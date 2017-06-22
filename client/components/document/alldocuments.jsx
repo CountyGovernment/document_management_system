@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-// import ReactPaginate from 'react-paginate';
+import ReactPaginate from 'react-paginate';
 import DocumentList from './DocumentList';
 import DocumentActionBar from './DocumentActionBar';
 import * as actions from '../../actions/documentActions';
@@ -21,7 +21,6 @@ class AllDocuments extends Component {
    * @memberof AllDocuments
    */
   constructor(props, context) {
-    // console.log('looking for props', props);
     super(props, context);
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
@@ -88,7 +87,7 @@ class AllDocuments extends Component {
    * @return {*} render the Document holder
    */
   render() {
-    console.log('this.props', this.props);
+    // console.log('this.props', this.props);
     // const { documents, searchResults, metaData } = this.props;
     // let documentsInfo;
     const { documents, searchResults, metaData } = this.props;
@@ -135,12 +134,12 @@ class AllDocuments extends Component {
               </div>
             </div>
 
-            {/* <DocumentActionBar
-            redirectToManageDocument={this.redirectToManageDocument}
-            onViewAccessChange={this.onViewAccessChange}
-            onSearchChange={this.onSearchChange}
-            sitewide="All Documents"
-          />*/}
+            <DocumentActionBar
+              redirectToManageDocument={this.redirectToManageDocument}
+              onViewAccessChange={this.onViewAccessChange}
+              onSearchChange={this.onSearchChange}
+              sitewide="All Documents"
+            />
 
             <div className="row">
               <div className="col s12">
@@ -155,19 +154,18 @@ class AllDocuments extends Component {
             </div>
 
             {/* <div className="center">
-             <ReactPaginate previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={<a href="">...</a>}
-              breakClassName={'break-me'}
-              pageCount={metaData.pages}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            />
-          </div>*/}
+              <ReactPaginate previousLabel={'previous'}
+                nextLabel={'next'}
+                breakLabel={<a href="">...</a>}
+                breakClassName={'break-me'}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageClick}
+                containerClassName={'pagination'}
+                subContainerClassName={'pages pagination'}
+                activeClassName={'active'}
+              />
+            </div>*/}
           </div>
         </div>
       );
@@ -200,7 +198,6 @@ AllDocuments.contextTypes = {
  * @returns {*} props
  */
 function mapStateToProps(state) {
-  // console.log('state', state);
   return {
     isAuth: state.isAuth,
     message: state.message,

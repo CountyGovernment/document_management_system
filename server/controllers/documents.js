@@ -13,12 +13,11 @@ class DocController {
   */
   create(req, res) { // route handler
     if (controllerHelpers.validateInput(req.body)) {
-      // console.log(req.body, 'mmmmmmmmmmmmmmmmmmm');
       return res.status(403).json({ // forbidden request
         message: 'Please fill the required fields!',
       });
     }
-    // console.log(req.decoded);
+
     return Document
       .create({ // request
         title: req.body.title,
@@ -43,7 +42,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   findByTitle(req, res) {
-    if (req.decoded.data === '1') {
+    if (req.decoded.data === 1) {
       if (req.query.q) {
         return Document
           .findAll({
@@ -61,7 +60,7 @@ class DocController {
           })
           .catch(error => res.status(400).json(error));
       }
-    } else if (req.decoded.data === '2') {
+    } else if (req.decoded.data === 2) {
       if (req.query.q) {
         return Document
           .findAll({
@@ -91,7 +90,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   find(req, res) {
-    if (req.decoded.data === '1') {
+    if (req.decoded.data === 1) {
       return Document
         .findById(req.params.id)
         .then((document) => {
@@ -103,7 +102,7 @@ class DocController {
           return res.status(200).json(document);
         })
         .catch(error => res.status(400).json(error));
-    } else if (req.decoded.data === '2') {
+    } else if (req.decoded.data === 2) {
       return Document
         .findById({
           where: {
@@ -123,19 +122,6 @@ class DocController {
     }
   }
 
-  listall(req, res) {
-    return Document
-          .findAll({})
-          .then((document) => {
-            if (!document) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            res.status(200).json(document);
-          })
-          .catch(error => res.status(400).json(error));
-  }
   /**
    * list method
    * Lists all documents found in the database
@@ -144,31 +130,32 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    // if (req.decoded.data === '1') {
-    //   console.log('Rudeness Episode');
-    //   if (req.query.limit || req.query.offset) { // pagination
-    //     return Document
-    //       .findAll({
-    //         limit: req.query.limit,
-    //         offset: req.query.offset,
-    //       })
-    //       .then((document) => {
-    //         if (!document) {
-    //           return res.status(404).json({
-    //             message: 'Document is not available',
-    //           });
-    //         }
-    //         res.status(200).json(document);
-    //       })
-    //       .catch(error => res.status(400).json(error));
-    //   }
-    //   return Document
-    //     .findAll()
-    //     .then(document => res.status(200).json(document))
-    //     .catch(error => res.status(400).json(error));
-    // } else if (req.decoded.data === 2) {
-    if (req.query.limit || req.query.offset) { // pagination
-      return Document
+    if (req.decoded.data === 1) {
+      console.log('Rudeness Episode');
+      if (req.query.limit || req.query.offset) { // pagination
+        return Document
+          .findAll({
+            limit: req.query.limit,
+            offset: req.query.offset,
+          })
+          .then((document) => {
+            if (!document) {
+              return res.status(404).json({
+                message: 'Document is not available',
+              });
+            }
+            res.status(200).json({ document });
+          })
+          .catch(error => res.status(400).json(error));
+      } else {
+        return Document
+        .findAll()
+        .then(document => res.status(200).json({ document }))
+        .catch(error => res.status(400).json(error));
+      }
+    } else if (req.decoded.data === 2) {
+      if (req.query.limit || req.query.offset) { // pagination
+        return Document
           .findAll({
             limit: req.query.limit,
             offset: req.query.offset,
@@ -182,11 +169,11 @@ class DocController {
                 message: 'Document is not available',
               });
             }
-            res.status(200).json(document);
+            res.status(200).json({ document });
           })
           .catch(error => res.status(400).json(error));
-    }
-    return Document
+      } else {
+        return Document
         .findAll({
           where: {
             access: 'public',
@@ -194,8 +181,9 @@ class DocController {
         })
         .then(document => res.status(200).json({ document }))
         .catch(error => res.status(400).json(error));
+      }
+    }
   }
-  // }
 
 
   /**

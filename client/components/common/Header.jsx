@@ -19,8 +19,10 @@ class Header extends Component {
               <Link to="/users" style={linkColor}>
                 Users
               </Link>&nbsp;
-              <Link style={linkColor} to="/documents">Documents</Link>&nbsp;
-              <Link style={linkColor} to="/login">Login</Link>
+              <Link style={linkColor} to="/documents">All Documents</Link>&nbsp;
+              <Link style={linkColor} to="/login">Login</Link>&nbsp;
+              <Link style={linkColor} to="/signup">Signup</Link>&nbsp;
+              <Link style={linkColor} to="/document">Document</Link>
             </AppBar>
           </MuiThemeProvider>
         </nav>

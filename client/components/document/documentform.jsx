@@ -27,14 +27,14 @@ const DocumentForm = ({ document, onSave, onChange, saving }) =>
 
                 <h5 className="col l1 m1 s12">Access:</h5>
                 <div className="input-field col l3 m3 s12">
-                  <select name="viewAccess"
+                  <select name="access"
                     className="browser-default"
                     value={document.access}
                     onChange={onChange}
                   >
                     <option value="">Choose your option</option>
-                    <option value="Private">Private</option>
-                    <option value="Public">Public</option>
+                    <option value="private">Private</option>
+                    <option value="public">Public</option>
                   </select>
                 </div>
               </div>
