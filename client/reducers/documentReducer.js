@@ -17,7 +17,9 @@ export default (state = initialState.documents, action) => {
         // console.log(state, 'state/////////////'),
         Object.assign({}, action.document),
       ];
-
+    case types.GET_ONE_DOCUMENT_SUCCESS:
+      // console.log("state get one doc", state);
+      return Object.assign({}, state, { document: action.document });
     case types.UPDATE_DOCUMENT_SUCCESS:
       return [
         ...state.filter(document => document.id !== action.document.id),

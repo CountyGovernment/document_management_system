@@ -34,7 +34,6 @@ class ManageDocument extends Component {
     this.updateDocument = this.updateDocument.bind(this);
 
     this.state = {
-      // document: [],
       document: Object.assign({}, props.document),
       errors: {},
       saving: false,
@@ -46,9 +45,8 @@ class ManageDocument extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    if (this.props.documentId) {
-      console.log('wwwwwwwwwwww', this.props.documentId);
-      this.props.actions.getOneDocument(this.props.documentId);
+    if (this.props.match.params.id) {
+      this.props.actions.getOneDocument(this.props.match.params.id);
     }
   }
 
@@ -57,8 +55,7 @@ class ManageDocument extends Component {
    * @returns {null} returns no value
    */
   componentWillReceiveProps(nextProps) {
-    if (this.props.document.id !== nextProps.document.id) {
-      // Necessary to repopulate the form when document is loaded directly
+    if (this.props.match.params.id !== nextProps.document.id) {
       this.setState({ document: Object.assign({}, nextProps.document) });
     }
   }
@@ -70,10 +67,8 @@ class ManageDocument extends Component {
    */
   updateDocumentState(event) {
     const field = event.target.name;
-    const authorId = 'userId';
     const document = this.state.document;
     document[field] = event.target.value;
-    // document[authorId] = this.props.userId;
     return this.setState({ document });
   }
 
@@ -104,12 +99,10 @@ class ManageDocument extends Component {
     this.setState({ saving: true });
     this.props.actions.updateDocument(
       this.state.document.id, this.state.document)
-    // .then(() => this.redirect())
     .then(() => this.state.document)
     .then(() => this.redirect())
     .catch(() => {
       this.setState({ saving: false });
-      toastr.error(this.props.message);
     });
   }
 
@@ -120,7 +113,7 @@ class ManageDocument extends Component {
   redirect() {
     this.setState({ saving: false });
     toastr.success('saved!');
-    this.context.router.push('/document');
+    this.context.router.push('/documents');
   }
 
   /**
@@ -128,10 +121,9 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
-    // console.log('render check');
-    // console.log('this.props', this.props);
-    const isUpdate = this.props.documents.id;
-    const documentTitle = this.props.documents.title;
+    const isUpdate = this.props.match.params.id;
+    const documentTitle = this.props.match.params.title;
+    console.log('whats this????', this.props.match.params.id);
     return (
       <div className="section">
         <div className="container">
@@ -174,16 +166,8 @@ ManageDocument.contextTypes = {
  * @returns {*} props
  */
 const mapStateToProps = (state) => {
-  const documentId = state.documents.id;
-
-  let document = { id: '', title: '', content: '', access: '' };
-
-  if (documentId && (state.documents.id === documentId)) {
-    document = state.documents;
-  }
-
   return {
-    documentId,
+    document: state.document,
     documents: state.documents,
     loggedInUserID: state.isAuth.loggedInUser,
   };

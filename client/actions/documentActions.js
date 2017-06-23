@@ -48,6 +48,9 @@ export function getDocumentSuccess(documents) {
   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
 }
 
+export function getOneDocumentSuccess(document) {
+  return { type: types.GET_ONE_DOCUMENT_SUCCESS, document };
+}
 /**
  *
  * @desc createDocumentSuccess
@@ -131,15 +134,15 @@ export function getUserDocuments(id, offset) {
  * @returns {object} the document to be fetched.
  */
 export function getOneDocument(id) {
-  console.log('lookie here');
+  // console.log('lookie here', id);
   return dispatch => axios.get(`/api/documents/${id}`)
   .then((response) => {
-    console.log(response, 'here lies a doc example');
-    dispatch(getDocumentSuccess(response.data.document));
+    // console.log(response, 'here lies a doc example');
+    dispatch(getOneDocumentSuccess(response.data));
     dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error));
   });
 }
 

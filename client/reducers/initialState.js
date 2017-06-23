@@ -6,6 +6,7 @@ export default {
     isAuthenticated: false,
     loggedInUser: null,
   },
+  document: {},
   searchResults: [],
   message: null,
 };
