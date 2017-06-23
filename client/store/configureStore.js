@@ -3,10 +3,11 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
 import rootReducer from '../reducers/rootReducer';
 
+/* eslint-disable no-underscore-dangle */
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  || compose;
+
 const configureStore = (initialState) => {
-  /* eslint-disable no-underscore-dangle */
-  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    || compose;
   /* eslint-enable */
   return createStore(
     rootReducer,
@@ -15,7 +16,6 @@ const configureStore = (initialState) => {
     composeEnhancers(
       applyMiddleware(thunk, reduxImmutableStateInvariant()),
     ),
-    applyMiddleware(thunk),
   );
 };
 

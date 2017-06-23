@@ -13,7 +13,7 @@ export function searchUsersSuccess(users) {
   return { type: types.SEARCH_USERS_SUCCESS, users };
 }
 export function getUserSuccess(users) {
-  return { type: types.GET_ALL_USERS_SUCCESS, users };
+  return { type: types.GET_ALL_USER_SUCCESS, users };
 }
 export function getOneUserSuccess(id) {
   return { type: types.GET_ONE_USERS_SUCCESS, id };
@@ -50,7 +50,7 @@ export function getAllUsers(users) {
 }
 
 export function getOneUser(id) {
-  return dispatch => axios.get(`/api/users/${id}`, id)
+  return dispatch => axios.get(`/api/users/${id}`)
   .then((response) => {
     dispatch(getOneUserSuccess(response.data));
   })

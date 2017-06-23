@@ -9,7 +9,7 @@ export default (state = initialState.users, action) => {
       const users = action.users;
       // console.log('new state', Object.assign([], state, users));
       return Object.assign([], state, users);
-    case types.GET_ONE_USERS_SUCCESS:
+    case types.GET_ONE_USER_SUCCESS:
       return action.id;
     case types.CREATE_USER_SUCCESS:
       return [

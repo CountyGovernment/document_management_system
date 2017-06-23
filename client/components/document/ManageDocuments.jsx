@@ -123,12 +123,12 @@ class ManageDocument extends Component {
   render() {
     const isUpdate = this.props.match.params.id;
     const documentTitle = this.props.match.params.title;
-    console.log('whats this????', this.props.match.params.id);
+    console.log('whats this????', this.props.match);
     return (
       <div className="section">
         <div className="container">
           <h1 className="center flow-text">
-            {isUpdate ? `Edit: ${documentTitle}`
+            {isUpdate ? 'Edit Document'
               : 'Add new document'}
           </h1>
           <DocumentForm

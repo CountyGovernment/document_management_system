@@ -1,14 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import DocumentTasks from './DocumentTasks';
+import DocumentTasks from './documenttasks';
 
 /**
  * @desc component used to display the list of documents
  */
 class DocumentList extends Component {
   render() {
-    console.log('loggedInUserID', this.props.loggedInUserID);
     return (
       <div className="col s12 m6 l4">
         <div className="card medium hoverable z-depth-5">
@@ -16,28 +15,16 @@ class DocumentList extends Component {
             <h4>{this.props.document.title}</h4>
             <hr />
             <div className="col s12 light">
-              <b>Published on:</b> {this.props.document.createdAt}
+              <b>Content:</b>{this.props.document.content.slice(0, 200)}
             </div>
             <div className="col s12 light">
-              <b>Accessibility:</b> {this.props.document.access}
+              <b>Published on:</b> {this.props.document.createdAt.slice(0, 10)}
             </div>
-            {/* <div className="col s12 light">
-              <b>Author:</b> {this.props.document.User.firstName} {this.props.document.User.secondName}
-            </div>*/}
             <div className="col s12 light">
-              <b>Content:</b>{this.props.document.content}...
+              <b>Access:</b> {this.props.document.access}
             </div>
           </div>
           <div className="card-action">
-            {/* <Link
-              to={`/document/view/${document.id}`}
-              data-position="bottom"
-              data-delay="50"
-              data-tooltip="View document"
-              className="waves-effect waves-light btn blue"
-            >View
-            </Link>
-            &nbsp;&nbsp;*/}
             <DocumentTasks
               loggedInUserID={this.props.loggedInUserID}
               userId={this.props.document.userId}
@@ -58,13 +45,4 @@ DocumentList.propTypes = {
   loggedInUserID: PropTypes.number,
 };
 
-/**
- *
- * @param {any} state
- * @returns {*} props
- */
-const mapStateToProps = state => ({
-  users: state.users,
-});
-
-export default connect(mapStateToProps)(DocumentList);
+export default DocumentList;

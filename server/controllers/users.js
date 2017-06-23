@@ -59,8 +59,8 @@ class UserController {
           } else if (user) {
             // console.log(user, 'user');
             if (bcrypt.compareSync(req.body.password, user.password)) {
-              const token = jwt.sign({ data: user.roleId, userId: user.id }, secretKey, {
-                expiresIn: '1hr',
+              const token = jwt.sign({ data: user.roleId, id: user.id }, secretKey, {
+                expiresIn: '24hr',
               });
               return res.status(201).json(Object.assign({},
                 { id: user.id, username: user.username, email: user.email, message: 'You are logged in' },

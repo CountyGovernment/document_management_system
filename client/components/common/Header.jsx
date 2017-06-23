@@ -16,9 +16,8 @@ class Header extends Component {
             <AppBar
               title="Shelf"
             >
-              <Link to="/users" style={linkColor}>
-                Users
-              </Link>&nbsp;
+              <Link style={linkColor} to="/dashboard">Dashboard</Link>&nbsp;
+              <Link to="/users" style={linkColor}>Users</Link>&nbsp;
               <Link style={linkColor} to="/documents">All Documents</Link>&nbsp;
               <Link style={linkColor} to="/login">Login</Link>&nbsp;
               <Link style={linkColor} to="/signup">Signup</Link>&nbsp;

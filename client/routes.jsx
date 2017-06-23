@@ -9,7 +9,6 @@ import AllUsers from './components/user/AllUsers';
 import EditUserProfile from './components/user/EditUserProfiles';
 import AllDocuments from './components/document/alldocuments';
 import ManageDocument from './components/document/ManageDocuments';
-import ViewDocument from './components/document/ViewDocumments';
 import FourOFour from './components/common/Four0Four';
 // import requireAuth from './utils/requireAuthentication';
 // import requireAdminRole from './utils/requireAdminRole';
@@ -23,9 +22,8 @@ export default (
           <Route path="/users" component={AllUsers} />
           <Route path="/user/:id" component={EditUserProfile} />
           <Route path="/documents" component={AllDocuments} />
-          <Route path="/document" component={ManageDocument} />
-          <Route path="/document/view/:id" component={ViewDocument} />
-           <Route path="/document/:id" component={ManageDocument} />
+          {/* <Route path="/document" component={ManageDocument} />*/}
+          <Route path="/document/:id" component={ManageDocument} />
           <Route path="/signup" component={SignupPage} />
           <Route path="404" component={FourOFour} />
           <Route path="/dashboard" component={Dashboard} />

@@ -5,7 +5,10 @@ import { Link } from 'react-router';
 import toastr from 'toastr';
 import ReactPaginate from 'react-paginate';
 import * as userActions from '../../actions/userActions';
-import UserProfile from '../user/userprofile.jsx';
+// import UserProfile from '../user/userprofile.jsx';
+import DocumentList from '../document/DocumentList';
+import DocumentSearch from '../document/DocumentSearch';
+import * as actions from '../../actions/documentActions';
 
 /**
  * @desc component used to display user's documents
@@ -25,7 +28,7 @@ class Dashboard extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.handlePageClick = this.handlePageClick.bind(this);
+    // this.handlePageClick = this.handlePageClick.bind(this);
 
     this.state = {
       documents: [],
@@ -40,18 +43,11 @@ class Dashboard extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
+    console.log('id: ', this.props.loggedInUserID);
     this.props.userActions.getOneUser(this.props.loggedInUserID);
-    if (this.props.isAuth.isAuthenticated) {
-      this.props.actions.getUserDocuments(this.props.loggedInUserID, this.state.offset);
-    }
-  }
-
-  /**
-   * @desc handles the redirecting to the manage documents page
-   * @returns {null} returns no value
-   */
-  redirectToManageDocument() {
-    this.context.router.push('/document');
+    // if (this.props.isAuth.isAuthenticated) {
+    this.props.actions.getUserDocuments(this.props.loggedInUserID, this.state.offset);
+    // }
   }
 
   /**
@@ -71,59 +67,68 @@ class Dashboard extends Component {
   }
 
   /**
+   * @desc handles the redirecting to the manage documents page
+   * @returns {null} returns no value
+   */
+  redirectToManageDocument() {
+    this.context.router.push('/document');
+  }
+
+  /**
    * @desc handles change of the pagination
    * @param {any} data the page number
    * @returns {*} no return value
    */
-  handlePageClick(data) {
-    const selected = data.selected;
-    const offset = Math.ceil(selected * this.props.metaData.pageSize);
+  // handlePageClick(data) {
+  //   const selected = data.selected;
+  //   const offset = Math.ceil(selected * this.props.metaData.pageSize);
 
-    this.setState({ offset }, () => {
-      this.props.actions.getUserDocuments(this.props.loggedInUserID, offset);
-    });
-  }
+  //   this.setState({ offset }, () => {
+  //     this.props.actions.getUserDocuments(this.props.loggedInUserID, offset);
+  //   });
+  // }
 
    /**
    * @desc Renders the Document holder
    * @return {*} render the Document holder
    */
   render() {
+    console.log('this.props', this.props);
     const { documents, searchResults, metaData, user } = this.props;
     let documentsInfo;
-    let userProfile;
+    // let userProfile;
 
-    if (user && documents) {
-      userProfile = (<div className="row">
-        <div className="col s12 m7 l7">
-          <div className="card">
-            <div className="card-image" />
-            <div className="card-content">
-              <h1 className="center">{user.firstname} {user.lastname}</h1>
-              <p className="center flow-text">Username: {user.username}</p>
-              <p className="center flow-text">Email: {user.email}</p>
-            </div>
-            <div className=" center card-action">
-              <Link to={`/user/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>
-            </div>
-          </div>
-        </div>
-        <div className="col s12 m5 l5">
-          <div className="row">
-            <div className="card-panel blue z-depth-1 col s10">
-              <p className="flow-text">You have {documents.filter(document =>
-                document.viewAccess === 'Private',
-              ).length} Private documents</p>
-            </div>
-            <div className="card-panel green z-depth-1 col s10">
-              <p className="flow-text">You have {documents.filter(document =>
-                document.viewAccess === 'Public',
-              ).length} Public documents</p>
-            </div>
-          </div>
-        </div>
-      </div>);
-    }
+    // if (user && documents) {
+    //   userProfile = (<div className="row">
+    //     <div className="col s12 m7 l7">
+    //       <div className="card">
+    //         <div className="card-image" />
+    //         <div className="card-content">
+    //           <h1 className="center">{user.firstName} {user.secondName}</h1>
+    //           <p className="center flow-text">Username: {user.username}</p>
+    //           <p className="center flow-text">Email: {user.email}</p>
+    //         </div>
+    //         <div className=" center card-action">
+    //           <Link to={`/user/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div className="col s12 m5 l5">
+    //       <div className="row">
+    //         <div className="card-panel blue z-depth-1 col s10">
+    //           <p className="flow-text">You have {documents.filter(document =>
+    //             document.access === 'private',
+    //           ).length} Private documents</p>
+    //         </div>
+    //         <div className="card-panel green z-depth-1 col s10">
+    //           <p className="flow-text">You have {documents.filter(document =>
+    //             document.access === 'public',
+    //           ).length} Public documents</p>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>);
+    // }
 
     if (!documents || this.props.message === 'no document found') {
       return (<div className="section">
@@ -132,7 +137,7 @@ class Dashboard extends Component {
             <div className="card-panel pink lighten-3 z-depth-1">
               <div className="row valign-wrapper">
                 <div className="col s10">
-                  <h3>You have not created any documents</h3>
+                  <h3>Add a Document</h3>
                   <div className="row">
                     <div className="col l4 m4 s1 offset-l3">
                       <a
@@ -163,7 +168,7 @@ class Dashboard extends Component {
             </div>
           </div>
 
-          <DocumentActionBar
+          <DocumentSearch
             redirectToManageDocument={this.redirectToManageDocument}
             onSearchChange={this.onSearchChange}
             onViewAccessChange={this.onViewAccessChange}
@@ -181,7 +186,7 @@ class Dashboard extends Component {
             </div>
           </div>
 
-          <div className="center">
+          {/* <div className="center">
             <ReactPaginate previousLabel={'previous'}
               nextLabel={'next'}
               breakLabel={<a href="">...</a>}
@@ -194,7 +199,7 @@ class Dashboard extends Component {
               subContainerClassName={'pages pagination'}
               activeClassName={'active'}
             />
-          </div>
+          </div>*/}
         </div>
       </div>
     );
@@ -225,7 +230,8 @@ Dashboard.contextTypes = {
  * @returns {boolean} isAuthenticated
  * @returns {*} isAdmin
  */
-const mapStateToProps = state => ({
+const mapStateToProps = state =>
+({
   user: state.users,
   isAuth: state.isAuth,
   message: state.message,
