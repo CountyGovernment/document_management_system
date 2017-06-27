@@ -3,6 +3,7 @@ const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
+
 const secretKey = 'yellow';
 const salt = 7;
 
@@ -202,7 +203,9 @@ class UserController {
       return User
         .findAll({
           where: {
-            username: { $eq: req.query.q },
+            username: {
+              $iLike: `%${req.query.q}%`,
+            },
           },
         })
         .then((user) => {

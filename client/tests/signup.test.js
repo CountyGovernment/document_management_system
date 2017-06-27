@@ -1,9 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-
-import SignUp from './client/components/Auth/SignUp';
-import TextField from 'material-ui/TextField';
+import SignUp from '../components/main/SignUp';
 
 describe('Signup form', () => {
   const props = {
@@ -11,7 +9,7 @@ describe('Signup form', () => {
       isAuthenticated: true,
       isFetching: false,
       credentials: {
-        email: 'jwarugu@gmail.com',
+        email: 'spiderman@gmail.com',
         password: 'password',
       },
       validations: {

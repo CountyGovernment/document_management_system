@@ -12,7 +12,7 @@ import * as types from './../actions/actionTypes';
 export default (state = initialState.isAuth, action) => {
   switch (action.type) {
     case types.SET_LOGGEDIN_USER:
-      console.log("user", action);
+      console.log('user', action);
       return Object.assign({}, state, {
         isAuthenticated: true,
         loggedInUser: action.user,

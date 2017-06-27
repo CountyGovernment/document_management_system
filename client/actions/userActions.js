@@ -13,7 +13,7 @@ export function searchUsersSuccess(users) {
   return { type: types.SEARCH_USERS_SUCCESS, users };
 }
 export function getUserSuccess(users) {
-  return { type: types.GET_ALL_USER_SUCCESS, users };
+  return { type: types.GET_ALL_USERS_SUCCESS, users };
 }
 export function getOneUserSuccess(id) {
   return { type: types.GET_ONE_USERS_SUCCESS, id };
@@ -42,10 +42,12 @@ export function search(queryString) {
 export function getAllUsers(users) {
   return dispatch => axios.get('/api/users', users)
   .then((response) => {
+    // console.log('response: ', response);
     dispatch(getUserSuccess(response.data));
+    // console.log('response.data: ', response.data);
   })
   .catch((error) => {
-    dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error));
   });
 }
 

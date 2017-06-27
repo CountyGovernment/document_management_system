@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import UserList from './userlist.jsx';
-import UserActionBar from './useractionbar.jsx';
+import UserList from './userlist';
+import UserActionBar from './useractionbar';
 import * as actions from '../../actions/userActions';
 
 /**
@@ -23,7 +23,7 @@ class AllUsers extends Component {
     console.log(props, 'zzzzzz');
     super(props, context);
 
-    this.redirectToManageUser = this.redirectToManageUser.bind(this);
+    // this.redirectToManageUser = this.redirectToManageUser.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
 
     this.state = {
@@ -40,12 +40,10 @@ class AllUsers extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    console.log('bool', this.props.isAuth.isAuthenticated);
     // if (this.props.isAuth.isAuthenticated) {
-    // if (true) {
-      // console.log('bool', this.props.isAuth.isAuthenticated);
-    // console.log('users from component', this.props.users);
+      // if (true) {
     this.props.actions.getAllUsers(this.props.users);
+      // }
     // }
   }
 
@@ -64,9 +62,9 @@ class AllUsers extends Component {
    * @desc handles the redirecting to the manage documents page
    * @returns {null} returns no value
    */
-  redirectToManageUser() {
-    this.context.router.push('/user');
-  }
+  // redirectToManageUser() {
+  //   this.context.router.push('/user');
+  // }
 
   /**
    * React Render
@@ -87,7 +85,7 @@ class AllUsers extends Component {
           user.roleId === parseInt(this.state.roleType, 10),
         );
       }
-      console.log(filteredUsers, 'users?');
+      console.log(users, 'users?');
       return (
         <div className="section">
           <div className="container">
@@ -155,7 +153,7 @@ const mapStateToProps = state => ({
   searchResults: state.searchResults.users,
   users: state.users,
   metaData: state.users.metaData,
-  // loggedInUserID: state.isAuth.loggedInUser.id,
+  loggedInUserID: state.isAuth.loggedInUser.id,
 });
 
 /**

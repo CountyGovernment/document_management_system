@@ -38,7 +38,7 @@ class Signin extends Component {
   componentWillMount() {
     if (this.props.isAuthenticated) {
       toastr.error('Already logged in');
-      this.context.router.push('/dashboard');
+      // this.context.router.push('/dashboard');
     }
   }
 
@@ -48,7 +48,7 @@ class Signin extends Component {
    * @returns {*} no return value
    */
   onSubmit(event) {
-    console.log(event, 'kkkkkk');
+    // console.log(event, 'kkkkkk');
     event.preventDefault();
     this.setState({
       errors: {},
@@ -56,13 +56,13 @@ class Signin extends Component {
     });
     this.props.userActions.login(this.state.user)
     .then(() => {
-      console.log('user logged in', this.state.user);
+      // console.log('user logged in', this.state.user);
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
       // this.context.router.push('/dashboard');
     })
     .catch(() => {
-      console.log('Catch triggered', this.props.message);
+      // console.log('Catch triggered', this.props.message);
       this.setState({ isLoading: false });
       toastr.error(this.props.message);
     });

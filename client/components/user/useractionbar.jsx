@@ -26,15 +26,6 @@ const UserActionBar = ({ onRoleChange, onSearchChange, clearSearch }) =>
     <div className="input-field col l4 m4 s12">
       <form action="#">
         <h6>Filter by Role:</h6>
-        <input
-          onClick={onRoleChange}
-          className="with-gap"
-          name="role"
-          value="All"
-          type="radio"
-          id="all"
-        />
-        <label htmlFor="all">All Users</label>
 
         <input
           onClick={onRoleChange}
@@ -42,7 +33,7 @@ const UserActionBar = ({ onRoleChange, onSearchChange, clearSearch }) =>
           name="role"
           value="1"
           type="radio"
-          id="admin"
+          id="1"
         />
         <label htmlFor="admin">Admin Users</label>
 
@@ -53,7 +44,7 @@ const UserActionBar = ({ onRoleChange, onSearchChange, clearSearch }) =>
             name="role"
             value="2"
             type="radio"
-            id="regular"
+            id="2"
           />
           <label htmlFor="regular">Regular Users</label>
         </span>
