@@ -38,7 +38,7 @@ class UserProfile extends Component {
                 <p className="center flow-text">Email: {user.email}</p>
               </div>
               <div className=" center card-action">
-                <Link to={`/user/view/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>
+                {/* <Link to={`/user/view/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>*/}
               </div>
             </div>
           </div>

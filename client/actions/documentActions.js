@@ -113,11 +113,10 @@ export function search(queryString) {
  *
  * @export
  * @param {number} id - The ID of the user
- * @param {number} offset - The offset for pagination
  * @returns {any} the document to be fetched.
  */
-export function getUserDocuments(id, offset) {
-  return dispatch => axios.get(`api/users/${id}/documents/?offset=${offset}`)
+export function getUserDocuments(id) {
+  return dispatch => axios.get(`api/users/${id}/documents`)
   .then((response) => {
     dispatch(getDocumentSuccess(response.data));
   })
@@ -134,10 +133,8 @@ export function getUserDocuments(id, offset) {
  * @returns {object} the document to be fetched.
  */
 export function getOneDocument(id) {
-  // console.log('lookie here', id);
   return dispatch => axios.get(`/api/documents/${id}`)
   .then((response) => {
-    // console.log(response, 'here lies a doc example');
     dispatch(getOneDocumentSuccess(response.data));
     dispatch(passSuccessMessage(response.data.message));
   })

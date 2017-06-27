@@ -153,20 +153,6 @@ class AllDocuments extends Component {
                 )}
               </div>
             </div>
-
-            {/* <div className="center">
-              <ReactPaginate previousLabel={'previous'}
-                nextLabel={'next'}
-                breakLabel={<a href="">...</a>}
-                breakClassName={'break-me'}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={'pagination'}
-                subContainerClassName={'pages pagination'}
-                activeClassName={'active'}
-              />
-            </div>*/}
           </div>
         </div>
       );
@@ -199,7 +185,6 @@ AllDocuments.contextTypes = {
  * @returns {*} props
  */
 function mapStateToProps(state) {
-  console.log(state, 'is there metaData???????');
   return {
     isAuth: state.isAuth,
     message: state.message,

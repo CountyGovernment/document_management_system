@@ -16,7 +16,7 @@ export function getUserSuccess(users) {
   return { type: types.GET_ALL_USERS_SUCCESS, users };
 }
 export function getOneUserSuccess(id) {
-  return { type: types.GET_ONE_USERS_SUCCESS, id };
+  return { type: types.GET_ONE_USER_SUCCESS, id };
 }
 export function createUserSuccess(user) {
   return { type: types.CREATE_USER_SUCCESS, user };

@@ -21,6 +21,9 @@ Router.route('/users/:id')
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.find)
   .put(Authenticate.validateToken, Authenticate.validateAdmin, User.update);
 
+Router.route('/users/:id/documents')
+  .get(Authenticate.validateToken, User.findUserDocs);
+
 /* search/users routes */
 Router.route('/search/users')
   .get(Authenticate.validateToken, Authenticate.validateAdmin, User.findByName);

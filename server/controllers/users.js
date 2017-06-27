@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { Document } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -137,6 +138,33 @@ class UserController {
           });
         }
         return res.status(200).json(user);
+      })
+      .catch(error => res.status(400).json(error));
+  }
+
+  /**
+   * find method
+   * Find the documents of a user by the id given
+   * @params req
+   * @params res
+   * @return { object } - A res to the user
+ */
+  findUserDocs(req, res) {
+    return User
+      .findById(req.params.id, {
+        include: [{
+          model: Document,
+          as: 'document',
+        }],
+      })
+      .then((user) => {
+        console.log(res, 'res');
+        if (!user) {
+          return res.status(404).json({
+            message: 'We could not find this user :(',
+          });
+        }
+        return res.status(200).send(user);
       })
       .catch(error => res.status(400).json(error));
   }

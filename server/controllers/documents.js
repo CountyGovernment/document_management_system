@@ -1,4 +1,5 @@
 const { Document } = require('../models');
+const { User } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
 
 /* Defines  Document Controller methods */
@@ -177,7 +178,6 @@ class DocController {
       }
     }
   }
-
 
   /**
    * update method

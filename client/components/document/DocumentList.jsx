@@ -27,7 +27,6 @@ class DocumentList extends Component {
           <div className="card-action">
             <DocumentTasks
               loggedInUserID={this.props.loggedInUserID}
-              userId={this.props.document.userId}
               documentId={this.props.document.id}
             />
           </div>

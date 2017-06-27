@@ -3,9 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import toastr from 'toastr';
-import ReactPaginate from 'react-paginate';
 import * as userActions from '../../actions/userActions';
-// import UserProfile from '../user/userprofile.jsx';
+import UserProfile from '../user/userprofile';
 import DocumentList from '../document/DocumentList';
 import DocumentSearch from '../document/DocumentSearch';
 import * as actions from '../../actions/documentActions';
@@ -34,7 +33,7 @@ class Dashboard extends Component {
       documents: [],
       searchResults: [],
       search: '',
-      offset: 0,
+      // offset: 0,
     };
   }
 
@@ -43,10 +42,11 @@ class Dashboard extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    console.log('id: ', this.props.loggedInUserID);
+    // console.log('id: ', this.props.loggedInUserID);
     this.props.userActions.getOneUser(this.props.loggedInUserID);
     // if (this.props.isAuth.isAuthenticated) {
-    this.props.actions.getUserDocuments(this.props.loggedInUserID, this.state.offset);
+    this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents);
+    console.log('docs?', this.props.documents);
     // }
   }
 
@@ -58,7 +58,7 @@ class Dashboard extends Component {
   onSearchChange(event) {
     this.setState({ search: event.target.value });
     if (event.target.value === '') {
-      this.props.actions.getUserDocuments(this.props.loggedInUserID, this.state.offset);
+      this.props.actions.getUserDocuments(this.props.loggedInUserID);
     }
     this.props.actions.search(event.target.value)
     .catch(() => {
@@ -74,20 +74,6 @@ class Dashboard extends Component {
     this.context.router.push('/document');
   }
 
-  /**
-   * @desc handles change of the pagination
-   * @param {any} data the page number
-   * @returns {*} no return value
-   */
-  // handlePageClick(data) {
-  //   const selected = data.selected;
-  //   const offset = Math.ceil(selected * this.props.metaData.pageSize);
-
-  //   this.setState({ offset }, () => {
-  //     this.props.actions.getUserDocuments(this.props.loggedInUserID, offset);
-  //   });
-  // }
-
    /**
    * @desc Renders the Document holder
    * @return {*} render the Document holder
@@ -95,41 +81,6 @@ class Dashboard extends Component {
   render() {
     console.log('this.props', this.props);
     const { documents, searchResults, metaData, user } = this.props;
-    let documentsInfo;
-    // let userProfile;
-
-    // if (user && documents) {
-    //   userProfile = (<div className="row">
-    //     <div className="col s12 m7 l7">
-    //       <div className="card">
-    //         <div className="card-image" />
-    //         <div className="card-content">
-    //           <h1 className="center">{user.firstName} {user.secondName}</h1>
-    //           <p className="center flow-text">Username: {user.username}</p>
-    //           <p className="center flow-text">Email: {user.email}</p>
-    //         </div>
-    //         <div className=" center card-action">
-    //           <Link to={`/user/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="col s12 m5 l5">
-    //       <div className="row">
-    //         <div className="card-panel blue z-depth-1 col s10">
-    //           <p className="flow-text">You have {documents.filter(document =>
-    //             document.access === 'private',
-    //           ).length} Private documents</p>
-    //         </div>
-    //         <div className="card-panel green z-depth-1 col s10">
-    //           <p className="flow-text">You have {documents.filter(document =>
-    //             document.access === 'public',
-    //           ).length} Public documents</p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>);
-    // }
-
     if (!documents || this.props.message === 'no document found') {
       return (<div className="section">
         <div className="container">
@@ -155,54 +106,40 @@ class Dashboard extends Component {
         </div>
       </div>);
     }
-
-    return (
-      <div className="section white">
-        <div className="container">
-          <div className="row">
-            <div className="col l12 m12 s12">
-              <hr />
-              <h3 className="center">My Dashboard</h3>
-              <hr />
-              {userProfile}
+    if (documents) {
+      console.log('user???', user);
+      return (
+        <div className="section white">
+          <div className="container">
+            <div className="row">
+              <div className="col l12 m12 s12">
+                <hr />
+                <h3 className="center">My Dashboard</h3>
+                <hr />
+              </div>
             </div>
-          </div>
 
-          <DocumentSearch
-            redirectToManageDocument={this.redirectToManageDocument}
-            onSearchChange={this.onSearchChange}
-            onViewAccessChange={this.onViewAccessChange}
-          />
+            <DocumentSearch
+              redirectToManageDocument={this.redirectToManageDocument}
+              onSearchChange={this.onSearchChange}
+              onViewAccessChange={this.onViewAccessChange}
+            />
 
-          <div className="row">
-            <div className="col s12">
-              {documents.map(document =>
+            <div className="row">
+              <div className="col s12">
+                `{documents.map(document =>
                 (<DocumentList
-                  loggedInUserID={this.props.loggedInUserID}
+                  loggedInUserID={this.props.loggedInUserID.id}
                   key={document.id}
                   document={document}
                 />),
-              )}
+              )}`
+              </div>
             </div>
           </div>
-
-          {/* <div className="center">
-            <ReactPaginate previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={<a href="">...</a>}
-              breakClassName={'break-me'}
-              pageCount={metaData.pages ? metaData.pages : null}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            />
-          </div>*/}
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 
@@ -230,15 +167,17 @@ Dashboard.contextTypes = {
  * @returns {boolean} isAuthenticated
  * @returns {*} isAdmin
  */
-const mapStateToProps = state =>
-({
-  user: state.users,
-  isAuth: state.isAuth,
-  message: state.message,
-  documents: state.documents.documents,
-  metaData: state.documents.metaData,
-  loggedInUserID: state.isAuth.loggedInUser.id,
-});
+function mapStateToProps(state) {
+  console.log(state, 'state');
+  return {
+    user: state.users,
+    isAuth: state.isAuth,
+    message: state.message,
+    documents: state.documents,
+    metaData: state.documents.metaData,
+    loggedInUserID: state.isAuth.loggedInUser.id,
+  };
+}
 
 /**
  * @param {any} dispatch
