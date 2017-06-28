@@ -1,8 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import ReactPaginate from 'react-paginate';
+import { browserHistory } from 'react-router';
 import DocumentList from './DocumentList';
 import DocumentSearch from './DocumentSearch';
 import * as actions from '../../actions/documentActions';
@@ -25,8 +26,6 @@ class AllDocuments extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    // this.handlePageClick = this.handlePageClick.bind(this);
-
     this.state = {
       documents: [],
       searchResults: [],
@@ -39,62 +38,39 @@ class AllDocuments extends Component {
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
-  // componentWillMount() {
-  //   // if (this.props.isAuth.isAuthenticated) {
-  //   this.props.actions.getAllDocuments(this.state.offset);
-  //   // }
-  // }
   componentWillMount() {
-    // if (this.props.isAuth.isAuthenticated) {
-    this.props.actions.getAllDocuments(this.props.documents);
-    // }
+    if (this.props.isAuth.isAuthenticated) {
+      this.props.actions.getAllDocuments(this.props.documents);
+    }
   }
+
   /**
    * @desc handles change of the search form
    * @param {any} event html event
    * @returns {*} no return value
    */
   onSearchChange(event) {
-    console.log('zzzzzzzzz', event, 'xxxxxxxxx');
-    this.setState({ search: event.target });
-    this.props.actions.search(event.target)
-    .catch(() => toastr.error(this.props.message));
+    this.setState({ searchValue: event.target.value });
+    this.props.actions.search(event.target);
+    // .catch(() => toastr.error(this.props.message));
   }
+
 
   /**
    * @desc handles the redirecting to the manage documents page
    * @returns {null} returns no value
    */
   redirectToManageDocument() {
-    this.context.router.push('/document');
+    browserHistory.push('/document');
   }
-
-  /**
-   * @desc handles change of the pagination
-   * @param {any} data the page number
-   * @returns {*} no return value
-   */
-  // handlePageClick(data) {
-  //   const selected = data.selected;
-  //   const offset = Math.ceil(selected * this.props.metaData.pageSize);
-
-  //   this.setState({ offset }, () => {
-  //     this.props.actions.getAllDocuments(offset);
-  //   });
-  // }
 
   /**
    * @desc Renders the Document holder
    * @return {*} render the Document holder
    */
   render() {
-    // console.log('this.props', this.props);
-    // const { documents, searchResults, metaData } = this.props;
-    // let documentsInfo;
     const { documents, searchResults, metaData } = this.props;
-    // console.log(documents, 'are the documents here?');
     let documentsInfo;
-    // console.log(documentsInfo, 'looking for docs info');
     if (!documents || this.props.message === 'no document found') {
       return (documentsInfo = (
         <div className="section">
@@ -121,9 +97,8 @@ class AllDocuments extends Component {
           </div>
         </div>));
     }
-    // console.log(documentsInfo, 'looking for docs');
+
     if (documents) {
-      // console.log('Type of>>>', documents, 'docs>>>>>>>>?');
       return (
         <div className="section">
           <div className="container">
@@ -170,13 +145,6 @@ AllDocuments.propTypes = {
   search: PropTypes.string,
   message: PropTypes.string,
   actions: PropTypes.object,
-};
-
-/**
- * @desc Set the contextTypes
- */
-AllDocuments.contextTypes = {
-  router: PropTypes.object,
 };
 
 /**

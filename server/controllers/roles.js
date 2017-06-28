@@ -1,4 +1,4 @@
-const { Roles } = require('../models');
+const { Role } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
 
 /* Defines Role Controller methods */
@@ -17,7 +17,8 @@ class RolesController {
         message: 'Please input a role',
       });
     }
-    return Roles.create({
+    return Role
+    .create({
       title: req.body.title,
     })
       .then(role => res.status(201).json({
@@ -35,7 +36,7 @@ class RolesController {
     * @return { object } - A response to the user
   */
   list(req, res) {
-    return Roles
+    return Role
       .all()
       .then(role => res.status(200).json(role))
       .catch(error => res.status(400).json(error));

@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import DocumentTasks from './documenttasks';
+import DocumentTasks from './DocumentTasks';
 
 /**
  * @desc component used to display the list of documents

@@ -1,5 +1,5 @@
-
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * @desc component used to display the document actionBar

@@ -1,6 +1,7 @@
-
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 
 /**
@@ -14,13 +15,13 @@ export default function (ComposedComponent) {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         toastr.error('You need to login to access this page');
-        this.context.router.push('/');
+        browserHistory.push('/');
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.context.router.push('/');
+        browserHistory.push('/');
       }
     }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Route, IndexRoute } from 'react-router';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import App from './components/App';
 import Login from './components/main/Login';
@@ -22,8 +21,8 @@ export default (
           <Route path="/users" component={AllUsers} />
           <Route path="/user/:id" component={EditUserProfile} />
           <Route path="/documents" component={AllDocuments} />
-          {/* <Route path="/document" component={ManageDocument} />*/}
           <Route path="/document/:id" component={ManageDocument} />
+          <Route path="/document" component={ManageDocument} />
           <Route path="/signup" component={SignupPage} />
           <Route path="404" component={FourOFour} />
           <Route path="/dashboard" component={Dashboard} />

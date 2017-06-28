@@ -12,17 +12,9 @@ class Authenticate {
    * @returns {Object} res message
    */
   validateToken(req, res, next) {
-    // console.log('validate token');
-    // console.log('validate token is being called');
-    // console.log('validate token', req.headers['x-access-token']);
-    // console.log('req token', req.headers['x-access-token']);
-    // localStorage.setItem('shelftoken', req.headers['x-access-token']);
-    // const token = localStorage.shelftoken;
-    // console.log('validated token', token);
-    // const token = req.headers['x-access-token'] || localStorage.shelftoken;
     const token = req.headers.authorization;
     if (!token) {
-      console.log('I can\'t find a token');
+      console.log('I cant find a token');
       return res.status(401).send({
         status: 401,
         message: 'Token required to access this route',

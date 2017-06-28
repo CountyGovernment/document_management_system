@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
@@ -84,11 +84,11 @@ class EditUserProfile extends Component {
   //  * @desc handles the redirecting to the dashboard on success
   //  * @returns {null} returns no value
   //  */
-  // redirect() {
-  //   this.setState({ saving: false });
-  //   toastr.success(this.props.message);
-  //   this.context.router.push('/dashboard');
-  // }
+  redirect() {
+    this.setState({ saving: false });
+    toastr.success(this.props.message);
+    browserHistory.push('/dashboard');
+  }
 
   /**
    * React Render

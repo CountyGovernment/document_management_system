@@ -1,8 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
 import toastr from 'toastr';
-import SigninForm from './LoginForm.jsx';
+import SigninForm from './LoginForm';
 import * as userActions from '../../actions/userActions';
 
 /**
@@ -35,12 +37,11 @@ class Signin extends Component {
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
-  componentWillMount() {
-    if (this.props.isAuthenticated) {
-      toastr.error('Already logged in');
-      // this.context.router.push('/dashboard');
-    }
-  }
+  // componentWillMount() {
+  //   if (this.props.isAuthenticated) {
+  //     toastr.error('Already logged in');
+  //   }
+  // }
 
   /**
    * @desc handles user login
@@ -48,7 +49,6 @@ class Signin extends Component {
    * @returns {*} no return value
    */
   onSubmit(event) {
-    // console.log(event, 'kkkkkk');
     event.preventDefault();
     this.setState({
       errors: {},
@@ -56,13 +56,11 @@ class Signin extends Component {
     });
     this.props.userActions.login(this.state.user)
     .then(() => {
-      // console.log('user logged in', this.state.user);
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      // this.context.router.push('/dashboard');
+      return <Redirect to="/dashboard" />;
     })
     .catch(() => {
-      // console.log('Catch triggered', this.props.message);
       this.setState({ isLoading: false });
       toastr.error(this.props.message);
     });
@@ -85,6 +83,9 @@ class Signin extends Component {
    * @return {*} html
    */
   render() {
+    // if (this.props.isAuthenticated) {
+    //   return <Redirect to="/dashboard" />;
+    // }
     return (
       <div>
         <h1 className="center">Shelf</h1>
@@ -110,15 +111,8 @@ class Signin extends Component {
 Signin.propTypes = {
   user: PropTypes.object,
   message: PropTypes.string,
-  isAuthenticated: PropTypes.bool.isRequired,
+  // isAuthenticated: PropTypes.bool.isRequired,
   userActions: PropTypes.object.isRequired,
-};
-
-/**
- * @desc Set the contextTypes
- */
-Signin.contextTypes = {
-  router: PropTypes.object,
 };
 
 /**

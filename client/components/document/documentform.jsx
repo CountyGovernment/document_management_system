@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 /**
  * @desc component used to display the document form
  */
 const DocumentForm = ({ document, onSave, onChange, saving }) =>
-  // console.log('doc form checkin');
   (<div className="container">
     <div className="row">
       <div className="col s12 m12">
@@ -81,7 +81,6 @@ DocumentForm.propTypes = {
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   saving: PropTypes.bool,
-  errors: PropTypes.object,
 };
 
 export default DocumentForm;

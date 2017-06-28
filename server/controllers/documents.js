@@ -25,6 +25,8 @@ class DocController {
         content: req.body.content,
         access: req.body.access || 'public',
         userId: req.decoded.userId,
+        // userId: req.body.user.id,
+        
       })
       .then((document) => { // response
         res.status(201).json({ // request was successful
@@ -124,6 +126,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
+    // console.log('req', req.decoded.data);
     if (req.decoded.data === 1) {
       // console.log('Rudeness Episode');
       if (req.query.limit || req.query.offset) { // pagination
@@ -143,9 +146,9 @@ class DocController {
           .catch(error => res.status(400).json(error));
       } else {
         return Document
-        .findAll()
-        .then(document => res.status(200).json({ document }))
-        .catch(error => res.status(400).json(error));
+          .findAll()
+          .then(document => res.status(200).json({ document }))
+          .catch(error => res.status(400).json(error));
       }
     } else if (req.decoded.data === 2) {
       if (req.query.limit || req.query.offset) { // pagination
@@ -168,13 +171,13 @@ class DocController {
           .catch(error => res.status(400).json(error));
       } else {
         return Document
-        .findAll({
-          where: {
-            access: 'public',
-          },
-        })
-        .then(document => res.status(200).json({ document }))
-        .catch(error => res.status(400).json(error));
+          .findAll({
+            where: {
+              access: 'public',
+            },
+          })
+          .then(document => res.status(200).json({ document }))
+          .catch(error => res.status(400).json(error));
       }
     }
   }

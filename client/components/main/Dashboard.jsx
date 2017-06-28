@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Link } from 'react-router';
+import { browserHistory, Link } from 'react-router';
 import toastr from 'toastr';
 import * as userActions from '../../actions/userActions';
 import UserProfile from '../user/userprofile';
@@ -27,13 +28,11 @@ class Dashboard extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    // this.handlePageClick = this.handlePageClick.bind(this);
 
     this.state = {
       documents: [],
       searchResults: [],
       search: '',
-      // offset: 0,
     };
   }
 
@@ -42,12 +41,9 @@ class Dashboard extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    // console.log('id: ', this.props.loggedInUserID);
-    this.props.userActions.getOneUser(this.props.loggedInUserID);
-    // if (this.props.isAuth.isAuthenticated) {
-    this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents);
-    console.log('docs?', this.props.documents);
-    // }
+    if (this.props.isAuth.isAuthenticated) {
+      this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents);
+    }
   }
 
   /**
@@ -71,7 +67,7 @@ class Dashboard extends Component {
    * @returns {null} returns no value
    */
   redirectToManageDocument() {
-    this.context.router.push('/document');
+    browserHistory.push('/document');
   }
 
    /**
@@ -79,7 +75,6 @@ class Dashboard extends Component {
    * @return {*} render the Document holder
    */
   render() {
-    console.log('this.props', this.props);
     const { documents, searchResults, metaData, user } = this.props;
     if (!documents || this.props.message === 'no document found') {
       return (<div className="section">
@@ -107,7 +102,6 @@ class Dashboard extends Component {
       </div>);
     }
     if (documents) {
-      console.log('user???', user);
       return (
         <div className="section white">
           <div className="container">
@@ -154,12 +148,6 @@ Dashboard.propTypes = {
   actions: PropTypes.object,
 };
 
-/**
- * @desc Set the contextTypes
- */
-Dashboard.contextTypes = {
-  router: PropTypes.object,
-};
 
 /**
  *
@@ -168,7 +156,6 @@ Dashboard.contextTypes = {
  * @returns {*} isAdmin
  */
 function mapStateToProps(state) {
-  console.log(state, 'state');
   return {
     user: state.users,
     isAuth: state.isAuth,

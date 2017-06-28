@@ -64,15 +64,12 @@ export function getOneUser(id) {
 export function createUser(user) {
   return dispatch => axios.post('api/users', user)
     .then((response) => {
-      const token = response.data.token;
-      localStorage.setItem('shelftoken', token);
       dispatch(passSuccessMessage(response.data.message));
-      setAuthorizationToken(token);
-      axios.defaults.headers.common.Authorization = token;
-      dispatch(setCurrentUser(response.data.userData));
+      dispatch(setCurrentUser(response.data.user));
+      console.log('response', response);
     })
     .catch((error) => {
-      throw dispatch(passFailureMessage(error.response.data.message));
+      dispatch(passFailureMessage(error.response.data.message));
     });
 }
 
@@ -89,7 +86,7 @@ export function login(user) {
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
-      throw dispatch(passFailureMessage(error.response.data.message));
+      dispatch(passFailureMessage(error.response.data.message));
     });
 }
 

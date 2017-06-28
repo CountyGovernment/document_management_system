@@ -83,11 +83,12 @@ export function updateDocumentSuccess(document) {
 export function search(queryString) {
   return dispatch => axios.get(`/api/search/documents/?q=${queryString}`)
   .then((response) => {
-    dispatch(passSuccessMessage(response.data.message));
+    console.log('response', response);
     dispatch(getDocumentSuccess(response.data));
+    console.log('docs', response.data);
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error));
   });
 }
 
@@ -186,7 +187,7 @@ export function updateDocument(id, document) {
     dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error.response.data.message));
   });
 }
 
@@ -195,17 +196,16 @@ export function updateDocument(id, document) {
  *
  * @export
  * @param {number} id - The ID of the document to be deleted
- * @param {number} userId - The ID of the document owner
  * @returns {object} documents
  */
-export function deleteDocument(id, userId) {
+export function deleteDocument(id) {
   return dispatch => axios.delete(`/api/documents/${id}`)
   .then((response) => {
     dispatch(passSuccessMessage(response.data.message));
-    dispatch(getUserDocuments(userId, 0));
+    dispatch(getDocumentSuccess(response.data));
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    dispatch(passFailureMessage(error.response.data.message));
   });
 }
 

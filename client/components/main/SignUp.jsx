@@ -1,8 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
 import toastr from 'toastr';
-import SignupForm from './SignupForm.jsx';
+import SignupForm from './SignupForm';
 import * as userActions from '../../actions/userActions';
 
 /**
@@ -38,7 +40,6 @@ class Signup extends Component {
   componentWillMount() {
     if (this.props.isAuthenticated) {
       toastr.error('Already logged in');
-      this.context.router.push('/dashboard');
     }
   }
 
@@ -55,14 +56,12 @@ class Signup extends Component {
     });
     this.props.userActions.createUser(this.state.user)
     .then(() => {
-      console.log('zzzzzzz');
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      // this.context.router.push('/dashboard');
+      // return <Redirect to="/login" />;
     })
     .catch(() => {
       this.setState({ isLoading: false });
-      toastr.error(this.props.message);
     });
   }
 
@@ -83,6 +82,9 @@ class Signup extends Component {
    * @return {object} html
    */
   render() {
+    if (this.props.user) {
+      return <Redirect to="/login" />;
+    }
     return (
       <div>
         <h1 className="center">Shelf</h1>
@@ -120,19 +122,13 @@ Signup.propTypes = {
 };
 
 /**
- * @desc Set the contextTypes
- */
-Signup.contextTypes = {
-  router: PropTypes.object,
-};
-
-/**
  *  map state to props
  *
  * @param {state} state
  * @returns {object} props
  */
 function mapStateToProps(state) {
+  console.log(state, 'sssssssss');
   return {
     message: state.message,
     user: state.isAuth.loggedInUser,

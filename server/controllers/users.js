@@ -18,17 +18,15 @@ class UserController {
     * @params res
     * @return { object } - A res to the user
   */
-  create(req, res) { // route handler
-    // console.log(req.body, 'req.user');
+  create(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
-      // console.log(req.body, 'inputs');
-      return res.status(403).json({ // forbidden req
+      return res.status(403).json({
         message: 'Input fields required!',
       });
     }
 
     return User
-      .create({ // req
+      .create({
         username: req.body.username,
         firstName: req.body.firstName,
         secondName: req.body.secondName,
@@ -36,8 +34,8 @@ class UserController {
         email: req.body.email,
         roleId: req.body.roleId || 2,
       })
-      .then((user) => { // res
-        res.status(201).json({ // req was successful
+      .then((user) => {
+        res.status(201).json({
           message: 'User created successfully!',
           user,
         });
@@ -48,7 +46,7 @@ class UserController {
   // Login a user
   login(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({ // forbidden req
+      return res.status(403).json({
         message: 'Email and Password are required',
       });
     } else {
@@ -59,7 +57,6 @@ class UserController {
           if (!user) {
             return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
           } else if (user) {
-            // console.log(user, 'user');
             if (bcrypt.compareSync(req.body.password, user.password)) {
               const token = jwt.sign({ data: user.roleId, id: user.id }, secretKey, {
                 expiresIn: '24hr',
@@ -67,7 +64,6 @@ class UserController {
               return res.status(201).json(Object.assign({},
                 { id: user.id, username: user.username, email: user.email, message: 'You are logged in' },
                 { token }));
-              // return token
             }
             // return error: Password is incorrect
             return res.status(401).json({
@@ -158,7 +154,6 @@ class UserController {
         }],
       })
       .then((user) => {
-        console.log(res, 'res');
         if (!user) {
           return res.status(404).json({
             message: 'We could not find this user :(',

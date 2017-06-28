@@ -2,7 +2,7 @@ const Router = require('express').Router();
 const { Document } = require('../controllers/controllers');
 const Authenticate = require('../authentication/authentication');
 
-Router.use(Authenticate.validateToken);
+// Router.use(Authenticate.validateToken);
 // Creates a new document instance.
 /* /documents routes */
 Router.route('/documents')

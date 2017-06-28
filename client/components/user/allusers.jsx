@@ -1,6 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 import UserList from './userlist';
 import UserActionBar from './useractionbar';
@@ -20,10 +22,9 @@ class AllUsers extends Component {
    * @memberof AllUsers
    */
   constructor(props, context) {
-    console.log(props, 'zzzzzz');
     super(props, context);
 
-    // this.redirectToManageUser = this.redirectToManageUser.bind(this);
+    this.redirectToManageUser = this.redirectToManageUser.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
 
     this.state = {
@@ -62,9 +63,9 @@ class AllUsers extends Component {
    * @desc handles the redirecting to the manage documents page
    * @returns {null} returns no value
    */
-  // redirectToManageUser() {
-  //   this.context.router.push('/user');
-  // }
+  redirectToManageUser() {
+    browserHistory.push('/user');
+  }
 
   /**
    * React Render
@@ -85,7 +86,6 @@ class AllUsers extends Component {
           user.roleId === parseInt(this.state.roleType, 10),
         );
       }
-      console.log(users, 'users?');
       return (
         <div className="section">
           <div className="container">
@@ -105,7 +105,7 @@ class AllUsers extends Component {
 
             <div className="row">
               <div className="col s12">
-                {filteredUsers.map(user =>
+                {users.map(user =>
                   (<UserList
                     loggedInUserID={this.props.loggedInUserID}
                     key={user.id}
@@ -132,13 +132,6 @@ AllUsers.propTypes = {
   search: PropTypes.string,
   message: PropTypes.string,
   actions: PropTypes.object,
-};
-
-/**
- * @desc Set the contextTypes
- */
-AllUsers.contextTypes = {
-  router: PropTypes.object,
 };
 
 /**

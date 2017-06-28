@@ -1,4 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 
@@ -24,7 +26,7 @@ export default (ComposedComponent) => {
 
       if (isAdmin !== 1) {
         toastr.error('Unauthorized Access Denied.');
-        this.context.router.push('/dashboard');
+        browserHistory.push('/dashboard');
       }
     }
 
@@ -34,7 +36,7 @@ export default (ComposedComponent) => {
      */
     componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        this.context.router.push('/');
+        browserHistory.push('/');
       }
     }
 

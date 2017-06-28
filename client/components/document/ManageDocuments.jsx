@@ -1,6 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 import * as documentActions from '../../actions/documentActions';
 import DocumentForm from './DocumentForm';
@@ -11,13 +13,6 @@ import DocumentForm from './DocumentForm';
  * @extends {Component}
  */
 class ManageDocument extends Component {
-  /**
-   * @desc handles the rendering of the select box.
-   * @returns {null} returns no value
-   */
-  static componentDidMount() {
-    $('select').material_select();
-  }
 
   /**
    * Creates an instance of ManageDocuments.
@@ -113,7 +108,7 @@ class ManageDocument extends Component {
   redirect() {
     this.setState({ saving: false });
     toastr.success('saved!');
-    this.context.router.push('/documents');
+    browserHistory.push('/documents');
   }
 
   /**
@@ -121,9 +116,9 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
+    console.log('random stuff');
     const isUpdate = this.props.match.params.id;
     const documentTitle = this.props.match.params.title;
-    console.log('whats this????', this.props.match);
     return (
       <div className="section">
         <div className="container">
@@ -151,13 +146,6 @@ class ManageDocument extends Component {
 ManageDocument.propTypes = {
   actions: PropTypes.object,
   document: PropTypes.object,
-};
-
-/**
- * @desc Set the contextTypes
- */
-ManageDocument.contextTypes = {
-  router: PropTypes.object,
 };
 
 /**
