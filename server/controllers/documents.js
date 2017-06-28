@@ -13,23 +13,23 @@ class DocController {
     * @params res
     * @return { object } - A response to the user
   */
-  create(req, res) { // route handler
+  create(req, res) {
     console.log('req: ', req);
     if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({ // forbidden request
+      return res.status(403).json({
         message: 'Please fill the required fields!',
       });
     }
     console.log('req.decoded', req.decoded);
     return Document
-      .create({ // request
+      .create({
         title: req.body.title,
         content: req.body.content,
         access: req.body.access || 'public',
         userId: req.decoded.id,
       })
-      .then((document) => { // response
-        res.status(201).json({ // request was successful
+      .then((document) => {
+        res.status(201).json({
           message: 'Document created successfully!',
           document,
         });
@@ -56,17 +56,16 @@ class DocController {
           .then((document) => { res.status(200).json(document); })
           .catch(error => res.status(400).json(error));
       }
-    } else if (req.decoded.data === 2) {
-      if (req.query.q) {
-        return Document
+    } else if (req.query.q) {
+      return Document
           .findAll({
             where: {
-              title: { $ilike: `%${req.query.q}%` },
-              userId: req.decoded.id,
+              title: { $iLike: `%${req.query.q}%` },
+              access: 'public',
             },
           })
           .then((document) => {
-            if (document.length === 0) {
+            if (!document) {
               return res.status(404).json({
                 message: 'Document is not available',
               });
@@ -74,7 +73,6 @@ class DocController {
             return res.status(200).json(document);
           })
           .catch(error => res.status(400).json(error));
-      }
     }
   }
 
@@ -86,7 +84,6 @@ class DocController {
    * @return { object } - A response to the user
  */
   find(req, res) {
-    // console.log('req.decoded', req.decoded);
     if (req.decoded.data === 1) {
       return Document
         .findById(req.params.id)
@@ -99,7 +96,7 @@ class DocController {
           return res.status(200).json(document);
         })
         .catch(error => res.status(400).json(error));
-    } else if (req.decoded.data === 2) {
+    } else {
       return Document
         .findOne({
           where: {
@@ -127,10 +124,8 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    console.log('req.decoded', req.decoded);
     if (req.decoded.data === 1) {
-      // console.log('Rudeness Episode');
-      if (req.query.limit || req.query.offset) { // pagination
+      if (req.query.limit || req.query.offset) {
         return Document
           .findAll({
             limit: req.query.limit,
@@ -151,9 +146,8 @@ class DocController {
           .then(document => res.status(200).json({ document }))
           .catch(error => res.status(400).json(error));
       }
-    } else if (req.decoded.data === 2) {
-      if (req.query.limit || req.query.offset) { // pagination
-        return Document
+    } else if (req.query.limit || req.query.offset) {
+      return Document
           .findAll({
             limit: req.query.limit,
             offset: req.query.offset,
@@ -170,8 +164,8 @@ class DocController {
             res.status(200).json({ document });
           })
           .catch(error => res.status(400).json(error));
-      } else {
-        return Document
+    } else {
+      return Document
           .findAll({
             where: {
               access: 'public',
@@ -179,7 +173,6 @@ class DocController {
           })
           .then(document => res.status(200).json({ document }))
           .catch(error => res.status(400).json(error));
-      }
     }
   }
 

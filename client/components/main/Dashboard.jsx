@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, Link } from 'react-router';
+import { Redirect, Link } from 'react-router';
 import toastr from 'toastr';
 import * as userActions from '../../actions/userActions';
 import UserProfile from '../user/userprofile';
@@ -23,8 +23,8 @@ class Dashboard extends Component {
    * @returns {*} no return value
    * @memberof Dashboard
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -33,6 +33,7 @@ class Dashboard extends Component {
       documents: [],
       searchResults: [],
       search: '',
+      redirect: false,
     };
   }
 
@@ -67,7 +68,7 @@ class Dashboard extends Component {
    * @returns {null} returns no value
    */
   redirectToManageDocument() {
-    browserHistory.push('/document');
+    this.setState({ redirect: true });
   }
 
    /**
@@ -75,8 +76,13 @@ class Dashboard extends Component {
    * @return {*} render the Document holder
    */
   render() {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/document" />;
+    }
     const { documents, searchResults, metaData, user } = this.props;
-    if (!documents || this.props.message === 'no document found') {
+    console.log('documents:', documents);
+    if (!documents) {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
@@ -100,8 +106,7 @@ class Dashboard extends Component {
           </div>
         </div>
       </div>);
-    }
-    if (documents) {
+    } else {
       return (
         <div className="section white">
           <div className="container">
@@ -114,7 +119,6 @@ class Dashboard extends Component {
             </div>
 
             <DocumentSearch
-              redirectToManageDocument={this.redirectToManageDocument}
               onSearchChange={this.onSearchChange}
               onViewAccessChange={this.onViewAccessChange}
             />
