@@ -110,7 +110,6 @@ class ManageDocument extends Component {
     if (redirect) {
       return <Redirect to="/dashboard" />;
     }
-    console.log('random stuff');
     const isUpdate = this.props.match.params.id;
     const documentTitle = this.props.match.params.title;
     return (

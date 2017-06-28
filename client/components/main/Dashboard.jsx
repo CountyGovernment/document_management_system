@@ -41,7 +41,7 @@ class Dashboard extends Component {
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
-  componentWillMount() {
+  componentDidMount() {
     if (this.props.isAuth.isAuthenticated) {
       this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents);
     }
@@ -145,7 +145,7 @@ class Dashboard extends Component {
  * @desc Set the PropTypes
  */
 Dashboard.propTypes = {
-  documents: PropTypes.array,
+  // documents: PropTypes.array,
   searchResults: PropTypes.array,
   search: PropTypes.string,
   message: PropTypes.string,

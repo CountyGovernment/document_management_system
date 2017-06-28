@@ -18,19 +18,19 @@ import '../node_modules/toastr/build/toastr.min.css';
 
 injectTapEventPlugin();
 const store = configureStore(initialState);
-// let userToken;
-// try {
-//   console.log('userToken', localStorage.shelftoken);
-//   userToken = localStorage.shelftoken;
-//   console.log('userToken', localStorage.shelftoken);
-//   if (userToken) {
-//     setAuthorizationToken(userToken);
-//     axios.defaults.headers.common.Authorization = userToken;
-//     store.dispatch(setCurrentUser(jwtDecode(userToken)));
-//   }
-// } catch (error) {
-//   console.log(error, 'error in setting authorization token!');
-// }
+let userToken;
+try {
+  // console.log('userToken', localStorage.shelftoken);
+  userToken = localStorage.shelftoken;
+  // console.log('userToken', localStorage.shelftoken);
+  if (userToken) {
+    setAuthorizationToken(userToken);
+    axios.defaults.headers.common.Authorization = userToken;
+    store.dispatch(setCurrentUser(jwtDecode(userToken)));
+  }
+} catch (error) {
+  console.log(error, 'error in setting authorization token!');
+}
 
 render(
   <Provider store={store}>

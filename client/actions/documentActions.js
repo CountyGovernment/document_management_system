@@ -12,6 +12,7 @@ import * as types from './actionTypes';
  * @returns {*} action, action types and message
  */
 export function passSuccessMessage(successMessage) {
+  console.log('passSuccessMessage', passSuccessMessage);
   return { type: types.SUCCESS_MESSAGE, successMessage };
 }
 
@@ -71,6 +72,7 @@ export function createDocumentSuccess(document) {
  * @returns {*} action, action types and document
  */
 export function updateDocumentSuccess(document) {
+  console.log('updateDocumentSuccess', updateDocumentSuccess);
   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
 }
 
@@ -175,10 +177,12 @@ export function createDocument(document) {
 export function updateDocument(id, document) {
   return dispatch => axios.put(`/api/documents/${id}`, document)
   .then((response) => {
-    dispatch(getAllDocuments(0));
+    console.log('response: ', response);
+    dispatch(updateDocumentSuccess);
     dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
+    console.log('>>>>>>', error);
     dispatch(passFailureMessage(error.response.data.message));
   });
 }
