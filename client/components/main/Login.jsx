@@ -20,8 +20,8 @@ class Signin extends Component {
    * @returns {*} no return value
    * @memberof Signin
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
     this.updateUserState = this.updateUserState.bind(this);
@@ -30,6 +30,7 @@ class Signin extends Component {
       user: Object.assign({}, props.user),
       errors: {},
       isLoading: false,
+      redirect: false,
     };
   }
 
@@ -58,7 +59,7 @@ class Signin extends Component {
     .then(() => {
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      return <Redirect to="/dashboard" />;
+      this.setState({ redirect: true });
     })
     .catch(() => {
       this.setState({ isLoading: false });
@@ -83,9 +84,10 @@ class Signin extends Component {
    * @return {*} html
    */
   render() {
-    // if (this.props.isAuthenticated) {
-    //   return <Redirect to="/dashboard" />;
-    // }
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/dashboard" />;
+    }
     return (
       <div>
         <h1 className="center">Shelf</h1>

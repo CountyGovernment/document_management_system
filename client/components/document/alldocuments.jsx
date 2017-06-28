@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
 import toastr from 'toastr';
-import { browserHistory } from 'react-router';
 import DocumentList from './DocumentList';
 import DocumentSearch from './DocumentSearch';
 import * as actions from '../../actions/documentActions';
@@ -21,8 +21,8 @@ class AllDocuments extends Component {
    * @returns {*} no return value
    * @memberof AllDocuments
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -50,9 +50,12 @@ class AllDocuments extends Component {
    * @returns {*} no return value
    */
   onSearchChange(event) {
-    this.setState({ searchValue: event.target.value });
-    this.props.actions.search(event.target);
-    // .catch(() => toastr.error(this.props.message));
+    this.setState({ search: event.target.value });
+    this.props.actions.search(event.target.value)
+    .catch(() => {
+      toastr.error(this.props.message);
+      // toastr.error('error searching documents');
+    });
   }
 
 
@@ -61,7 +64,7 @@ class AllDocuments extends Component {
    * @returns {null} returns no value
    */
   redirectToManageDocument() {
-    browserHistory.push('/document');
+    return <Redirect to="/document" />;
   }
 
   /**
@@ -70,6 +73,7 @@ class AllDocuments extends Component {
    */
   render() {
     const { documents, searchResults, metaData } = this.props;
+    // console.log(this.props, 'this.props');
     let documentsInfo;
     if (!documents || this.props.message === 'no document found') {
       return (documentsInfo = (
@@ -114,7 +118,7 @@ class AllDocuments extends Component {
               redirectToManageDocument={this.redirectToManageDocument}
               onViewAccessChange={this.onViewAccessChange}
               onSearchChange={this.onSearchChange}
-              sitewide="All Documents"
+              sitewide="sitewide"
             />
 
             <div className="row">

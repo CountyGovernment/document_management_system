@@ -40,25 +40,25 @@ Router.route('/users/login')
 /* /users routes */
 Router.route('/users')
   .post(User.create)
-  .get(User.list);
+  .get(Authenticate.validateToken, User.list);
 
 /* /users/?limit={}&offset={} */
 
 Router.route('/users')
-  .get(User.list);
+  .get(Authenticate.validateToken, User.list);
 
 /* /users/:id routes */
 Router.route('/users/:id')
-  .delete(User.delete)
-  .get(User.find)
-  .put(User.update);
+  .delete(Authenticate.validateToken, User.delete)
+  .get(Authenticate.validateToken, User.find)
+  .put(Authenticate.validateToken, User.update);
 
 Router.route('/users/:id/documents')
-  .get(User.findUserDocs);
+  .get(Authenticate.validateToken, User.findUserDocs);
 
 /* search/users routes */
 Router.route('/search/users')
-  .get(User.findByName);
+  .get(Authenticate.validateToken, User.findByName);
 
 
 Router.route('/users/logout')

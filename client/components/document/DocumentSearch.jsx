@@ -4,24 +4,13 @@ import PropTypes from 'prop-types';
 /**
  * @desc component used to display the document actionBar
  */
-const DocumentSearch = ({
-    redirectToManageDocument, onViewAccessChange,
+const DocumentSearch = ({ onViewAccessChange,
     sitewide, onSearchChange }) =>
       (<div className="card-panel">
         <div className="row">
-          <div className="col l3 m3 s1 offset-l1">
-            <a
-              onClick={redirectToManageDocument}
-              className="waves-effect waves-light btn-large blue"
-            >
-              <i className="material-icons left">add</i>Add New Document
-        </a>
-          </div>
-
           <div className="col l1 m1 s1">
             <h5>Search:</h5>
           </div>
-
           <div className="col l6 m5 s12">
             <form>
               <div className="input-field">
@@ -29,7 +18,7 @@ const DocumentSearch = ({
                   id="search"
                   type="search"
                   onKeyUp={onSearchChange}
-                  placeholder="Search within your own documents"
+                  placeholder="Search documents"
                 />
                 <i className="material-icons">close</i>
               </div>
@@ -42,7 +31,6 @@ const DocumentSearch = ({
  * @desc Set the PropTypes
  */
 DocumentSearch.propTypes = {
-  redirectToManageDocument: PropTypes.func,
   onViewAccessChange: PropTypes.func,
   sitewide: PropTypes.string,
   onSearchChange: PropTypes.func,

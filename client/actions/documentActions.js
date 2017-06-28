@@ -51,6 +51,7 @@ export function getDocumentSuccess(documents) {
 export function getOneDocumentSuccess(document) {
   return { type: types.GET_ONE_DOCUMENT_SUCCESS, document };
 }
+
 /**
  *
  * @desc createDocumentSuccess
@@ -80,11 +81,11 @@ export function updateDocumentSuccess(document) {
  * @param {any} queryString - The query to be searched for
  * @returns {any} the documents to be fetched.
  */
-export function search(queryString) {
-  return dispatch => axios.get(`/api/search/documents/?q=${queryString}`)
+export function search(title) {
+  return dispatch => axios.get(`/api/search/documents/?q=${title}`)
   .then((response) => {
     console.log('response', response);
-    dispatch(getDocumentSuccess(response.data));
+    dispatch(searchDocumentsSuccess(response.data));
     console.log('docs', response.data);
   })
   .catch((error) => {
@@ -99,15 +100,16 @@ export function search(queryString) {
  * @param {number} offset - The offset for pagination
  * @returns {any} the documents to be fetched.
  */
-// export function getAllDocuments(offset) {
-//   return dispatch => axios.get(`/api/documents/?offset=${offset}`)
-//   .then((response) => {
-//     dispatch(getDocumentSuccess(response.data));
-//   })
-//   .catch((error) => {
-//     throw dispatch(passFailureMessage(error.response.data.message));
-//   });
-// }
+export function getAllDocuments(documents) {
+  return dispatch => axios.get('/api/documents', documents)
+    .then((response) => {
+      dispatch(getDocumentSuccess(response.data));
+    })
+    .catch((error) => {
+      dispatch(passFailureMessage(error.response));
+    });
+}
+
 
 /**
  * @desc fetch all documents for a user via GET /api/users/:id/documents/
@@ -142,16 +144,6 @@ export function getOneDocument(id) {
   .catch((error) => {
     dispatch(passFailureMessage(error));
   });
-}
-
-export function getAllDocuments(documents) {
-  return dispatch => axios.get('/api/documents', documents)
-    .then((response) => {
-      dispatch(getDocumentSuccess(response.data));
-    })
-    .catch((error) => {
-      dispatch(passFailureMessage(error.response));
-    });
 }
 
 /**
@@ -202,7 +194,7 @@ export function deleteDocument(id) {
   return dispatch => axios.delete(`/api/documents/${id}`)
   .then((response) => {
     dispatch(passSuccessMessage(response.data.message));
-    dispatch(getDocumentSuccess(response.data));
+    dispatch(getUserDocuments());
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));

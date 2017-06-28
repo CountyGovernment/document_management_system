@@ -54,6 +54,7 @@ class UserController {
         .findOne(
         { where: { email: req.body.email } })
         .then((user) => {
+          console.log('>>>>>>>>>>>>>>>', user);
           if (!user) {
             return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
           } else if (user) {
@@ -61,6 +62,8 @@ class UserController {
               const token = jwt.sign({ data: user.roleId, id: user.id }, secretKey, {
                 expiresIn: '24hr',
               });
+              console.log('token:', token);
+              console.log(user, 'user:.........');
               return res.status(201).json(Object.assign({},
                 { id: user.id, username: user.username, email: user.email, message: 'You are logged in' },
                 { token }));

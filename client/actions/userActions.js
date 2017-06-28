@@ -66,7 +66,7 @@ export function createUser(user) {
     .then((response) => {
       dispatch(passSuccessMessage(response.data.message));
       dispatch(setCurrentUser(response.data.user));
-      console.log('response', response);
+      // console.log('response', response);
     })
     .catch((error) => {
       dispatch(passFailureMessage(error.response.data.message));
@@ -76,6 +76,7 @@ export function createUser(user) {
 export function login(user) {
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
+      console.log(response, 'response');
       const token = response.data.token;
       const stringyToken = `${token}`;
       localStorage.setItem('shelftoken', stringyToken);
@@ -83,6 +84,7 @@ export function login(user) {
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
+      console.log(storedToken, 'storedToken');
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {

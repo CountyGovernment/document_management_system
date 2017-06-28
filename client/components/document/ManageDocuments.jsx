@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import toastr from 'toastr';
 import * as documentActions from '../../actions/documentActions';
 import DocumentForm from './DocumentForm';
@@ -32,6 +32,7 @@ class ManageDocument extends Component {
       document: Object.assign({}, props.document),
       errors: {},
       saving: false,
+      redirect: false,
     };
   }
 
@@ -76,8 +77,7 @@ class ManageDocument extends Component {
     event.preventDefault();
     this.setState({ errors: {}, saving: true });
     this.props.actions.createDocument(this.state.document)
-    .then(() => this.redirect())
-    .then(() => this.state.document)
+    .then(() => this.setState({ redirect: true }))
     .catch(() => {
       this.setState({ saving: false });
       toastr.success(this.props.message);
@@ -93,22 +93,12 @@ class ManageDocument extends Component {
     event.preventDefault();
     this.setState({ saving: true });
     this.props.actions.updateDocument(
-      this.state.document.id, this.state.document)
-    .then(() => this.state.document)
-    .then(() => this.redirect())
+      this.state.document.id)
+    .then(() => this.setState({ redirect: true }))
     .catch(() => {
       this.setState({ saving: false });
+      toastr.success('Document updated successfully!');
     });
-  }
-
-  /**
-   * @desc handles the redirecting to the dashboard on success
-   * @returns {null} returns no value
-   */
-  redirect() {
-    this.setState({ saving: false });
-    toastr.success('saved!');
-    browserHistory.push('/documents');
   }
 
   /**
@@ -116,6 +106,10 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/dashboard" />;
+    }
     console.log('random stuff');
     const isUpdate = this.props.match.params.id;
     const documentTitle = this.props.match.params.title;

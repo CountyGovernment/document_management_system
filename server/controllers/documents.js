@@ -1,6 +1,7 @@
 const { Document } = require('../models');
 const { User } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
+// const { validateToken } = require('../authentication/authentication');
 
 /* Defines  Document Controller methods */
 class DocController {
@@ -13,20 +14,19 @@ class DocController {
     * @return { object } - A response to the user
   */
   create(req, res) { // route handler
+    console.log('req: ', req);
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({ // forbidden request
         message: 'Please fill the required fields!',
       });
     }
-
+    console.log('req.decoded', req.decoded);
     return Document
       .create({ // request
         title: req.body.title,
         content: req.body.content,
         access: req.body.access || 'public',
-        userId: req.decoded.userId,
-        // userId: req.body.user.id,
-        
+        userId: req.decoded.id,
       })
       .then((document) => { // response
         res.status(201).json({ // request was successful
@@ -61,8 +61,8 @@ class DocController {
         return Document
           .findAll({
             where: {
-              title: { $eq: req.query.q },
-              userId: req.decoded.userId,
+              title: { $ilike: `%${req.query.q}%` },
+              userId: req.decoded.id,
             },
           })
           .then((document) => {
@@ -86,6 +86,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   find(req, res) {
+    // console.log('req.decoded', req.decoded);
     if (req.decoded.data === 1) {
       return Document
         .findById(req.params.id)
@@ -100,10 +101,10 @@ class DocController {
         .catch(error => res.status(400).json(error));
     } else if (req.decoded.data === 2) {
       return Document
-        .findById({
+        .findOne({
           where: {
             id: req.params.id,
-            userId: req.decoded.userId,
+            userId: req.decoded.id,
           },
         })
         .then((document) => {
@@ -126,7 +127,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    // console.log('req', req.decoded.data);
+    console.log('req.decoded', req.decoded);
     if (req.decoded.data === 1) {
       // console.log('Rudeness Episode');
       if (req.query.limit || req.query.offset) { // pagination
@@ -200,7 +201,7 @@ class DocController {
       .update(updateDocument, {
         where: {
           id: req.params.id,
-          userId: req.decoded.userId,
+          userId: req.decoded.id,
         },
       })
       .then(() => res.status(201).json({
@@ -221,7 +222,7 @@ class DocController {
       .destroy({
         where: {
           id: req.params.id,
-          userId: req.decoded.userId,
+          userId: req.decoded.id,
         },
       })
       .then(() => res.status(200).json({ message: 'Document successfully deleted!' }))

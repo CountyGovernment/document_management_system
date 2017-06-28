@@ -58,7 +58,6 @@ class Signup extends Component {
     .then(() => {
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      // return <Redirect to="/login" />;
     })
     .catch(() => {
       this.setState({ isLoading: false });
@@ -128,7 +127,7 @@ Signup.propTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state) {
-  console.log(state, 'sssssssss');
+  // console.log(state, 'state<<<');
   return {
     message: state.message,
     user: state.isAuth.loggedInUser,
