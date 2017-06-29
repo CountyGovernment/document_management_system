@@ -162,6 +162,7 @@ class UserController {
             message: 'We could not find this user :(',
           });
         }
+        console.log('user document +++++', user);
         return res.status(200).send(user);
       })
       .catch(error => res.status(400).json(error));

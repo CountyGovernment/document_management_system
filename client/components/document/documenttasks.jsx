@@ -22,6 +22,8 @@ class DocumentTasks extends Component {
   constructor(props, context) {
     super(props, context);
 
+    this.state ={ }
+
     this.deleteDocument = this.deleteDocument.bind(this);
   }
 
@@ -43,7 +45,7 @@ class DocumentTasks extends Component {
     }, (isConfirm) => {
       if (isConfirm) {
         this.props.actions.deleteDocument(
-          this.props.documentId, this.props.userId)
+          this.props.documentId, this.props.userId, this.props.document)
         .then(() =>
           swal('Deleted!', 'The selected file has been deleted.', 'success'),
         )
@@ -61,6 +63,8 @@ class DocumentTasks extends Component {
    * @return {*} render the Document task buttons
    */
   render() {
+    console.log(this.props.userId, 'userId');
+    console.log(this.props.loggedInUserID, 'loggedInUserID');
     if (this.props.userId === this.props.loggedInUserID) {
       return (
         <span>

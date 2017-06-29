@@ -41,7 +41,7 @@ class Dashboard extends Component {
    */
   componentDidMount() {
     if (this.props.isAuth.isAuthenticated) {
-      this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents);
+      this.props.actions.getUserDocuments(this.props.loggedInUserID, this.props.documents, this.props.loggedInUserDocuments);
     }
   }
 
@@ -58,13 +58,14 @@ class Dashboard extends Component {
    * @return {*} render the Document holder
    */
   render() {
+    console.log(this.props.loggedInUserDocuments, 'loggedInUserDocs');
     console.log(this.props.documents, 'documents prop');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/document" />;
     }
-    const { documents, metaData, user } = this.props;
-    if (documents.length === 0) {
+    const { documents, metaData, user, loggedInUserDocuments } = this.props;
+    if (loggedInUserDocuments.length === 0) {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
@@ -101,7 +102,7 @@ class Dashboard extends Component {
             </div>
             <div className="row">
               <div className="col s12">
-                {this.props.documents.map(document =>
+                {loggedInUserDocuments.map(document =>
                 (<DocumentList
                   loggedInUserID={this.props.loggedInUserID.id}
                   key={document.id}
@@ -140,6 +141,7 @@ function mapStateToProps(state) {
     documents: state.documents,
     metaData: state.documents.metaData,
     loggedInUserID: state.isAuth.loggedInUser.id,
+    loggedInUserDocuments: state.loggedInUserDocuments,
   };
 }
 

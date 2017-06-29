@@ -6,6 +6,7 @@ import documents from './documentReducer';
 import message from './messageReducer';
 import searchResults from './searchReducer';
 import isAuth from './authUserReducer';
+import loggedInUserDocuments from './loggedInUserDocumentsReducer';
 
 const rootReducer = combineReducers({
   users,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   message,
   searchResults,
   isAuth,
+  loggedInUserDocuments,
 });
 
 export default rootReducer;

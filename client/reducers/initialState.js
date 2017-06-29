@@ -9,4 +9,5 @@ export default {
   document: {},
   searchResults: [],
   message: null,
+  loggedInUserDocuments: [],
 };

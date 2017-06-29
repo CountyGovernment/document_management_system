@@ -52,6 +52,15 @@ export function getOneDocumentSuccess(document) {
   return { type: types.GET_ONE_DOCUMENT_SUCCESS, document };
 }
 
+export function getUserDocumentSuccess(documents) {
+  console.log('documents in action type', documents);
+  return { type: types.GET_USER_DOCUMENTS_SUCCESS, documents };
+}
+
+export function deleteDocumentSuccess() {
+  return { type: types.DELETE_DOCUMENT_SUCCESS };
+}
+
 /**
  *
  * @desc createDocumentSuccess
@@ -120,9 +129,12 @@ export function getAllDocuments(documents) {
 export function getUserDocuments(id) {
   return dispatch => axios.get(`api/users/${id}/documents`)
   .then((response) => {
-    dispatch(getDocumentSuccess(response.data));
+    console.log(response, 'user docs');
+    dispatch(getUserDocumentSuccess(response.data));
+    // console.log(getUserDocumentSuccess, 'getUserDocumentSuccess');
   })
   .catch((error) => {
+    console.log('error', error);
     dispatch(passFailureMessage(error.response.data.message));
   });
 }
@@ -189,10 +201,12 @@ export function updateDocument(id, document) {
  * @returns {object} documents
  */
 export function deleteDocument(id) {
+  console.log('delete method');
   return dispatch => axios.delete(`/api/documents/${id}`)
   .then((response) => {
+    console.log(response, 'response');
+    dispatch(deleteDocumentSuccess);
     dispatch(passSuccessMessage(response.data.message));
-    dispatch(getUserDocuments());
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));

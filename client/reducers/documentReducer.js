@@ -27,6 +27,10 @@ export default (state = [initialState.documents], action) => {
     case types.SEARCH_DOCUMENTS_SUCCESS:
       return action.documents;
 
+    case types.DELETE_DOCUMENT_SUCCESS:
+      console.log('state', state);
+      return state;
+
     default:
       return state;
   }
