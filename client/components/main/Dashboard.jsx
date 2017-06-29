@@ -32,6 +32,7 @@ class Dashboard extends Component {
       // documents: [],
       search: '',
       redirect: false,
+      isLoading: false,
     };
   }
 
@@ -58,8 +59,6 @@ class Dashboard extends Component {
    * @return {*} render the Document holder
    */
   render() {
-    console.log(this.props.loggedInUserDocuments, 'loggedInUserDocs');
-    console.log(this.props.documents, 'documents prop');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/document" />;

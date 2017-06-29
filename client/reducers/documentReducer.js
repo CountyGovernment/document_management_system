@@ -27,9 +27,12 @@ export default (state = [initialState.documents], action) => {
     case types.SEARCH_DOCUMENTS_SUCCESS:
       return action.documents;
 
-    case types.DELETE_DOCUMENT_SUCCESS:
-      console.log('state', state);
-      return state;
+    // case types.DELETE_DOCUMENT_SUCCESS:
+    //   const deletedDocId = action.documentId;
+    //   console.log('State>>>>', state);
+    //   return state.filter((doc) => {
+    //     return doc.id !== deletedDocId;
+    //   });
 
     default:
       return state;

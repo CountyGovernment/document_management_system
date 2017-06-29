@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import swal from 'sweetalert';
 import toastr from 'toastr';
 import * as documentActions from '../../actions/documentActions';
+import { Redirect } from 'react-router';
 
 /**
  * @desc component used to display document tasks
@@ -22,7 +23,7 @@ class DocumentTasks extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.state ={ }
+    this.state = { };
 
     this.deleteDocument = this.deleteDocument.bind(this);
   }
@@ -46,9 +47,10 @@ class DocumentTasks extends Component {
       if (isConfirm) {
         this.props.actions.deleteDocument(
           this.props.documentId, this.props.userId, this.props.document)
-        .then(() =>
-          swal('Deleted!', 'The selected file has been deleted.', 'success'),
-        )
+        .then(() => {
+          swal('Deleted!', 'The selected file has been deleted.', 'success');
+            <Redirect to="/dashboard" />;
+        })
         .catch(() => {
           toastr.error('Unable to delete document');
         });
@@ -97,12 +99,6 @@ DocumentTasks.propTypes = {
   actions: PropTypes.object.isRequired,
 };
 
-/**
- * @desc Set the contextTypes
- */
-DocumentTasks.contextTypes = {
-  router: PropTypes.object,
-};
 
 /**
  *
@@ -111,6 +107,7 @@ DocumentTasks.contextTypes = {
  */
 const mapStateToProps = state => ({
   loggedInID: state.isAuth.loggedInUser.id,
+  loggedInUserDocuments: state.loggedInUserDocuments,
 });
 
 /**
@@ -121,5 +118,5 @@ const mapDispatchToProps = dispatch => ({
   actions: bindActionCreators(documentActions, dispatch),
 });
 
-export default connect(null, mapDispatchToProps)(DocumentTasks);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentTasks);
 
