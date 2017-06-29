@@ -10,8 +10,8 @@ describe('Store', () => {
     const store = createStore(rootReducer, initialState);
 
     const documents = [
-      { title: 'Doc 2' },
-      { title: 'Doc 1' },
+      { title: 'title3' },
+      { title: 'titl5' },
     ];
 
     const action = documentActions.getDocumentSuccess(documents);
@@ -19,7 +19,6 @@ describe('Store', () => {
 
     const actual = store.getState().documents;
     const expected = documents;
-    console.log('ada', actual);
 
     expect(actual).toEqual(expected);
     expect(typeof actual).toBe('object');
@@ -28,9 +27,9 @@ describe('Store', () => {
   it('Should handle creating documents', () => {
     const store = createStore(rootReducer, initialState);
     const document = {
-      title: 'Dummy title',
-      content: 'Dummy content',
-      viewAccess: 'Public',
+      title: 'x titlt',
+      content: 'x content',
+      access: 'public',
     };
 
     const action = documentActions.createDocumentSuccess(document);
@@ -42,38 +41,21 @@ describe('Store', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('Should handle clearing state on user signout', () => {
-    const store = createStore(rootReducer, initialState);
-    const document = {
-      title: 'Dummy title',
-      content: 'Dummy content',
-      viewAccess: 'Public',
-    };
-
-    const action = userActions.signoutUser();
-    store.dispatch(action);
-
-    const actual = store.getState().documents;
-    const expected = [];
-
-    expect(actual).toEqual(expected);
-  });
-
   it('Should handle updating documents', () => {
     const store = createStore(rootReducer, initialState);
     const documents = [
-      { id: '1', title: 'Dummy title 1' },
-      { id: '2', title: 'Dummy title 2' },
+      { id: '1', title: 'kool kat' },
+      { id: '2', title: 'slimey' },
     ];
 
-    const document = { id: '1', title: 'Dummy title' };
+    const document = { id: '1', title: 'kool' };
 
     const action = documentActions.updateDocumentSuccess(document);
     store.dispatch(action);
 
     const actual = store.getState().documents;
     const expected = [
-      { id: '1', title: 'Dummy title' },
+      { id: '1', title: 'kool' },
     ];
 
     expect(actual).toEqual(expected);

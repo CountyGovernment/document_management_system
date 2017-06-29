@@ -12,7 +12,8 @@ import * as types from './actionTypes';
  * @returns {*} action, action types and message
  */
 export function passSuccessMessage(successMessage) {
-  console.log('passSuccessMessage', passSuccessMessage);
+  // console.log('passSuccessMessage', passSuccessMessage);
+  console.log('Pass success message action creator');
   return { type: types.SUCCESS_MESSAGE, successMessage };
 }
 
@@ -50,6 +51,7 @@ export function getDocumentSuccess(documents) {
 }
 
 export function getOneDocumentSuccess(document) {
+  console.log('getting here at get one document success action creator');
   return { type: types.GET_ONE_DOCUMENT_SUCCESS, document };
 }
 
@@ -71,8 +73,14 @@ export function createDocumentSuccess(document) {
  * @param {*} documents  returned updated document
  * @returns {*} action, action types and document
  */
+// export function updateDocumentSuccess(document) {
+//   console.log('updateDocumentSuccess action creator', updateDocumentSuccess);
+//   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
+// }
+
 export function updateDocumentSuccess(document) {
-  console.log('updateDocumentSuccess', updateDocumentSuccess);
+  console.log('updateDocumentSuccess action creator', updateDocumentSuccess);
+  console.log('type of', typeof document);
   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
 }
 
@@ -123,10 +131,12 @@ export function getAllDocuments(documents) {
 export function getUserDocuments(id) {
   return dispatch => axios.get(`api/users/${id}/documents`)
   .then((response) => {
+    console.log('documents belonging to a user', response.data);
     dispatch(getDocumentSuccess(response.data));
   })
   .catch((error) => {
-    throw dispatch(passFailureMessage(error.response.data.message));
+    console.log(error, 'error');
+    dispatch(passFailureMessage(error.response.data.message));
   });
 }
 
@@ -140,10 +150,12 @@ export function getUserDocuments(id) {
 export function getOneDocument(id) {
   return dispatch => axios.get(`/api/documents/${id}`)
   .then((response) => {
+    console.log('I was successful in getting one document', response);
     dispatch(getOneDocumentSuccess(response.data));
-    dispatch(passSuccessMessage(response.data.message));
+    // dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
+    console.log('I have an error getOneDocument');
     dispatch(passFailureMessage(error));
   });
 }
@@ -175,14 +187,15 @@ export function createDocument(document) {
  * @returns {object} documents
  */
 export function updateDocument(id, document) {
+  console.log('update document function', document);
   return dispatch => axios.put(`/api/documents/${id}`, document)
   .then((response) => {
-    console.log('response: ', response);
-    dispatch(updateDocumentSuccess);
+    console.log('updated document response is here ', response);
+    dispatch(updateDocumentSuccess(response.data.document));
     dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
-    console.log('>>>>>>', error);
+    console.log('I failed to update the document', error);
     dispatch(passFailureMessage(error.response.data.message));
   });
 }

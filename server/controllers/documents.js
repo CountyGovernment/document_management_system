@@ -14,13 +14,12 @@ class DocController {
     * @return { object } - A response to the user
   */
   create(req, res) {
-    console.log('req: ', req);
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({
         message: 'Please fill the required fields!',
       });
     }
-    console.log('req.decoded', req.decoded);
+    // console.log(req.body,"jkhgf")
     return Document
       .create({
         title: req.body.title,
@@ -190,17 +189,25 @@ class DocController {
       });
     }
     const updateDocument = req.body;
+    console.log('update controller', req.body);
     return Document
       .update(updateDocument, {
         where: {
           id: req.params.id,
           userId: req.decoded.id,
         },
+        returning: true,
+        plain: true,
       })
-      .then(() => res.status(201).json({
+      // .findById(req.params.id)
+      // .then(function(result) { console.log(result[1].dataValues) }
+      .then(result =>
+      res.status(201).json({
+        document: result[1].dataValues,
         message: 'Document Successfully updated!',
-      }))
-      .catch(error => res.status(400).json(error));
+      }),
+      )
+      .catch(error => console.log('Error', error));
   }
 
   /**

@@ -90,11 +90,14 @@ class ManageDocument extends Component {
    * @returns {*} no return value
    */
   updateDocument(event) {
+    console.log('Document updated');
     event.preventDefault();
     this.setState({ saving: true });
     this.props.actions.updateDocument(
-      this.state.document.id)
-    .then(() => this.setState({ redirect: true }))
+      this.state.document.id, this.state.document)
+    // .then(() => this.setState({ saving: true, redirect: false }))
+    .then(() => this.setState({ saving: false }))
+    .then(() => this.props.actions.getOneDocument(this.state.document.id))
     .catch(() => {
       this.setState({ saving: false });
       toastr.success(this.props.message);

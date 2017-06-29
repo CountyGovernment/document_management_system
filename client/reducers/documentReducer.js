@@ -5,8 +5,9 @@ export default (state = initialState.documents, action) => {
   switch (action.type) {
     case types.GET_ALL_DOCUMENTS_SUCCESS:
       const documents = action.documents.document;
+      // const documents = action.documents;
+      // console.log(Object.assign([], state, action.documents), 'document in state');
       return Object.assign([], state, documents);
-
 
     case types.CREATE_DOCUMENT_SUCCESS:
       return [
@@ -20,9 +21,12 @@ export default (state = initialState.documents, action) => {
 
 
     case types.UPDATE_DOCUMENT_SUCCESS:
+      console.log('update document reducer', action.document);
+      console.log('documents from reducer', [
+        ...state, { document: action.document },
+      ]);
       return [
-        ...state.filter(document => document.id !== action.document.id),
-        Object.assign({}, action.document),
+        ...state, { document: action.document },
       ];
 
 

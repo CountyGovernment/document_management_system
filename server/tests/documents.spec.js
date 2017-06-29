@@ -11,8 +11,7 @@ const server = require('../../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-let token = '';
-let token2 = '';
+const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoyLCJpZCI6NCwiaWF0IjoxNDk4NzE2NDM1LCJleHAiOjE0OTg4MDI4MzV9.nzD-I159iBkeErxvphuwTq7Xrh9gEIBTrJPSB2Rrk3Q';
 
 // describe('before login', () => {
 //   it('asserts that documents cannot be accessed if not logged in', (done) => {
@@ -26,30 +25,30 @@ let token2 = '';
 // });
 
 describe('documents', () => {
-  before((done) => {
-    const admin = {
-      email: 'spiderman@gmail.com',
-      password: 'spidey33',
-    };
-    chai.request(server)
-    .get('/api/users/login')
-    .send(admin)
-    .end((err, res) => {
-      token = res.body.token;
-    });
+  // before((done) => {
+  //   const admin = {
+  //     email: 'spiderman@gmail.com',
+  //     password: 'spidey33',
+  //   };
+  //   chai.request(server)
+  //   .get('/api/users/login')
+  //   .send(admin)
+  //   .end((err, res) => {
+  //     token = res.body.token;
+  //   });
 
-    const regular = {
-      email: 'blackpanther@gmail.com',
-      password: 'blackpanther33',
-    };
-    chai.request(server)
-    .get('/api/users/login')
-    .send(regular)
-    .end((err, res) => {
-      token2 = res.body.token;
-      done();
-    });
-  });
+  //   const regular = {
+  //     email: 'blackpanther@gmail.com',
+  //     password: 'blackpanther33',
+  //   };
+  //   chai.request(server)
+  //   .get('/api/users/login')
+  //   .send(regular)
+  //   .end((err, res) => {
+  //     token = res.body.token;
+  //     done();
+  //   });
+  // });
 
   /*
    * Test the /GET route
@@ -74,13 +73,15 @@ describe('documents', () => {
       const document = {
         title: 'Girl with the dragon tattoo',
         content: 'Be a great hacker and steal from rich folks',
+        access: 'public',
+        userId: 1,
       };
       chai.request(server)
         .post('/api/documents')
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Document created successfully!');
           done();
