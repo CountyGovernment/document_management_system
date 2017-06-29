@@ -109,6 +109,7 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
+    console.log(this.state.document, 'document state');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/dashboard" />;

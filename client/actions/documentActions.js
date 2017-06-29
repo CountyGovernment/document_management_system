@@ -80,7 +80,7 @@ export function createDocumentSuccess(document) {
 
 export function updateDocumentSuccess(document) {
   console.log('updateDocumentSuccess action creator', updateDocumentSuccess);
-  console.log('type of', typeof document);
+  console.log('type of', document);
   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
 }
 

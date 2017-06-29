@@ -30,7 +30,7 @@ class Dashboard extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
 
     this.state = {
-      documents: [],
+      // documents: [],
       searchResults: [],
       search: '',
       redirect: false,
@@ -76,13 +76,15 @@ class Dashboard extends Component {
    * @return {*} render the Document holder
    */
   render() {
+    console.log(this.props.documents, 'documents prop');
+    // console.log(this.prop.document, 'document state');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/document" />;
     }
-    const { documents, searchResults, metaData, user } = this.props;
-    console.log('documents:', documents);
-    if (!documents) {
+    // const { documents, searchResults, metaData, user } = this.props;
+    // console.log('documents:', documents);
+    if (!this.props.documents) {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
@@ -125,13 +127,13 @@ class Dashboard extends Component {
 
             <div className="row">
               <div className="col s12">
-                `{documents.map(document =>
+                {this.props.documents.map(document =>
                 (<DocumentList
                   loggedInUserID={this.props.loggedInUserID.id}
                   key={document.id}
                   document={document}
                 />),
-              )}`
+              )}
               </div>
             </div>
           </div>
@@ -145,7 +147,7 @@ class Dashboard extends Component {
  * @desc Set the PropTypes
  */
 Dashboard.propTypes = {
-  // documents: PropTypes.array,
+  documents: PropTypes.array,
   searchResults: PropTypes.array,
   search: PropTypes.string,
   message: PropTypes.string,
@@ -164,6 +166,7 @@ function mapStateToProps(state) {
     user: state.users,
     isAuth: state.isAuth,
     message: state.message,
+    document: state.document,
     documents: state.documents,
     metaData: state.documents.metaData,
     loggedInUserID: state.isAuth.loggedInUser.id,
