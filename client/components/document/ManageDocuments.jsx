@@ -95,13 +95,11 @@ class ManageDocument extends Component {
     this.setState({ saving: true });
     this.props.actions.updateDocument(
       this.state.document.id, this.state.document)
-    // .then(() => this.setState({ saving: true, redirect: false }))
     .then(() => this.setState({ saving: false }))
-    .then(() => this.props.actions.getOneDocument(this.state.document.id))
-    .catch(() => {
-      this.setState({ saving: false });
-      toastr.success(this.props.message);
-    });
+    .then(() => this.props.actions.getOneDocument(this.state.document.id),
+                toastr.success('Document updated!'))
+    .then(() => this.setState({ redirect: true }))
+    .catch(() => this.setState({ saving: false }));
   }
 
   /**
@@ -109,7 +107,6 @@ class ManageDocument extends Component {
    * @return {object} html
    */
   render() {
-    console.log(this.state.document, 'document state');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/dashboard" />;

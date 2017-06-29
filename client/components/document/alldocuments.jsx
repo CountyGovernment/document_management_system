@@ -28,7 +28,6 @@ class AllDocuments extends Component {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.state = {
       documents: [],
-      searchResults: [],
       search: '',
       offset: 0,
     };
@@ -54,7 +53,6 @@ class AllDocuments extends Component {
     this.props.actions.search(event.target.value)
     .catch(() => {
       toastr.error(this.props.message);
-      // toastr.error('error searching documents');
     });
   }
 
@@ -72,11 +70,9 @@ class AllDocuments extends Component {
    * @return {*} render the Document holder
    */
   render() {
-    const { documents, searchResults, metaData } = this.props;
-    // console.log(this.props, 'this.props');
-    let documentsInfo;
+    const { documents, metaData } = this.props;
     if (!documents || this.props.message === 'no document found') {
-      return (documentsInfo = (
+      return (
         <div className="section">
           <div className="container">
             <div className="col s12 m8 offset-m2 l6 offset-l3">
@@ -99,7 +95,7 @@ class AllDocuments extends Component {
               </div>
             </div>
           </div>
-        </div>));
+        </div>);
     }
 
     if (documents) {
@@ -115,10 +111,8 @@ class AllDocuments extends Component {
             </div>
 
             <DocumentSearch
-              redirectToManageDocument={this.redirectToManageDocument}
               onViewAccessChange={this.onViewAccessChange}
               onSearchChange={this.onSearchChange}
-              sitewide="sitewide"
             />
 
             <div className="row">
@@ -144,7 +138,6 @@ class AllDocuments extends Component {
  */
 AllDocuments.propTypes = {
   documents: PropTypes.array,
-  searchResults: PropTypes.array,
   loggedInUserID: PropTypes.object,
   search: PropTypes.string,
   message: PropTypes.string,

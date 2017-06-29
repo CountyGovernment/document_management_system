@@ -27,11 +27,9 @@ class Dashboard extends Component {
     super(props);
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
-    this.onSearchChange = this.onSearchChange.bind(this);
 
     this.state = {
       // documents: [],
-      searchResults: [],
       search: '',
       redirect: false,
     };
@@ -48,22 +46,6 @@ class Dashboard extends Component {
   }
 
   /**
-   * @desc handles change of the search form
-   * @param {any} event html event
-   * @returns {*} no return value
-   */
-  onSearchChange(event) {
-    this.setState({ search: event.target.value });
-    if (event.target.value === '') {
-      this.props.actions.getUserDocuments(this.props.loggedInUserID);
-    }
-    this.props.actions.search(event.target.value)
-    .catch(() => {
-      toastr.error(this.props.message);
-    });
-  }
-
-  /**
    * @desc handles the redirecting to the manage documents page
    * @returns {null} returns no value
    */
@@ -77,18 +59,16 @@ class Dashboard extends Component {
    */
   render() {
     console.log(this.props.documents, 'documents prop');
-    // console.log(this.prop.document, 'document state');
     const { redirect } = this.state;
     if (redirect) {
       return <Redirect to="/document" />;
     }
-    // const { documents, searchResults, metaData, user } = this.props;
-    // console.log('documents:', documents);
-    if (!this.props.documents) {
+    const { documents, metaData, user } = this.props;
+    if (documents.length === 0) {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
-            <div className="card-panel pink lighten-3 z-depth-1">
+            <div className="card-panel blue lighten-3 z-depth-1">
               <div className="row valign-wrapper">
                 <div className="col s10">
                   <h3>Add a Document</h3>
@@ -96,7 +76,7 @@ class Dashboard extends Component {
                     <div className="col l4 m4 s1 offset-l3">
                       <a
                         onClick={this.redirectToManageDocument}
-                        className="waves-effect waves-light btn-large green"
+                        className="waves-effect waves-light btn-large pink"
                       >
                         <i className="material-icons left">add</i>Add New Document
                       </a>
@@ -119,12 +99,6 @@ class Dashboard extends Component {
                 <hr />
               </div>
             </div>
-
-            <DocumentSearch
-              onSearchChange={this.onSearchChange}
-              onViewAccessChange={this.onViewAccessChange}
-            />
-
             <div className="row">
               <div className="col s12">
                 {this.props.documents.map(document =>
@@ -148,9 +122,6 @@ class Dashboard extends Component {
  */
 Dashboard.propTypes = {
   documents: PropTypes.array,
-  searchResults: PropTypes.array,
-  search: PropTypes.string,
-  message: PropTypes.string,
   actions: PropTypes.object,
 };
 
@@ -165,7 +136,6 @@ function mapStateToProps(state) {
   return {
     user: state.users,
     isAuth: state.isAuth,
-    message: state.message,
     document: state.document,
     documents: state.documents,
     metaData: state.documents.metaData,

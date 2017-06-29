@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 /**
  * @desc component used to display the document actionBar
  */
-const DocumentSearch = ({ onViewAccessChange,
-    sitewide, onSearchChange }) =>
+const DocumentSearch = ({ onViewAccessChange, onSearchChange }) =>
       (<div className="card-panel">
         <div className="row">
           <div className="col l1 m1 s1">
@@ -32,7 +31,6 @@ const DocumentSearch = ({ onViewAccessChange,
  */
 DocumentSearch.propTypes = {
   onViewAccessChange: PropTypes.func,
-  sitewide: PropTypes.string,
   onSearchChange: PropTypes.func,
 };
 
