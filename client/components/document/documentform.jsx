@@ -35,6 +35,7 @@ const DocumentForm = ({ document, onSave, onChange, saving }) =>
                     <option value="">Choose your option</option>
                     <option value="private">Private</option>
                     <option value="public">Public</option>
+                    <option value="role">Role</option>
                   </select>
                 </div>
               </div>

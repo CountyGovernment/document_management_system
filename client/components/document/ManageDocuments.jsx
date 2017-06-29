@@ -97,7 +97,7 @@ class ManageDocument extends Component {
     .then(() => this.setState({ redirect: true }))
     .catch(() => {
       this.setState({ saving: false });
-      toastr.success('Document updated successfully!');
+      toastr.success(this.props.message);
     });
   }
 
