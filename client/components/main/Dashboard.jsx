@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import { Redirect, Link } from 'react-router';
 import toastr from 'toastr';
 import * as userActions from '../../actions/userActions';
-import UserProfile from '../user/userprofile';
 import DocumentList from '../document/DocumentList';
 import DocumentSearch from '../document/DocumentSearch';
 import * as actions from '../../actions/documentActions';
@@ -29,7 +28,6 @@ class Dashboard extends Component {
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
 
     this.state = {
-      // documents: [],
       search: '',
       redirect: false,
       isLoading: false,

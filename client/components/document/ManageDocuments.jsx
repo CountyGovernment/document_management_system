@@ -33,6 +33,7 @@ class ManageDocument extends Component {
       errors: {},
       saving: false,
       redirect: false,
+      isLoading: false,
     };
   }
 
@@ -77,10 +78,13 @@ class ManageDocument extends Component {
     event.preventDefault();
     this.setState({ errors: {}, saving: true });
     this.props.actions.createDocument(this.state.document)
-    .then(() => this.setState({ redirect: true }))
+    .then(() => {
+      toastr.success('Document created successfully!');
+      this.setState({ redirect: true });
+      this.setState({ saving: false });
+    })
     .catch(() => {
       this.setState({ saving: false });
-      toastr.success(this.props.message);
     });
   }
 
@@ -90,7 +94,6 @@ class ManageDocument extends Component {
    * @returns {*} no return value
    */
   updateDocument(event) {
-    console.log('Document updated');
     event.preventDefault();
     this.setState({ saving: true });
     this.props.actions.updateDocument(
@@ -152,6 +155,7 @@ const mapStateToProps = (state) => {
     document: state.document,
     documents: state.documents,
     loggedInUserID: state.isAuth.loggedInUser,
+    loggedInUserDocuments: state.loggedInUserDocuments,
   };
 };
 

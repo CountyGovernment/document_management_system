@@ -14,7 +14,6 @@ class Authenticate {
   validateToken(req, res, next) {
     const token = req.headers.authorization;
     if (!token) {
-      console.log('I cant find a token');
       return res.status(401).send({
         status: 401,
         message: 'Token required to access this route',
@@ -43,7 +42,6 @@ class Authenticate {
     return Role.findById(req.decoded.data)
 
       .then((role) => {
-        // if the role does not exist
         if (!role) {
           return res.status(404).send({
             message: 'Role does not exist!',

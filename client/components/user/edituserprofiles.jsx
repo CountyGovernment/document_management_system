@@ -24,7 +24,6 @@ class EditUserProfile extends Component {
       errors: {},
       saving: false,
     };
-    console.log('user state', this.state.user);
   }
 
   /**
@@ -80,15 +79,6 @@ class EditUserProfile extends Component {
     });
   }
 
-  // /**
-  //  * @desc handles the redirecting to the dashboard on success
-  //  * @returns {null} returns no value
-  //  */
-  redirect() {
-    this.setState({ saving: false });
-    toastr.success(this.props.message);
-    browserHistory.push('/dashboard');
-  }
 
   /**
    * React Render
@@ -198,12 +188,6 @@ EditUserProfile.propTypes = {
   message: PropTypes.string,
 };
 
-/**
- * @desc Set the contextTypes
- */
-EditUserProfile.contextTypes = {
-  router: PropTypes.object,
-};
 
 /**
  *  map state to props

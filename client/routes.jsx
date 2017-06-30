@@ -6,11 +6,10 @@ import Dashboard from './components/main/Dashboard';
 import SignupPage from './components/main/SignUp';
 import AllUsers from './components/user/AllUsers';
 import EditUserProfile from './components/user/EditUserProfiles';
-import AllDocuments from './components/document/alldocuments';
+import AllDocuments from './components/document/AllDocuments';
 import ManageDocument from './components/document/ManageDocuments';
-import FourOFour from './components/common/Four0Four';
-// import requireAuth from './utils/requireAuthentication';
-// import requireAdminRole from './utils/requireAdminRole';
+import requireAuth from './utils/requireAuthentication';
+import requireAdminRole from './utils/requireAdminRole';
 // import DocumentList from './components/document/DocumentList';
 
 export default (
@@ -18,14 +17,13 @@ export default (
     <div>
       <App>
         <Switch>
-          <Route path="/users" component={AllUsers} />
-          <Route path="/user/:id" component={EditUserProfile} />
-          <Route path="/documents" component={AllDocuments} />
-          <Route path="/document/:id" component={ManageDocument} />
-          <Route path="/document" component={ManageDocument} />
+          <Route path="/users" component={requireAdminRole(AllUsers)} />
+          {/* <Route path="/user/:id" component={requireAdminRole(EditUserProfile)} />*/}
+          <Route path="/documents" component={requireAuth(AllDocuments)} />
+          <Route path="/document/:id" component={requireAuth(ManageDocument)} />
+          <Route path="/document" component={requireAuth(ManageDocument)} />
           <Route path="/signup" component={SignupPage} />
-          <Route path="404" component={FourOFour} />
-          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/dashboard" component={requireAuth(Dashboard)} />
           <Route path="/login" component={Login} />
         </Switch>
       </App>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import toastr from 'toastr';
 
 /**
@@ -12,20 +12,37 @@ import toastr from 'toastr';
  */
 export default function (ComposedComponent) {
   class RequireAuth extends Component {
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        redirect: false,
+      };
+    }
+
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         toastr.error('You need to login to access this page');
-        browserHistory.push('/');
+        return this.redirectToLogin;
       }
     }
 
     componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        browserHistory.push('/');
+        return this.redirectToLogin;
       }
     }
 
+    redirectToLogin() {
+      this.setState({ redirect: true });
+    }
+
     render() {
+      const { redirect } = this.state;
+      if (redirect) {
+        return <Redirect to="/login" />;
+      }
       return <ComposedComponent {...this.props} />;
     }
   }

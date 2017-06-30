@@ -40,7 +40,7 @@ class Signin extends Component {
    */
   // componentWillMount() {
   //   if (this.props.isAuthenticated) {
-  //     toastr.error('Already logged in');
+  //     toastr.error('Login required');
   //   }
   // }
 
@@ -113,7 +113,7 @@ class Signin extends Component {
 Signin.propTypes = {
   user: PropTypes.object,
   message: PropTypes.string,
-  // isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
   userActions: PropTypes.object.isRequired,
 };
 

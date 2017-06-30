@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { browserHistory } from 'react-router';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import toastr from 'toastr';
 
@@ -12,21 +12,24 @@ import toastr from 'toastr';
  */
 export default (ComposedComponent) => {
   class RequireAuth extends React.Component {
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        redirect: false,
+      };
+    }
+
     /**
      * @desc Performs tasks before the component mounts.
      */
     componentWillMount() {
       const isAuthenticated = this.props.isAuthenticated;
       let isAdmin;
-      if (isAuthenticated) {
-        isAdmin = this.props.isAdmin.roleId;
-      } else {
-        isAdmin = 0;
-      }
-
-      if (isAdmin !== 1) {
-        toastr.error('Unauthorized Access Denied.');
-        browserHistory.push('/dashboard');
+      if (this.props.isAdmin !== 1) {
+        toastr.error('Unauthorized Access Denied. You need to be an admin to access this page.');
+        this.setState({ redirect: true });
       }
     }
 
@@ -36,11 +39,19 @@ export default (ComposedComponent) => {
      */
     componentWillUpdate(nextProps) {
       if (!nextProps.isAuthenticated) {
-        browserHistory.push('/');
+        <Redirect to="/dashboard" />;
       }
     }
 
+    redirectToDashboard() {
+      this.setState({ redirect: true });
+    }
+
     render() {
+      const { redirect } = this.state;
+      if (redirect) {
+        return <Redirect to="/dashboard" />;
+      }
       return <ComposedComponent {...this.props} />;
     }
   }
@@ -50,14 +61,7 @@ export default (ComposedComponent) => {
    */
   RequireAuth.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    isAdmin: PropTypes.object,
-  };
-
-  /**
-   * @desc Set the contextTypes
-   */
-  RequireAuth.contextTypes = {
-    router: PropTypes.object.isRequired,
+    isAdmin: PropTypes.number,
   };
 
   /**
@@ -67,10 +71,12 @@ export default (ComposedComponent) => {
    * @returns {boolean} isAuthenticated
    * @returns {*} isAdmin
    */
-  const mapStateToProps = state => ({
-    isAuthenticated: state.isAuth.isAuthenticated,
-    isAdmin: state.isAuth.loggedInUser,
-  });
+  const mapStateToProps = (state) => {
+    return ({
+      isAuthenticated: state.isAuth.isAuthenticated,
+      isAdmin: state.isAuth.loggedInUser.data,
+    });
+  };
 
   return connect(mapStateToProps)(RequireAuth);
 };

@@ -33,13 +33,14 @@ const Authenticate = require('../authentication/authentication');
 //   .post(Authenticate.validateToken, User.logout);
 
 // module.exports.UserRouter = Router;
+Router.route('/users')
+  .post(User.create);
 
 Router.route('/users/login')
   .post(User.login);
 
 /* /users routes */
 Router.route('/users')
-  .post(User.create)
   .get(Authenticate.validateToken, User.list);
 
 /* /users/?limit={}&offset={} */

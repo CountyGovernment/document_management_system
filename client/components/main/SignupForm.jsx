@@ -84,10 +84,12 @@ const SignupForm = ({ onChange, onSubmit, loading, errors }) =>
         </div>
 
         <div className="input-field col s12">
-          <p className="center medium-small sign-up">
-            Already have an account?
-            <Link to="/"> Login</Link>
-          </p>
+          <nav>
+            <p className="center medium-small sign-up">
+              Already have an account?
+            <Link to="/login" replace> Login</Link>
+            </p>
+          </nav>
         </div>
       </div>
     </div>

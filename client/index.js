@@ -20,9 +20,7 @@ injectTapEventPlugin();
 const store = configureStore(initialState);
 let userToken;
 try {
-  // console.log('userToken', localStorage.shelftoken);
   userToken = localStorage.shelftoken;
-  // console.log('userToken', localStorage.shelftoken);
   if (userToken) {
     setAuthorizationToken(userToken);
     axios.defaults.headers.common.Authorization = userToken;

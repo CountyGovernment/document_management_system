@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 /**
  * @desc component used to display the document form
@@ -14,7 +14,7 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
       <div className="card-content">
         <div className="row">
           <div className="col s6 offset-s3">
-            <h6>Username/Email</h6>
+            <h6>Email</h6>
             <input
               name="email"
               type="email"
@@ -51,7 +51,7 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
           <div className="input-field col s12">
             <p className="margin center medium-small sign-up">
                 Do not have an account?
-                <Link to="/signup"> Signup</Link>
+                 <NavLink to="/signup" >Signup</NavLink>
             </p>
           </div>
         </div>

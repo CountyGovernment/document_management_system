@@ -15,9 +15,7 @@ class UserProfile extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    // console.log('what?');
     this.props.actions.getOneUser(this.props.id);
-    // console.log(this.props.id, 'this.props.id');
   }
 
   /**

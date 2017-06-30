@@ -1,11 +1,12 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
 import swal from 'sweetalert';
 import toastr from 'toastr';
 import * as documentActions from '../../actions/documentActions';
-import { Redirect } from 'react-router';
 
 /**
  * @desc component used to display document tasks
@@ -22,8 +23,6 @@ class DocumentTasks extends Component {
    */
   constructor(props, context) {
     super(props, context);
-
-    this.state = { };
 
     this.deleteDocument = this.deleteDocument.bind(this);
   }
@@ -49,7 +48,7 @@ class DocumentTasks extends Component {
           this.props.documentId, this.props.userId, this.props.document)
         .then(() => {
           swal('Deleted!', 'The selected file has been deleted.', 'success');
-            <Redirect to="/dashboard" />;
+           <Redirect to="/dashboard" />;
         })
         .catch(() => {
           toastr.error('Unable to delete document');
@@ -65,8 +64,6 @@ class DocumentTasks extends Component {
    * @return {*} render the Document task buttons
    */
   render() {
-    console.log(this.props.userId, 'userId');
-    console.log(this.props.loggedInUserID, 'loggedInUserID');
     if (this.props.userId === this.props.loggedInUserID) {
       return (
         <span>

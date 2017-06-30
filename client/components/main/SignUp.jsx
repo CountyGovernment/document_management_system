@@ -37,11 +37,11 @@ class Signup extends Component {
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
-  componentWillMount() {
-    if (this.props.isAuthenticated) {
-      toastr.error('Already logged in');
-    }
-  }
+  // componentWillMount() {
+  //   if (this.props.isAuthenticated) {
+  //     toastr.error('Already logged in');
+  //   }
+  // }
 
   /**
    * @desc handles signup form actions
@@ -61,6 +61,7 @@ class Signup extends Component {
     })
     .catch(() => {
       this.setState({ isLoading: false });
+      toastr.error(this.props.message);
     });
   }
 
@@ -127,7 +128,6 @@ Signup.propTypes = {
  * @returns {object} props
  */
 function mapStateToProps(state) {
-  // console.log(state, 'state<<<');
   return {
     message: state.message,
     user: state.isAuth.loggedInUser,

@@ -1,7 +1,6 @@
 const { Document } = require('../models');
 const { User } = require('../models');
 const controllerHelpers = require('../helpers/controllerHelpers');
-// const { validateToken } = require('../authentication/authentication');
 
 /* Defines  Document Controller methods */
 class DocController {
@@ -19,7 +18,7 @@ class DocController {
         message: 'Please fill the required fields!',
       });
     }
-    // console.log(req.body,"jkhgf")
+
     return Document
       .create({
         title: req.body.title,
@@ -28,7 +27,7 @@ class DocController {
         userId: req.decoded.id,
       })
       .then((document) => {
-        res.status(201).json({
+        return res.status(201).json({
           message: 'Document created successfully!',
           document,
         });
@@ -189,7 +188,6 @@ class DocController {
       });
     }
     const updateDocument = req.body;
-    console.log('update controller', req.body);
     return Document
       .update(updateDocument, {
         where: {
@@ -199,15 +197,13 @@ class DocController {
         returning: true,
         plain: true,
       })
-      // .findById(req.params.id)
-      // .then(function(result) { console.log(result[1].dataValues) }
       .then(result =>
       res.status(201).json({
         document: result[1].dataValues,
         message: 'Document Successfully updated!',
       }),
       )
-      .catch(error => console.log('Error', error));
+      .catch(error => res.status(400).json(error));
   }
 
   /**

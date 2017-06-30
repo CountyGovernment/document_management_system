@@ -1,14 +1,15 @@
-/*
-    ./client/components/App.jsx
-*/
-import React, { PropTypes } from 'react';
-import Header from './common/Header.jsx';
+import React from 'react';
+import PropTypes from 'prop-types';
+import Header from './common/Header';
+import SignUp from './main/SignUp';
+import Login from './main/Login';
 
 class App extends React.Component {
   render() {
     return (
       <div className="container-fluid">
         <Header />
+        <Login />
         {this.props.children}
       </div>
     );

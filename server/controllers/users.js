@@ -21,11 +21,10 @@ class UserController {
   create(req, res) {
     if (controllerHelpers.validateInput(req.body)) {
       return res.status(403).json({
-        message: 'Input fields required!',
+        message: 'Please fill your user details',
       });
-    }
-
-    return User
+    } else {
+      return User
       .create({
         username: req.body.username,
         firstName: req.body.firstName,
@@ -40,7 +39,12 @@ class UserController {
           user,
         });
       })
-      .catch(error => res.status(400).json(error));
+      .catch((error) => {
+        res.status(400).json(error, {
+          message: 'Please fill in user details',
+        });
+      });
+    }
   }
 
   // Login a user
@@ -54,7 +58,6 @@ class UserController {
         .findOne(
         { where: { email: req.body.email } })
         .then((user) => {
-          console.log('>>>>>>>>>>>>>>>', user);
           if (!user) {
             return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
           } else if (user) {
@@ -62,10 +65,8 @@ class UserController {
               const token = jwt.sign({ data: user.roleId, id: user.id }, secretKey, {
                 expiresIn: '24hr',
               });
-              console.log('token:', token);
-              console.log(user, 'user:.........');
               return res.status(201).json(Object.assign({},
-                { id: user.id, username: user.username, email: user.email, message: 'You are logged in' },
+                { id: user.id, data: user.roleId, username: user.username, email: user.email, message: 'You are logged in' },
                 { token }));
             }
             // return error: Password is incorrect
@@ -80,7 +81,7 @@ class UserController {
 
   // logout a user
   logout(req, res) {
-    res.setHeader['x-access-token'] = ' ';
+    res.setHeader.authorization = ' ';
     res.status(200)
       .json({
         success: true,
@@ -159,10 +160,9 @@ class UserController {
       .then((user) => {
         if (!user) {
           return res.status(404).json({
-            message: 'We could not find this user :(',
+            message: 'We could not find this user profile :(',
           });
         }
-        console.log('user document +++++', user);
         return res.status(200).send(user);
       })
       .catch(error => res.status(400).json(error));

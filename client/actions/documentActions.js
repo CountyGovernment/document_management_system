@@ -197,14 +197,12 @@ export function updateDocument(id, document) {
  * @returns {object} documents
  */
 export function deleteDocument(id) {
-  console.log('delete');
   return dispatch => axios.delete(`/api/documents/${id}`)
   .then((response) => {
     dispatch(deleteDocumentSuccess(id));
     dispatch(passSuccessMessage(response.data.message));
   })
   .catch((error) => {
-    console.log('Error', error);
     dispatch(passFailureMessage(error.response.data.message));
   });
 }

@@ -42,9 +42,7 @@ export function search(queryString) {
 export function getAllUsers(users) {
   return dispatch => axios.get('/api/users', users)
   .then((response) => {
-    // console.log('response: ', response);
     dispatch(getUserSuccess(response.data));
-    // console.log('response.data: ', response.data);
   })
   .catch((error) => {
     dispatch(passFailureMessage(error));
@@ -66,17 +64,17 @@ export function createUser(user) {
     .then((response) => {
       dispatch(passSuccessMessage(response.data.message));
       dispatch(setCurrentUser(response.data.user));
-      // console.log('response', response);
     })
     .catch((error) => {
+      console.log('Error: ', error);
       dispatch(passFailureMessage(error.response.data.message));
     });
 }
 
 export function login(user) {
+  console.log("action user", user);
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
-      console.log(response, 'response');
       const token = response.data.token;
       const stringyToken = `${token}`;
       localStorage.setItem('shelftoken', stringyToken);
@@ -84,7 +82,7 @@ export function login(user) {
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
-      console.log(storedToken, 'storedToken');
+      console.log("response", response.data);
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
