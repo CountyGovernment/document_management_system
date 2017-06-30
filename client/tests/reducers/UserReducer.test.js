@@ -1,46 +1,46 @@
-// import expect from 'expect';
-// import { createStore } from 'redux';
-// import userReducer from '../../reducers/userReducer';
-// import rootReducer from '../../reducers/rootReducer';
-// import initialState from '../../reducers/initialState';
-// import * as actions from '../../actions/userActions';
+import expect from 'expect';
+import { createStore } from 'redux';
+import userReducer from '../../reducers/userReducer';
+import rootReducer from '../../reducers/rootReducer';
+import initialState from '../../reducers/initialState';
+import * as actions from '../../actions/userActions';
 
-// describe('User reducer', () => {
-//   it('should return a list of all users.', () => {
-//     const store = createStore(rootReducer, initialState);
+describe('User reducer', () => {
+  it('should return a list of all users.', () => {
+    const store = createStore(rootReducer, initialState);
 
-//     const users = [
-//       { username: 'Ade' },
-//       { username: 'Admin' },
-//     ];
+    const users = [
+      { username: 'Ade' },
+      { username: 'Admin' },
+    ];
 
-//     const action = actions.getUserSuccess(users);
-//     store.dispatch(action);
+    const action = actions.getUserSuccess(users);
+    store.dispatch(action);
 
-//     const actual = store.getState().users;
-//     const expected = users;
+    const actual = store.getState().users;
+    const expected = users;
 
-//     expect(actual).toEqual(expected);
-//     expect(typeof actual).toBe('object');
-//   });
+    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('object');
+  });
 
-//   it('should create a new user.', () => {
-//     const store = createStore(rootReducer, initialState);
+  it('should create a new user.', () => {
+    const store = createStore(rootReducer, initialState);
 
-//     const users = [
-//       { username: 'Will' },
-//       { username: 'Way' },
-//     ];
+    const users = [
+      { username: 'Will' },
+      { username: 'Way' },
+    ];
 
-//     const newUser = { username: 'Spiderman' };
+    const newUser = { username: 'Spiderman' };
 
-//     const action = actions.createUserSuccess(newUser);
-//     store.dispatch(action);
+    const action = actions.createUserSuccess(newUser);
+    store.dispatch(action);
 
-//     const actual = store.getState().users;
-//     const expected = [newUser];
+    const actual = store.getState().users;
+    const expected = [newUser];
 
-//     expect(actual).toEqual(expected);
-//     expect(typeof actual).toBe('object');
-//   });
-// });
+    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('object');
+  });
+});

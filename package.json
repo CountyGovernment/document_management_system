@@ -10,7 +10,7 @@
     "lint:watch": "npm run lint -- --watch",
     "start:D": "webpack-dev-server",
     "start:dev": "nodemon ./bin/www",
-    "test:client": "NODE_ENV=test nyc --reporter=text node_modules/.bin/_mocha  ./**/test/**/*.js --require babel-register",
+    "test:client": "NODE_ENV=test istanbul cover _mocha --require ./client/tests/testSetup.js -R client/tests/**/*.js",
     "test:server": "NODE_ENV=test npm run seed && ./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec ./server/tests --timeout 20000",
     "script": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "seed": "npm run migrate && sequelize db:seed:all",
@@ -25,11 +25,13 @@
   "dependencies": {
     "axios": "^0.16.2",
     "babel-polyfill": "^6.23.0",
+    "babel-register": "^6.24.1",
     "bcrypt": "^1.0.2",
     "blueimp-md5": "^2.7.0",
     "body-parser": "^1.17.2",
     "colors": "^1.1.2",
     "dotenv-webpack": "^1.5.0",
+    "enzyme": "^2.9.1",
     "expect": "^1.20.2",
     "express": "^4.15.3",
     "has-flag": "^2.0.0",
@@ -76,7 +78,6 @@
     "chai-http": "^3.0.0",
     "coveralls": "^2.13.1",
     "css-loader": "^0.28.4",
-    "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.1",
     "eslint-loader": "^1.7.1",
@@ -102,21 +103,5 @@
     "sinon": "^2.3.2",
     "style-loader": "^0.18.2",
     "url-loader": "^0.5.9"
-  },
-  "nyc": {
-    "require": [
-      "babel-register"
-    ],
-    "reporter": [
-      "lcov",
-      "text",
-      "html"
-    ],
-    "sourceMap": false,
-    "instrument": false,
-    "exclude": [
-      "client/test",
-      "server/test"
-    ]
   }
 }
