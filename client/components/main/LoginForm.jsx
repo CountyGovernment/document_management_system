@@ -41,6 +41,7 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
         <div className="row">
           <div className="input-field col s12">
             <input
+              id="login"
               type="submit"
               disabled={loading}
               value={loading ? 'Please wait...' : 'Login'}
