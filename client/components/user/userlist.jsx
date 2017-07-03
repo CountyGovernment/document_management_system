@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import UserTasks from './usertasks';
+import UserTasks from './UserTasks';
 
 /**
  * @desc component used to display the list of users

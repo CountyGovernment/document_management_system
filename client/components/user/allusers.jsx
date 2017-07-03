@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
-import UserList from './userlist';
-import UserActionBar from './useractionbar';
+import UserList from './UserList';
+import UserActionBar from './UserActionBar';
 import * as actions from '../../actions/userActions';
 
 /**
