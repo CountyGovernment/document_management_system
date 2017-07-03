@@ -4,7 +4,7 @@
   "description": "A document management system",
   "main": "server.js",
   "scripts": {
-    "start": "npm-run-all --parallel open:client lint:watch",
+    "start": "node bin/www",
     "open:client": "node bin/www",
     "lint": "node_modules/.bin/esw webpack.config.* client server",
     "lint:watch": "npm run lint -- --watch",
