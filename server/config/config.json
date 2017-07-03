@@ -15,12 +15,15 @@
     "port": 5432,
     "dialect": "postgres"
   },
-  "production": {
-    "username": "juliemugira",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+"production": {
+    "use_env_variable": "DATABASE_URL",
     "port": 5432,
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "ssl": true,
+    "dialectOptions": {
+      "ssl": {
+        "require": true
+      }
+    }
   }
 }

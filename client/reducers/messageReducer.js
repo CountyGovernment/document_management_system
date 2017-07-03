@@ -15,7 +15,9 @@ export default (state = initialState.message, action) => {
       return action.successMessage;
 
     case types.ERROR_MESSAGE:
-      return state;
+    // console.log('getting here');
+      // console.log(action.errorMessage, 'action.errorMessage');
+      return action.errorMessage;
 
     default:
       return state;

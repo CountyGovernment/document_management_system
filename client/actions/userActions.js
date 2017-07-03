@@ -86,7 +86,10 @@ export function login(user) {
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
+      console.log('Error', error);
       dispatch(passFailureMessage(error.response.data.message));
+      console.log('Error Message', error.response.data.message);
+      // console.log('Error', response.data.message);
     });
 }
 

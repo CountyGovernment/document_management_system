@@ -24,13 +24,17 @@ export default function (ComposedComponent) {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         toastr.error('You need to login to access this page');
-        return this.redirectToLogin;
+        // return this.redirectToLogin;
+        this.setState({ redirect: true });
       }
     }
 
     componentWillUpdate(nextProps) {
+      console.log('testing auth ////////////');
       if (!nextProps.isAuthenticated) {
-        return this.redirectToLogin;
+        // return this.redirectToLogin;
+        // this.setState({ redirect: true });
+        <Redirect to="/dashboard" />;
       }
     }
 
@@ -52,13 +56,6 @@ export default function (ComposedComponent) {
    */
   RequireAuth.propTypes = {
     isAuthenticated: React.PropTypes.bool.isRequired,
-  };
-
-  /**
-   * @desc Set the contextTypes
-   */
-  RequireAuth.contextTypes = {
-    router: PropTypes.object.isRequired,
   };
 
   /**
