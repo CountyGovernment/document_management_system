@@ -71,4 +71,15 @@ describe('sync actions', () => {
       done();
     });
   });
+
+  it('handles updating a user', () => {
+    const updatedUser = { id: 1 };
+    const expectedAction = [{ type: types.UPDATE_USER_SUCCESS, body: { users: [{ id: 1 }] } }];
+    const store = mockStore({ users: [] }, expectedAction);
+    store.dispatch(userAction.updateUser(updatedUser)).then(() => {
+      const action = store.getAction();
+      expect(action[0].type).toEqual(types.UPDATE_USER_SUCCESS);
+      done();
+    });
+  });
 });

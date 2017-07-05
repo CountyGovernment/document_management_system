@@ -24,8 +24,8 @@ export function createUserSuccess(user) {
 export function setCurrentUser(user) {
   return { type: types.SET_LOGGEDIN_USER, user };
 }
-export function signoutUser(user) {
-  return { type: types.SIGNOUT_USER, user };
+export function logoutUser(user) {
+  return { type: types.LOGOUT_USER, user };
 }
 export function updateUserSuccess(user) {
   return { type: types.UPDATE_USER_SUCCESS, user };
@@ -97,10 +97,11 @@ export function login(user) {
 }
 
 export function logout() {
+  console.log('logout');
   return (dispatch) => {
     localStorage.removeItem('shelftoken');
-    setAuthorizationToken(false);
-    dispatch(signoutUser({}));
+    // setAuthorizationToken(false);
+    dispatch(logoutUser({}));
   };
 }
 

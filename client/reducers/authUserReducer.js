@@ -16,7 +16,8 @@ export default (state = initialState.isAuth, action) => {
         isAuthenticated: true,
         loggedInUser: action.user,
       });
-    case types.SIGNOUT_USER:
+
+    case types.LOGOUT_USER:
       return {
         isAuthenticated: false,
         loggedInUser: null,

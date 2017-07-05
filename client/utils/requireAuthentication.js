@@ -34,7 +34,7 @@ export default function (ComposedComponent) {
       if (!nextProps.isAuthenticated) {
         // return this.redirectToLogin;
         // this.setState({ redirect: true });
-        <Redirect to="/dashboard" />;
+        <Redirect to="/login" />;
       }
     }
 
