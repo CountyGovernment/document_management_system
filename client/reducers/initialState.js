@@ -1,6 +1,7 @@
 export default {
   documents: [],
   users: [],
+  user: {},
   roles: [],
   isAuth: {
     isAuthenticated: false,

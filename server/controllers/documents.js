@@ -192,7 +192,6 @@ class DocController {
       .update(updateDocument, {
         where: {
           id: req.params.id,
-          userId: req.decoded.id,
         },
         returning: true,
         plain: true,

@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
-import users from './userReducer';
+import users from './usersReducer';
+import user from './userReducer';
 import roles from './roleReducer';
 import document from './docReducer';
-import documents from './documentReducer';
+import documents from './documentsReducer';
 import message from './messageReducer';
 import isAuth from './authUserReducer';
 import loggedInUserDocuments from './loggedInUserDocumentsReducer';
 
 const rootReducer = combineReducers({
   users,
+  user,
   document,
   roles,
   documents,

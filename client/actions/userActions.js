@@ -15,8 +15,8 @@ export function searchUsersSuccess(users) {
 export function getUserSuccess(users) {
   return { type: types.GET_ALL_USERS_SUCCESS, users };
 }
-export function getOneUserSuccess(id) {
-  return { type: types.GET_ONE_USER_SUCCESS, id };
+export function getOneUserSuccess(user) {
+  return { type: types.GET_ONE_USER_SUCCESS, user };
 }
 export function createUserSuccess(user) {
   return { type: types.CREATE_USER_SUCCESS, user };
@@ -26,6 +26,9 @@ export function setCurrentUser(user) {
 }
 export function signoutUser(user) {
   return { type: types.SIGNOUT_USER, user };
+}
+export function updateUserSuccess(user) {
+  return { type: types.UPDATE_USER_SUCCESS, user };
 }
 
 export function search(username) {
@@ -51,6 +54,7 @@ export function getAllUsers(users) {
 export function getOneUser(id) {
   return dispatch => axios.get(`/api/users/${id}`)
   .then((response) => {
+    console.log('response', response);
     dispatch(getOneUserSuccess(response.data));
   })
   .catch((error) => {
@@ -71,7 +75,7 @@ export function createUser(user) {
 }
 
 export function login(user) {
-  console.log("action user", user);
+  console.log('action user', user);
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
       const token = response.data.token;
@@ -81,7 +85,7 @@ export function login(user) {
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
-      console.log("response", response.data);
+      console.log('response', response.data);
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
@@ -98,6 +102,17 @@ export function logout() {
     setAuthorizationToken(false);
     dispatch(signoutUser({}));
   };
+}
+
+export function updateUser(id, user) {
+  return dispatch => axios.put(`/api/users/${id}`, user)
+  .then((response) => {
+    dispatch(updateUserSuccess(response.data.user));
+    dispatch(passSuccessMessage(response.data.message));
+  })
+  .catch((error) => {
+    dispatch(passFailureMessage(error.response.data.message));
+  });
 }
 
 /**

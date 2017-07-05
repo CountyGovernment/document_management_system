@@ -62,6 +62,11 @@ class UserTasks extends Component {
   render() {
     return (
       <span>
+        <Link
+          to={`/users/${this.props.userId}`}
+          className="waves-effect waves-light btn green"
+        >Edit
+        </Link>
         &nbsp;&nbsp;
         <a className="waves-effect waves-light btn red"
           onClick={this.deleteUser}
@@ -81,11 +86,14 @@ UserTasks.propTypes = {
 };
 
 /**
- * @desc Set the contextTypes
+ *
+ * @param {any} state
+ * @returns {*} props
  */
-UserTasks.contextTypes = {
-  router: PropTypes.object,
-};
+const mapStateToProps = state => ({
+  loggedInID: state.isAuth.loggedInUser.id,
+  loggedInUserDocuments: state.loggedInUserDocuments,
+});
 
 /**
  * @param {any} dispatch
@@ -97,4 +105,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(UserTasks);
+export default connect(mapStateToProps, mapDispatchToProps)(UserTasks);

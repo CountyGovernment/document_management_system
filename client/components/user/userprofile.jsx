@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
@@ -10,13 +11,33 @@ import * as actions from '../../actions/userActions';
  * @extends {Component}
  */
 class UserProfile extends Component {
+
+  /**
+   * Creates an instance of AllUsers.
+   * @param {any} props property of component
+   * @param {any} context property of component
+   * @returns {*} no return value
+   * @memberof AllUsers
+   */
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {},
+    };
+  }
+
   /**
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
   componentWillMount() {
-    this.props.actions.getOneUser(this.props.id);
+    console.log('one user');
+    this.props.actions.getOneUser(this.state.user.id);
+    // if (this.props.match.params.id) {
+      // this.props.actions.getOneUser(this.props.match.params.id);
   }
+  // }
 
   /**
    * @desc Renders the user profile
@@ -31,12 +52,10 @@ class UserProfile extends Component {
             <div className="card">
               <div className="card-image" />
               <div className="card-content">
-                <h1 className="center">{user.firstName} {user.secondName}</h1>
-                <p className="center flow-text">Username: {user.username}</p>
+                <h1 className="center">{user.username} {}</h1>
+                <p className="center flow-text">Username: {user.firstName}</p>
+                <p className="center flow-text">Username: {user.secondName}</p>
                 <p className="center flow-text">Email: {user.email}</p>
-              </div>
-              <div className=" center card-action">
-                {/* <Link to={`/user/view/${user.id}`} className="waves-effect waves-light btn">Edit Your Profile</Link>*/}
               </div>
             </div>
           </div>
@@ -52,13 +71,12 @@ class UserProfile extends Component {
  * @param {any} ownProps
  * @returns {*} props
  */
-const mapStateToProps = (state, ownProps) => {
-  const userId = parseInt(ownProps.params.id, 10) || this.props.userId;
-  const user = state.users;
+const mapStateToProps = (state) => {
+  console.log(state, 'state');
+  const user = state.user;
 
   return (
-    user,
-    userId
+    user
   );
 };
 

@@ -21,8 +21,8 @@ class DocumentTasks extends Component {
    * @returns {*} no return value
    * @memberof DocumentTasks
    */
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
 
     this.deleteDocument = this.deleteDocument.bind(this);
   }

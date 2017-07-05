@@ -176,12 +176,6 @@ class UserController {
    * @return { object } - A res to the user
  */
   update(req, res) {
-    if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({
-        message: 'Please make changes in order to update this user.',
-      });
-    }
-
     const updateData = req.body;
     return User
       .update(updateData,
@@ -190,9 +184,12 @@ class UserController {
           id: req.params.id,
         },
       })
-      .then(() => res.status(200).json({
-        message: 'Your changes have been successfully applied',
-      }))
+      .then(user =>
+      res.status(201).json({
+        user,
+        message: 'User Successfully updated!',
+      }),
+      )
       .catch(error => res.status(400).json(error));
   }
 

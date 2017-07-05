@@ -17,8 +17,8 @@ export default (
     <div>
       <App>
         <Switch>
+          <Route path="/users/:id" component={EditUserProfile} />
           <Route path="/users" component={requireAdminRole(AllUsers)} />
-          {/* <Route path="/user/:id" component={requireAdminRole(EditUserProfile)} />*/}
           <Route path="/documents" component={requireAuth(AllDocuments)} />
           <Route path="/document/:id" component={requireAuth(ManageDocument)} />
           <Route path="/document" component={requireAuth(ManageDocument)} />

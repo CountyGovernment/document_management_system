@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, browserHistory } from 'react-router';
+import { Link, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
@@ -23,6 +23,7 @@ class EditUserProfile extends Component {
       user: Object.assign({}, this.props.user),
       errors: {},
       saving: false,
+      redirect: false,
     };
   }
 
@@ -31,8 +32,12 @@ class EditUserProfile extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    if (this.props.userId) {
-      this.props.userActions.getOneUser(this.props.userId);
+    // if (this.props.userId) {
+    //   this.props.userActions.getOneUser(this.props.userId);
+    // }
+    if (this.props.match.params.id) {
+      console.log('this.props.match.params.id', this.props.match.params.id);
+      this.props.userActions.getOneUser(this.props.match.params.id);
     }
   }
 
@@ -41,7 +46,7 @@ class EditUserProfile extends Component {
    * @returns {null} returns no value
    */
   componentWillReceiveProps(nextProps) {
-    if (this.props.user.id !== nextProps.user.id) {
+    if (this.props.match.params.id !== nextProps.user.id) {
       // Necessary to repopulate the form when document is loaded directly
       this.setState({ user: Object.assign({}, nextProps.user) });
     }
@@ -55,9 +60,8 @@ class EditUserProfile extends Component {
   updateUserState(event) {
     const field = event.target.name;
     const user = this.state.user;
-
     user[field] = event.target.value;
-    user.id = this.props.userId;
+    // user.id = this.props.userId;
     return this.setState({ user });
   }
 
@@ -72,7 +76,10 @@ class EditUserProfile extends Component {
       saving: true,
     });
     this.props.userActions.updateUser(this.state.user.id, this.state.user)
-    .then(() => this.redirect())
+    .then(() => this.setState({ saving: false }))
+    .then(() => this.props.userActions.getOneUser(this.state.user.id),
+                toastr.success('User updated!'))
+    .then(() => this.setState({ redirect: true }))
     .catch(() => {
       this.setState({ saving: false });
       toastr.error(this.props.message);
@@ -85,6 +92,10 @@ class EditUserProfile extends Component {
    * @return {object} html
    */
   render() {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to="/users" />;
+    }
     const { user } = this.props;
 
     return (
@@ -145,7 +156,7 @@ class EditUserProfile extends Component {
                         name="email"
                         type="email"
                         value={user.email}
-                        disabled
+                        onChange={this.updateUserState}
                         placeholder="Your email here"
                         required
                       />
@@ -161,10 +172,6 @@ class EditUserProfile extends Component {
                           onClick={this.updateProfile}
                           className="btn waves-effect waves-light col s2 offset-s5 pink darken-1"
                         />
-
-                        <Link to="/dashboard" className="right btn red">
-                          Cancel
-                        </Link>
                       </div>
                     </div>
                   </div>
@@ -184,32 +191,22 @@ class EditUserProfile extends Component {
 EditUserProfile.propTypes = {
   userActions: PropTypes.object.isRequired,
   user: PropTypes.object,
-  userId: PropTypes.number.isRequired,
+  // userId: PropTypes.number.isRequired,
   message: PropTypes.string,
 };
 
-
 /**
- *  map state to props
  *
- * @param {state} state
- * @returns {object} props
+ * @param {any} state
+ * @returns {*} props
  */
-function mapStateToProps(state, ownProps) {
-  const userId = ownProps.params.id;
-  let user = { id: '', firstName: '', secondName: '', username: '', email: '', password: '' };
-
-  if (userId && (state.user.length > 0)) {
-    user = state.user;
-  }
-
+const mapStateToProps = (state) => {
   return {
-    user,
-    userId,
-    message: state.message,
+    user: state.user,
+    // userId: state.user.id,
     isAuthenticated: state.isAuth.isAuthenticated,
   };
-}
+};
 
 /**
  * @param {any} dispatch
