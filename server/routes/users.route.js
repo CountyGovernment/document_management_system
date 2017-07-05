@@ -39,6 +39,9 @@ Router.route('/users')
 Router.route('/users/login')
   .post(User.login);
 
+Router.route('/users/logout')
+  .post(User.logout);
+
 /* /users routes */
 Router.route('/users')
   .get(Authenticate.validateToken, User.list);
