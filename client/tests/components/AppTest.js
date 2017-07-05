@@ -21,10 +21,3 @@ import App from '../components/AppTest';
 //     expect(wrapper.find('Header').length).toBe(0);
 //   });
 // });
-
-describe('<MyComponent />', () => {
-  it('should render three <Foo /> components', () => {
-    const wrapper = shallow(<App />);
-    expect(wrapper.find('div').props().className).toBe('container-fluid');
-  });
-});

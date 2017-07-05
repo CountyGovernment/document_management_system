@@ -1,17 +1,18 @@
 import expect from 'expect';
 import { createStore } from 'redux';
+import DocumentReducer from '../../reducers/documentsReducer';
 import rootReducer from '../../reducers/rootReducer';
 import initialState from '../../reducers/initialState';
 import * as documentActions from '../../actions/documentActions';
 import * as userActions from '../../actions/userActions';
 
-describe('Store', () => {
+describe('Document Reducer', () => {
   it('should return a list of all documents.', () => {
     const store = createStore(rootReducer, initialState);
 
     const documents = [
-      { title: 'title3' },
-      { title: 'titl5' },
+      { title: 'title 3' },
+      { title: 'title 5' },
     ];
 
     const action = documentActions.getDocumentSuccess(documents);
@@ -54,9 +55,24 @@ describe('Store', () => {
     store.dispatch(action);
 
     const actual = store.getState().documents;
-    const expected = [
-      { id: '1', title: 'kool' },
+    const expected = [];
+
+    expect(actual).toEqual(expected);
+  });
+
+  it('should return a list of all searched documents.', () => {
+    const store = createStore(rootReducer, initialState);
+
+    const documents = [
+      { title: ' title 1' },
+      { title: 'title 2' },
     ];
+
+    const action = documentActions.searchDocumentsSuccess(documents);
+    store.dispatch(action);
+
+    const actual = store.getState().documents;
+    const expected = documents;
 
     expect(actual).toEqual(expected);
   });

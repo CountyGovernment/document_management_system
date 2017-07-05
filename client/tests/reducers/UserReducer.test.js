@@ -5,40 +5,19 @@ import rootReducer from '../../reducers/rootReducer';
 import initialState from '../../reducers/initialState';
 import * as actions from '../../actions/userActions';
 
-describe('User reducer', () => {
-  it('should return a list of all users.', () => {
+describe('Find one user reducer', () => {
+  it('should return a user.', () => {
     const store = createStore(rootReducer, initialState);
 
-    const users = [
-      { username: 'Ade' },
-      { username: 'Admin' },
-    ];
+    const user = {
+      0: { username: 't100' },
+    };
 
-    const action = actions.getUserSuccess(users);
+    const action = actions.getOneUserSuccess(user);
     store.dispatch(action);
 
-    const actual = store.getState().users;
-    const expected = users;
-
-    expect(actual).toEqual(expected);
-    expect(typeof actual).toBe('object');
-  });
-
-  it('should create a new user.', () => {
-    const store = createStore(rootReducer, initialState);
-
-    const users = [
-      { username: 'Will' },
-      { username: 'Way' },
-    ];
-
-    const newUser = { username: 'Spiderman' };
-
-    const action = actions.createUserSuccess(newUser);
-    store.dispatch(action);
-
-    const actual = store.getState().users;
-    const expected = [newUser];
+    const actual = store.getState().user;
+    const expected = user;
 
     expect(actual).toEqual(expected);
     expect(typeof actual).toBe('object');

@@ -34,17 +34,6 @@
 
 //   it('shows edit dialog for documents', () => {
 //     const wrapper = shallow(<CreateDocument
-//       document={{ docContent: { _id: '1',
-//         title: 'Hey',
-//         content: 'Test document content',
-//         role: '938',
-//         ownerId: '78',
-//         ownerEmail: 'joy.warugu@gmail.com',
-//         ownerName: 'joy warugu',
-//         roleTitle: 'user',
-//         accessLevel: 'public' },
-//         isShowingDialog: true,
-//         isUpdatingDoc: true }}
 //     />);
 //     expect(wrapper.find(Dialog)).to.be.defined;
 //     expect(wrapper.find(Dialog).props().title).to.eql('Edit Document');
