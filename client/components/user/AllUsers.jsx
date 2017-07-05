@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 import UserList from './UserList';
-import UserActionBar from './UserActionBar';
+import UserSearch from './UserSearch';
 import * as actions from '../../actions/userActions';
 
 /**
@@ -24,13 +24,10 @@ class AllUsers extends Component {
   constructor(props, context) {
     super(props, context);
 
-    this.redirectToManageUser = this.redirectToManageUser.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
 
     this.state = {
       users: [],
-      searchResults: [],
-      roleType: '',
       search: '',
       offset: 0,
     };
@@ -41,11 +38,9 @@ class AllUsers extends Component {
    * @returns {null} returns no value
    */
   componentWillMount() {
-    // if (this.props.isAuth.isAuthenticated) {
-      // if (true) {
-    this.props.actions.getAllUsers(this.props.users);
-      // }
-    // }
+    if (this.props.isAuth.isAuthenticated) {
+      this.props.actions.getAllUsers(this.props.users);
+    }
   }
 
   /**
@@ -60,32 +55,13 @@ class AllUsers extends Component {
   }
 
   /**
-   * @desc handles the redirecting to the manage documents page
-   * @returns {null} returns no value
-   */
-  redirectToManageUser() {
-    browserHistory.push('/user');
-  }
-
-  /**
    * React Render
    * @return {object} html
    */
   render() {
-    const { users, searchResults, metaData } = this.props;
+    const { users, metaData } = this.props;
 
     if (users) {
-      let filteredUsers;
-      if (this.state.search !== '') {
-        filteredUsers = searchResults;
-      } else if (this.state.roleType === ''
-        || this.state.roleType === 'All') {
-        filteredUsers = users;
-      } else {
-        filteredUsers = users.filter(user =>
-          user.roleId === parseInt(this.state.roleType, 10),
-        );
-      }
       return (
         <div className="section">
           <div className="container">
@@ -97,9 +73,7 @@ class AllUsers extends Component {
               </div>
             </div>
 
-            <UserActionBar
-              clearSearch={this.clearSearch}
-              onRoleChange={this.onRoleChange}
+            <UserSearch
               onSearchChange={this.onSearchChange}
             />
 
@@ -127,7 +101,6 @@ class AllUsers extends Component {
  */
 AllUsers.propTypes = {
   users: PropTypes.array,
-  searchResults: PropTypes.array,
   loggedInUserID: PropTypes.number,
   search: PropTypes.string,
   message: PropTypes.string,
@@ -143,7 +116,6 @@ AllUsers.propTypes = {
 const mapStateToProps = state => ({
   isAuth: state.isAuth,
   message: state.message,
-  searchResults: state.searchResults.users,
   users: state.users,
   metaData: state.users.metaData,
   loggedInUserID: state.isAuth.loggedInUser.id,

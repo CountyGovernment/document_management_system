@@ -17,6 +17,9 @@ export default (state = initialState.users, action) => {
         Object.assign({}, action.user),
       ];
 
+    case types.SEARCH_USERS_SUCCESS:
+      return action.users;
+
     default:
       return state;
   }

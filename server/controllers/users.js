@@ -230,17 +230,15 @@ class UserController {
       return User
         .findAll({
           where: {
-            username: {
-              $iLike: `%${req.query.q}%`,
-            },
+            username: { $iLike: `%${req.query.q}%` },
           },
         })
         .then((user) => {
-          if (user.length === 0) {
-            return res.status(404).json({
-              message: 'We could not find this user',
-            });
-          }
+          // if (user.length === 0) {
+          //   return res.status(404).json({
+          //     message: 'We could not find this user',
+          //   });
+          // }
           return res.status(200).json(user);
         })
         .catch(error => res.status(400).json(error));

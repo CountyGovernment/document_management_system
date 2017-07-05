@@ -9,13 +9,16 @@ const UserList = ({ user, roles }) =>
   (<div className="col s12 m6 l4">
     <div className="card medium hoverable z-depth-5">
       <div className="card-content">
-        <h4>{user.firstName} {user.secondName}</h4>
+        <h4>{user.username}</h4>
         <hr />
         <div className="col s12 light">
-          <b>Email:</b> {user.email}
+          <b>FirstName:</b> {user.firstName}
         </div>
         <div className="col s12 light">
-          <b>Username:</b> {user.username}
+          <b>Username:</b> {user.secondName}
+        </div>
+        <div className="col s12 light">
+          <b>Email:</b> {user.email}
         </div>
         <div className="col s12 light">
           <b>Role:</b> {roles.filter(role =>

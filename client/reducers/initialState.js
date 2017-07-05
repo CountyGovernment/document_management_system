@@ -7,7 +7,6 @@ export default {
     loggedInUser: null,
   },
   document: {},
-  searchResults: [],
   message: null,
   loggedInUserDocuments: [],
 };

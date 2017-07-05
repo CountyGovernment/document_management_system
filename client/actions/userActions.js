@@ -28,11 +28,10 @@ export function signoutUser(user) {
   return { type: types.SIGNOUT_USER, user };
 }
 
-export function search(queryString) {
-  return dispatch => axios.get(`/api/search/users/?search=${queryString}`)
+export function search(username) {
+  return dispatch => axios.get(`/api/search/users/?q=${username}`)
   .then((response) => {
-    dispatch(passSuccessMessage(response.data.message));
-    dispatch(searchUsersSuccess(response.data.users));
+    dispatch(searchUsersSuccess(response.data));
   })
   .catch((error) => {
     dispatch(passFailureMessage(error.response.data.message));

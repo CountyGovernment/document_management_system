@@ -58,7 +58,7 @@ Router.route('/users/:id/documents')
   .get(Authenticate.validateToken, User.findUserDocs);
 
 /* search/users routes */
-Router.route('/search/users')
+Router.route('/search/users/')
   .get(Authenticate.validateToken, User.findByName);
 
 
