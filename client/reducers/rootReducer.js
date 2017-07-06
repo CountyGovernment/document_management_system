@@ -7,6 +7,7 @@ import documents from './documentsReducer';
 import message from './messageReducer';
 import isAuth from './authUserReducer';
 import loggedInUserDocuments from './loggedInUserDocumentsReducer';
+import paginatedDocuments from './documentPaginationReducer';
 
 const rootReducer = combineReducers({
   users,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   message,
   isAuth,
   loggedInUserDocuments,
+  paginatedDocuments,
 });
 
 export default rootReducer;

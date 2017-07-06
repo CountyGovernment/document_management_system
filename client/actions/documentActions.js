@@ -48,6 +48,10 @@ export function getDocumentSuccess(documents) {
   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
 }
 
+export function getPaginateDocumentSuccess(paginatedDocuments) {
+  return { type: types.GET_PAGINATE_DOCUMENTS_SUCCESS, paginatedDocuments };
+}
+
 export function getOneDocumentSuccess(document) {
   return { type: types.GET_ONE_DOCUMENT_SUCCESS, document };
 }
@@ -117,6 +121,15 @@ export function getAllDocuments(documents) {
     });
 }
 
+export function paginateDocuments(documents, limit, offset) {
+  return dispatch => axios.get(`/api/documents/?limit=${limit}&offset=${offset}`, documents)
+    .then((response) => {
+      dispatch(getPaginateDocumentSuccess(response.data));
+    })
+    .catch((error) => {
+      dispatch(passFailureMessage(error.response));
+    });
+}
 
 /**
  * @desc fetch all documents for a user via GET /api/users/:id/documents/

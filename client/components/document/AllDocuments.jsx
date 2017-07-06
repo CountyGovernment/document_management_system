@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import toastr from 'toastr';
+import Pagination from 'react-js-pagination';
 import DocumentList from './DocumentList';
 import DocumentSearch from './DocumentSearch';
 import * as actions from '../../actions/documentActions';
@@ -26,10 +27,14 @@ class AllDocuments extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+
     this.state = {
       documents: [],
       search: '',
       offset: 0,
+      activePage: 1,
+      limit: 3,
     };
   }
 
@@ -40,6 +45,7 @@ class AllDocuments extends Component {
   componentWillMount() {
     if (this.props.isAuth.isAuthenticated) {
       this.props.actions.getAllDocuments(this.props.documents);
+      this.props.actions.paginateDocuments(this.props.documents, this.state.limit, this.state.offset);
     }
   }
 
@@ -56,6 +62,10 @@ class AllDocuments extends Component {
     });
   }
 
+  handlePageChange(pageNumber) {
+    this.setState({ activePage: pageNumber });
+    this.props.actions.paginateDocuments(this.props.documents, this.state.limit, (this.state.limit * (this.state.activePage - 1)));
+  }
 
   /**
    * @desc handles the redirecting to the manage documents page
@@ -70,6 +80,8 @@ class AllDocuments extends Component {
    * @return {*} render the Document holder
    */
   render() {
+    const totalItems = this.props.documents;
+    const paginatedDocuments = this.props.paginatedDocuments;
     const { documents, metaData } = this.props;
     if (!documents || this.props.message === 'no document found') {
       return (
@@ -117,7 +129,7 @@ class AllDocuments extends Component {
 
             <div className="row">
               <div className="col s12">
-                {documents.map(document =>
+                {paginatedDocuments.map(document =>
                   (<DocumentList
                     loggedInUserID={this.props.loggedInUserID.id}
                     key={document.id}
@@ -126,6 +138,12 @@ class AllDocuments extends Component {
                 )}
               </div>
             </div>
+            <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={this.state.limit}
+              totalItemsCount={totalItems}
+              onChange={this.handlePageChange}
+            />
           </div>
         </div>
       );
@@ -142,6 +160,7 @@ AllDocuments.propTypes = {
   search: PropTypes.string,
   message: PropTypes.string,
   actions: PropTypes.object,
+  paginatedDocuments: PropTypes.array,
 };
 
 /**
@@ -153,9 +172,10 @@ function mapStateToProps(state) {
   return {
     isAuth: state.isAuth,
     message: state.message,
-    documents: state.documents,
+    documents: state.documents.length,
     metaData: state.documents.metaData,
     loggedInUserID: state.isAuth.loggedInUser,
+    paginatedDocuments: state.paginatedDocuments,
   };
 }
 

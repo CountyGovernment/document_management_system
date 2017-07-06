@@ -10,4 +10,5 @@ export default {
   document: {},
   message: null,
   loggedInUserDocuments: [],
+  paginatedDocuments: [],
 };
