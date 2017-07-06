@@ -1,10 +1,10 @@
 import expect from 'expect';
 import { createStore } from 'redux';
-import loggedInUserDocumentsReducer from '../../reducers/loggedInUserDocumentsReducer';
-import rootReducer from '../../reducers/rootReducer';
-import initialState from '../../reducers/initialState';
-import * as documentActions from '../../actions/documentActions';
-import * as userActions from '../../actions/userActions';
+import loggedInUserDocumentsReducer from '../../reducers/LoggedInUserDocumentsReducer';
+import rootReducer from '../../reducers/RootReducer';
+import initialState from '../../reducers/InitialState';
+import * as documentActions from '../../actions/DocumentActions';
+import * as userActions from '../../actions/UserActions';
 
 describe('LoggedInUserDocuments Reducer', () => {
   it('should return a list of all documents by the user', () => {

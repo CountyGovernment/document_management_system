@@ -6,7 +6,7 @@ import { browserHistory } from 'react-router';
 import toastr from 'toastr';
 import UserList from './UserList';
 import UserSearch from './UserSearch';
-import * as actions from '../../actions/userActions';
+import * as actions from '../../actions/UserActions';
 
 /**
  * @desc component used to display all users

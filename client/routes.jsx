@@ -8,9 +8,8 @@ import AllUsers from './components/user/AllUsers';
 import EditUserProfile from './components/user/EditUserProfiles';
 import AllDocuments from './components/document/AllDocuments';
 import ManageDocument from './components/document/ManageDocuments';
-import requireAuth from './utils/requireAuthentication';
-import requireAdminRole from './utils/requireAdminRole';
-// import DocumentList from './components/document/DocumentList';
+import requireAuth from './utils/RequireAuthentication';
+import requireAdminRole from './utils/RequireAdminRole';
 
 export default (
   <Router>

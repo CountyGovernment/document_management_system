@@ -24,16 +24,12 @@ export default function (ComposedComponent) {
     componentWillMount() {
       if (!this.props.isAuthenticated) {
         toastr.error('You need to login to access this page');
-        // return this.redirectToLogin;
         this.setState({ redirect: true });
       }
     }
 
     componentWillUpdate(nextProps) {
-      console.log('testing auth ////////////');
       if (!nextProps.isAuthenticated) {
-        // return this.redirectToLogin;
-        // this.setState({ redirect: true });
         <Redirect to="/login" />;
       }
     }

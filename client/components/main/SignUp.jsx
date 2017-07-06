@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import toastr from 'toastr';
 import SignupForm from './SignupForm';
-import * as userActions from '../../actions/userActions';
+import * as userActions from '../../actions/UserActions';
 
 /**
  * @desc component used to display the signup component

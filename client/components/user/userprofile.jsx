@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { bindActionCreators } from 'redux';
-import * as actions from '../../actions/userActions';
+import * as actions from '../../actions/UserActions';
 
 /**
  * @desc component used to display the user profile

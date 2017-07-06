@@ -15,19 +15,10 @@ const UserList = ({ user, roles }) =>
           <b>FirstName:</b> {user.firstName}
         </div>
         <div className="col s12 light">
-          <b>Username:</b> {user.secondName}
+          <b>SecondName:</b> {user.secondName}
         </div>
         <div className="col s12 light">
           <b>Email:</b> {user.email}
-        </div>
-        <div className="col s12 light">
-          <b>Role:</b> {roles.filter(role =>
-            role.id === user.roleId,
-          ).map(role =>
-            (<span key={role.id}>
-              {role.title}
-            </span>),
-          )}
         </div>
         <div className="col s12 light">
           <b>Joined on:</b> {user.createdAt.slice(0, 10)}

@@ -1,9 +1,9 @@
 import expect from 'expect';
 import { createStore } from 'redux';
-import userReducer from '../../reducers/userReducer';
-import rootReducer from '../../reducers/rootReducer';
-import initialState from '../../reducers/initialState';
-import * as actions from '../../actions/userActions';
+import userReducer from '../../reducers/UserReducer';
+import rootReducer from '../../reducers/RootReducer';
+import initialState from '../../reducers/InitialState';
+import * as actions from '../../actions/UserActions';
 
 describe('Find one user reducer', () => {
   it('should return a user.', () => {

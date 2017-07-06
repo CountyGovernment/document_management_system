@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as types from './actionTypes';
+import * as types from './ActionTypes';
 
 export default function getRoleSuccess(roles) {
   return { type: types.GET_ALL_ROLES_SUCCESS, roles };

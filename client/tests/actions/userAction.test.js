@@ -2,8 +2,8 @@ import expect from 'expect';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 import configureMockStore from 'redux-mock-store';
-import * as types from '../../actions/actionTypes';
-import * as userAction from '../../actions/userActions';
+import * as types from '../../actions/ActionTypes';
+import * as userAction from '../../actions/UserActions';
 
 
 describe('User action', () => {

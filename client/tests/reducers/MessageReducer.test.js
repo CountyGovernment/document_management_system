@@ -1,9 +1,9 @@
 import expect from 'expect';
 import { createStore } from 'redux';
-import rootReducer from '../../reducers/rootReducer';
-import initialState from '../../reducers/initialState';
-import * as actions from '../../actions/documentActions';
-import * as userActions from '../../actions/userActions';
+import rootReducer from '../../reducers/RootReducer';
+import initialState from '../../reducers/InitialState';
+import * as actions from '../../actions/DocumentActions';
+import * as userActions from '../../actions/UserActions';
 
 describe('Message reducer', () => {
   it('should add a success message when a document is created.', () => {

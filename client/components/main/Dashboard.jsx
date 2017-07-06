@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect, Link } from 'react-router';
 import toastr from 'toastr';
-import * as userActions from '../../actions/userActions';
+import * as userActions from '../../actions/UserActions';
 import DocumentList from '../document/DocumentList';
 import DocumentSearch from '../document/DocumentSearch';
-import * as actions from '../../actions/documentActions';
+import * as actions from '../../actions/DocumentActions';
 
 /**
  * @desc component used to display user's documents

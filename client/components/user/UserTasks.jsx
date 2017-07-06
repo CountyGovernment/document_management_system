@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import swal from 'sweetalert';
-import * as userActions from '../../actions/userActions';
+import * as userActions from '../../actions/UserActions';
 
 /**
  * @desc component used to display the user tasks

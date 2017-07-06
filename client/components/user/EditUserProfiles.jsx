@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import toastr from 'toastr';
-import * as userActions from '../../actions/userActions';
+import * as userActions from '../../actions/UserActions';
 
 class EditUserProfile extends Component {
   /**
@@ -123,7 +123,7 @@ class EditUserProfile extends Component {
 
                   <div className="row">
                     <div className="col s6 offset-s3">
-                      <p className="flow-text">secondName:</p>
+                      <p className="flow-text">SecondName:</p>
                       <input
                         name="lastname"
                         type="text"
@@ -170,7 +170,7 @@ class EditUserProfile extends Component {
                           id="updateProfile"
                           type="submit"
                           onClick={this.updateProfile}
-                          className="btn waves-effect waves-light col s2 offset-s5 pink darken-1"
+                          className="btn waves-effect waves-light col s2 offset-s5 green darken-1"
                         />
                       </div>
                     </div>

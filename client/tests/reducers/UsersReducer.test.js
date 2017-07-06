@@ -1,9 +1,9 @@
 import expect from 'expect';
 import { createStore } from 'redux';
-import usersReducer from '../../reducers/usersReducer';
-import rootReducer from '../../reducers/rootReducer';
-import initialState from '../../reducers/initialState';
-import * as actions from '../../actions/userActions';
+import usersReducer from '../../reducers/UsersReducer';
+import rootReducer from '../../reducers/RootReducer';
+import initialState from '../../reducers/InitialState';
+import * as actions from '../../actions/UserActions';
 
 describe('User reducer', () => {
   it('should return a list of all users.', () => {

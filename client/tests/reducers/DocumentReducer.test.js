@@ -1,79 +1,25 @@
 import expect from 'expect';
 import { createStore } from 'redux';
-import DocumentReducer from '../../reducers/documentsReducer';
-import rootReducer from '../../reducers/rootReducer';
-import initialState from '../../reducers/initialState';
-import * as documentActions from '../../actions/documentActions';
-import * as userActions from '../../actions/userActions';
+import docReducer from '../../reducers/DocumentReducer';
+import rootReducer from '../../reducers/RootReducer';
+import initialState from '../../reducers/InitialState';
+import * as actions from '../../actions/DocumentActions';
 
-describe('Document Reducer', () => {
-  it('should return a list of all documents.', () => {
+describe('Find one document reducer', () => {
+  it('should return a document.', () => {
     const store = createStore(rootReducer, initialState);
 
-    const documents = [
-      { title: 'title 3' },
-      { title: 'title 5' },
-    ];
-
-    const action = documentActions.getDocumentSuccess(documents);
-    store.dispatch(action);
-
-    const actual = store.getState().documents;
-    const expected = documents;
-
-    expect(actual).toEqual(expected);
-    expect(typeof actual).toBe('object');
-  });
-
-  it('Should handle creating documents', () => {
-    const store = createStore(rootReducer, initialState);
     const document = {
-      title: 'x titlt',
-      content: 'x content',
-      access: 'public',
+      0: { title: 't105' },
     };
 
-    const action = documentActions.createDocumentSuccess(document);
+    const action = actions.getOneDocumentSuccess(document);
     store.dispatch(action);
 
-    const actual = store.getState().documents[0];
+    const actual = store.getState().document;
     const expected = document;
 
     expect(actual).toEqual(expected);
-  });
-
-  it('Should handle updating documents', () => {
-    const store = createStore(rootReducer, initialState);
-    const documents = [
-      { id: '1', title: 'kool kat' },
-      { id: '2', title: 'slimey' },
-    ];
-
-    const document = { id: '1', title: 'kool' };
-
-    const action = documentActions.updateDocumentSuccess(document);
-    store.dispatch(action);
-
-    const actual = store.getState().documents;
-    const expected = [];
-
-    expect(actual).toEqual(expected);
-  });
-
-  it('should return a list of all searched documents.', () => {
-    const store = createStore(rootReducer, initialState);
-
-    const documents = [
-      { title: ' title 1' },
-      { title: 'title 2' },
-    ];
-
-    const action = documentActions.searchDocumentsSuccess(documents);
-    store.dispatch(action);
-
-    const actual = store.getState().documents;
-    const expected = documents;
-
-    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('object');
   });
 });

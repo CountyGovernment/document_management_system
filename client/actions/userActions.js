@@ -1,7 +1,7 @@
 import axios from 'axios';
 // import jwtDecode from 'jwt-decode';
-import * as types from './actionTypes';
-import setAuthorizationToken from '../utils/authentication';
+import * as types from './ActionTypes';
+import setAuthorizationToken from '../utils/Authentication';
 
 export function passSuccessMessage(successMessage) {
   return { type: types.SUCCESS_MESSAGE, successMessage };

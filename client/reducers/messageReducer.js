@@ -1,5 +1,5 @@
-import initialState from './initialState';
-import * as types from '../actions/actionTypes';
+import initialState from './InitialState';
+import * as types from '../actions/ActionTypes';
 
 /**
  * Message reducer

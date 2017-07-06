@@ -7,7 +7,7 @@ import toastr from 'toastr';
 import Pagination from 'react-js-pagination';
 import DocumentList from './DocumentList';
 import DocumentSearch from './DocumentSearch';
-import * as actions from '../../actions/documentActions';
+import * as actions from '../../actions/DocumentActions';
 
 /**
  * @desc component used to display all public documents
@@ -155,7 +155,7 @@ class AllDocuments extends Component {
  * @desc Set the PropTypes
  */
 AllDocuments.propTypes = {
-  documents: PropTypes.array,
+  documents: PropTypes.number,
   loggedInUserID: PropTypes.object,
   search: PropTypes.string,
   message: PropTypes.string,

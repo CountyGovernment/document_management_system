@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import swal from 'sweetalert';
 import toastr from 'toastr';
-import * as documentActions from '../../actions/documentActions';
+import * as documentActions from '../../actions/DocumentActions';
 
 /**
  * @desc component used to display document tasks
