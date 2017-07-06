@@ -45,7 +45,7 @@ class AllDocuments extends Component {
   componentWillMount() {
     if (this.props.isAuth.isAuthenticated) {
       this.props.actions.getAllDocuments(this.props.documents);
-      this.props.actions.paginateDocuments(this.props.documents, this.state.limit, this.state.offset);
+      this.props.actions.paginateDocuments(this.state.limit, this.state.offset);
     }
   }
 
@@ -64,7 +64,7 @@ class AllDocuments extends Component {
 
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-    this.props.actions.paginateDocuments(this.props.documents, this.state.limit, (this.state.limit * (this.state.activePage - 1)));
+    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (this.state.activePage - 1)));
   }
 
   /**

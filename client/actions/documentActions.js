@@ -121,8 +121,8 @@ export function getAllDocuments(documents) {
     });
 }
 
-export function paginateDocuments(documents, limit, offset) {
-  return dispatch => axios.get(`/api/documents/?limit=${limit}&offset=${offset}`, documents)
+export function paginateDocuments(limit, offset) {
+  return dispatch => axios.get(`/api/documents/?limit=${limit}&offset=${offset}`)
     .then((response) => {
       dispatch(getPaginateDocumentSuccess(response.data));
     })
