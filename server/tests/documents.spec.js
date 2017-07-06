@@ -4,43 +4,56 @@ process.env.NODE_ENV = 'test';
 // Dev Dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const expect = require('chai');
-// const expect = require('expect');
+// const expect = require('chai');
+const expect = require('expect');
 const server = require('../../app');
 
 const should = chai.should();
 chai.use(chaiHttp);
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoyLCJpZCI6NCwiaWF0IjoxNDk4NzE2NDM1LCJleHAiOjE0OTg4MDI4MzV9.nzD-I159iBkeErxvphuwTq7Xrh9gEIBTrJPSB2Rrk3Q';
 
-// describe('before login', () => {
-//   it('asserts that documents cannot be accessed if not logged in', (done) => {
-//     chai.request(server)
-//       .get('/api/documents')
-//       .end((err, res) => {
-//         expect(res.body.message).to.equal('Token required to access this route');
-//         done();
-//       });
-//   });
-// });
+let token = '';
+describe('before login', () => {
+  it('asserts that documents cannot be accessed if not logged in', (done) => {
+    chai.request(server)
+      .get('/api/documents')
+      .end((err, res) => {
+        expect(res.body.message).toBe('Token required to access this route');
+        done();
+      });
+  });
+});
 
-describe('documents', () => {
-  // before((done) => {
-  //   const admin = {
-  //     email: 'spiderman@gmail.com',
-  //     password: 'spidey33',
-  //   };
-  //   chai.request(server)
-  //   .get('/api/users/login')
-  //   .send(admin)
-  //   .end((err, res) => {
-  //     token = res.body.token;
-  //   });
+describe('documents contoller methods', () => {
+  chai.request(server)
+  .post('/api/users')
+  .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roleId: '1' })
+  .then((res) => {
+    // console.log('got here');
+    // console.log('res >>>>', res.body);
+  });
 
-  //   const regular = {
-  //     email: 'blackpanther@gmail.com',
-  //     password: 'blackpanther33',
-  //   };
+
+  beforeEach('login', (done) => {
+    const admin = {
+      email: 'tester@gmail.com',
+      password: 'tester',
+    };
+    chai.request(server)
+      .post('/api/users/login')
+      .send(admin)
+      .end((err, res) => {
+        // console.log('res >>>>>>>>>', res.body);
+        token = res.body.token;
+        // console.log('token', token);
+        done();
+      });
+  });
+
+    // const regular = {
+    //   email: 'blackpanther@gmail.com',
+    //   password: 'blackpanther33',
+    // };
   //   chai.request(server)
   //   .get('/api/users/login')
   //   .send(regular)
@@ -74,7 +87,7 @@ describe('documents', () => {
         title: 'Girl with the dragon tattoo',
         content: 'Be a great hacker and steal from rich folks',
         access: 'public',
-        userId: 1,
+        userId: 4,
       };
       chai.request(server)
         .post('/api/documents')
@@ -127,14 +140,14 @@ describe('documents', () => {
   describe('/PUT/:id document', () => {
     it('it should UPDATE a document given the id', (done) => {
       const document = {
-        title: 'Wisdom',
+        title: 'Girl with the dragon tattoo update',
       };
       chai.request(server)
-        .put('/api/documents/2')
+        .put('/api/documents/7')
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Document Successfully updated!');
           done();
@@ -150,7 +163,7 @@ describe('documents', () => {
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Document Successfully updated!');
           done();
@@ -166,7 +179,7 @@ describe('documents', () => {
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
           res.body.should.have.property('message').eql('Document Successfully updated!');
           done();
@@ -190,22 +203,24 @@ describe('documents', () => {
    * Test the /GET/?title route
    */
   describe('/GET/?title search documents', () => {
-    it('it should not GET a document by the given title', (done) => {
-      chai.request(server)
-        .get('/api/search/documents/?q=people')
-        .end((err, res) => {
-          res.should.have.status(404);
-          res.body.should.have.property('message').eql('Document is not available');
-          done();
-        });
-    });
+    // it('it should not GET a document by the given title', (done) => {
+    //   chai.request(server)
+    //     .get('/api/search/documents/?q=people')
+    //     .set('authorization', token)
+    //     .end((err, res) => {
+    //       res.should.have.status(401);
+    //       res.body.should.have.property('message').eql('Document is not available');
+    //       done();
+    //     });
+    // });
 
     it('it should GET a document by the given title', (done) => {
       chai.request(server)
-        .get('/api/search/documents/?q=elixir')
+        .get('/api/search/documents/?q=Girl with the dragon tattoo')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
-          res.body[0].should.have.property('title').eql('elixir');
+          res.body[0].should.have.property('title').eql('Girl with the dragon tattoo');
           done();
         });
     });
@@ -217,22 +232,24 @@ describe('documents', () => {
   describe('/DELETE/:id document', () => {
     it('it should DELETE a document given the id', (done) => {
       chai.request(server)
-        .delete('/api/documents/4')
+        .delete('/api/documents/6')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Document successfully deleted');
+          res.body.should.have.property('message').eql('Document successfully deleted!');
           done();
         });
     });
 
     it('it should DELETE a document if an admin or owner is deleting it', (done) => {
       chai.request(server)
-        .delete('/api/documents/3')
+        .delete('/api/documents/5')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Document successfully deleted');
+          res.body.should.have.property('message').eql('Document successfully deleted!');
           done();
         });
     });

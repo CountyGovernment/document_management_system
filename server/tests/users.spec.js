@@ -10,7 +10,32 @@ const server = require('../../app');
 const should = chai.should();
 chai.use(chaiHttp);
 
-describe('Users', () => {
+let token = '';
+describe('Users controller methods', () => {
+  chai.request(server)
+    .post('/api/users')
+    .send({ username: 'tester2', firstName: 'tester2', secondName: 'tester2', email: 'tester2@gmail.com', password: 'tester2', roleId: '1' })
+    .then((res) => {
+      // console.log('got here');
+      // console.log('res >>>>', res.body);
+    });
+
+
+  beforeEach('login', (done) => {
+    const admin = {
+      email: 'tester2@gmail.com',
+      password: 'tester2',
+    };
+    chai.request(server)
+      .post('/api/users/login')
+      .send(admin)
+      .end((err, res) => {
+        // console.log('res >>>>>>>>>', res.body);
+        token = res.body.token;
+        // console.log('token', token);
+        done();
+      });
+  });
   /*
    * Test the /GET route
    */
@@ -18,6 +43,7 @@ describe('Users', () => {
     it('it should GET all users', (done) => {
       chai.request(server)
         .get('/api/users')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
@@ -32,6 +58,7 @@ describe('Users', () => {
     it('it should GET a user by the given id', (done) => {
       chai.request(server)
         .get('/api/users/2')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
@@ -56,11 +83,12 @@ describe('Users', () => {
       };
       chai.request(server)
         .put('/api/users/1')
+        .set('authorization', token)
         .send(user)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Your changes have been successfully applied');
+          res.body.should.have.property('message').eql('User Successfully updated!');
           done();
         });
     });
@@ -71,11 +99,12 @@ describe('Users', () => {
       };
       chai.request(server)
         .put('/api/users/1')
+        .set('authorization', token)
         .send(user)
         .end((err, res) => {
-          res.should.have.status(200);
+          res.should.have.status(201);
           res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Your changes have been successfully applied');
+          res.body.should.have.property('message').eql('User Successfully updated!');
           done();
         });
     });
@@ -88,6 +117,7 @@ describe('Users', () => {
     it('it should GET users based on query', (done) => {
       chai.request(server)
         .get('/api/users/?limit=1&offset=2')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           done();
@@ -102,6 +132,7 @@ describe('Users', () => {
     it('it should GET a user by the given username', (done) => {
       chai.request(server)
         .get('/api/search/users/?q=Batman')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body[0].should.have.property('username').eql('Batman');
@@ -117,6 +148,7 @@ describe('Users', () => {
     it('it should DELETE a user given the id if user is an admin', (done) => {
       chai.request(server)
         .delete('/api/users/3')
+        .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('object');
