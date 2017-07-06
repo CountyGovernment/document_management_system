@@ -9,8 +9,8 @@ class App extends Component {
     return (
       <div className="container-fluid">
         <Header />
-        {/*<Login />*/}
         {this.props.children}
+        {/*<Login />*/}
       </div>
     );
   }

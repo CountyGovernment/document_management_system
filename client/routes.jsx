@@ -24,7 +24,7 @@ export default (
           <Route path="/document" component={requireAuth(ManageDocument)} />
           <Route path="/signup" component={SignupPage} />
           <Route path="/dashboard" component={requireAuth(Dashboard)} />
-          <Route path="/login" component={Login} />
+          <Route path="/" component={Login} />
         </Switch>
       </App>
     </div>

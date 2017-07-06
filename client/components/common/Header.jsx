@@ -38,21 +38,18 @@ class Header extends Component {
       fontSize: 20,
     };
     return (
-      <div>
+      <div className="navbar-fixed">
         <nav>
-          <MuiThemeProvider>
-            <AppBar
-              title="Shelf"
-            >
-              <Link style={linkColor} to="/dashboard">Dashboard</Link>&nbsp;
-              <Link to="/users" style={linkColor}>Users</Link>&nbsp;
-              <Link style={linkColor} to="/documents">All Documents</Link>&nbsp;
-              <Link style={linkColor} to="/login">Login</Link>&nbsp;
-              <Link style={linkColor} to="/signup">Signup</Link>&nbsp;
-              <Link style={linkColor} to="/document">Document</Link>&nbsp;
-              <Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link>&nbsp;
-            </AppBar>
-          </MuiThemeProvider>
+          <div className="nav-wrapper">&nbsp;
+            <a href="#!" className="brand-logo"> SHELFDMS </a>
+            <ul className="right hide-on-med-and-down">
+              <li><a href="sass.html"><Link style={linkColor} to="/dashboard"> My Dashboard</Link></a></li>
+              <li><a href="badges.html"><Link style={linkColor} to="/document">Create a Document</Link></a></li>
+              <li><a href="collapsible.html"><Link style={linkColor} to="/documents">All Documents</Link></a></li>
+              <li><a href="sass.html"><Link to="/users" style={linkColor}> All Users</Link></a></li>
+              <li><a href="collapsible.html"><Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link></a></li>
+            </ul>
+          </div>
         </nav>
       </div>
     );
