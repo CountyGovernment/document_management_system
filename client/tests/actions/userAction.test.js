@@ -52,7 +52,7 @@ describe('sync actions', () => {
 
   it('handles search for a user', () => {
     const searchValue = 1;
-    const expectedAction = [{ type: types.SEARCH_USERs_SUCCESS, body: { users: [{ id: 7, username: 'ice' }] } }];
+    const expectedAction = [{ type: types.SEARCH_USERS_SUCCESS, body: { users: [{ id: 7, username: 'ice' }] } }];
     const store = mockStore({ users: [] }, expectedAction);
     store.dispatch(userAction.search(searchValue)).then(() => {
       const action = store.getAction();

@@ -82,36 +82,22 @@ class DocController {
    * @return { object } - A response to the user
  */
   find(req, res) {
-    if (req.decoded.data === 1) {
-      return Document
-        .findById(req.params.id)
-        .then((document) => {
-          if (!document) {
-            return res.status(404).json({
-              message: 'Document is not available',
-            });
-          }
-          return res.status(200).json(document);
-        })
-        .catch(error => res.status(400).json(error));
-    } else {
-      return Document
-        .findOne({
-          where: {
-            id: req.params.id,
-            userId: req.decoded.id,
-          },
-        })
-        .then((document) => {
-          if (!document) {
-            return res.status(404).json({
-              message: 'Document is not available',
-            });
-          }
-          return res.status(200).json(document);
-        })
-        .catch(error => res.status(400).json(error));
-    }
+    return Document
+      .findOne({
+        where: {
+          id: req.params.id,
+          userId: req.decoded.id,
+        },
+      })
+      .then((document) => {
+        if (!document) {
+          return res.status(404).json({
+            message: 'Document is not available',
+          });
+        }
+        return res.status(200).json(document);
+      })
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -182,11 +168,6 @@ class DocController {
    * @return { object } - A response to the user
  */
   update(req, res) {
-    if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({
-        message: 'No update detected',
-      });
-    }
     const updateDocument = req.body;
     return Document
       .update(updateDocument, {

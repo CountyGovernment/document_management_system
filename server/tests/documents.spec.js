@@ -82,7 +82,7 @@ describe('documents contoller methods', () => {
    * Test the /POST route
    */
   describe('/POST document', () => {
-    it('it should POST a document', (done) => {
+    it('it should create a document', (done) => {
       const document = {
         title: 'Girl with the dragon tattoo',
         content: 'Be a great hacker and steal from rich folks',
@@ -108,7 +108,7 @@ describe('documents contoller methods', () => {
   describe('/GET/:id document', () => {
     it('it should GET a document by the given id', (done) => {
       chai.request(server)
-        .get('/api/documents/1')
+        .get('/api/documents/7')
         .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
@@ -121,7 +121,7 @@ describe('documents contoller methods', () => {
         });
     });
 
-    it('it should not return a document', (done) => {
+    it('it should not return a document when id is invalid', (done) => {
       chai.request(server)
         .get('/api/documents/0')
         .set('authorization', token)
@@ -154,28 +154,12 @@ describe('documents contoller methods', () => {
         });
     });
 
-    it('it should UPDATE a document by the given id if an admin', (done) => {
-      const document = {
-        title: 'Knowledge',
-      };
-      chai.request(server)
-        .put('/api/documents/2')
-        .set('authorization', token)
-        .send(document)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('Document Successfully updated!');
-          done();
-        });
-    });
-
     it('it should UPDATE a document by the given id if userId matches owners id', (done) => {
       const document = {
-        title: 'Songs',
+        title: 'Girl with the dragon tattoo update',
       };
       chai.request(server)
-        .put('/api/documents/3')
+        .put('/api/documents/7')
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
@@ -220,6 +204,7 @@ describe('documents contoller methods', () => {
         .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.be.a('array');
           res.body[0].should.have.property('title').eql('Girl with the dragon tattoo');
           done();
         });
