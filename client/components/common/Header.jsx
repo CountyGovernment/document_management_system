@@ -17,6 +17,13 @@ class Header extends Component {
     this.resetState = this.resetState.bind(this);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.redirect && this.state.redirect) {
+      this.setState({ redirect: false });
+    }
+    console.log('Different important details', prevProps, prevState, this.state);
+  }
+
   onLogout(event) {
     event.preventDefault();
     this.props.userActions.logout();
@@ -34,7 +41,6 @@ class Header extends Component {
   render() {
     const { redirect } = this.state;
     if (redirect) {
-      this.resetState();
       return <Redirect to="/login" />;
     }
     const linkColor = {
