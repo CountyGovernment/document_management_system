@@ -82,7 +82,7 @@ describe('sync actions', () => {
     });
   });
 
-  it('handles deleting a user', () => {
+  it('handles deleting a document', () => {
     const deletedDocument = 1;
     const expectedAction = [{ type: types.DELETE_DOCUMENT_SUCCESS, body: { documents: [] } }];
     const store = mockStore({ documents: [] }, expectedAction);

@@ -75,7 +75,6 @@ export function createUser(user) {
 }
 
 export function login(user) {
-  console.log('action user', user);
   return dispatch => axios.post('api/users/login', user)
     .then((response) => {
       const token = response.data.token;
@@ -85,7 +84,6 @@ export function login(user) {
       dispatch(passSuccessMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
-      console.log('response', response.data);
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {

@@ -15,12 +15,14 @@ export default (state = initialState.isAuth, action) => {
       return Object.assign({}, state, {
         isAuthenticated: true,
         loggedInUser: action.user,
+        loggedInUserRole: action.user.data,
       });
 
     case types.LOGOUT_USER:
       return {
         isAuthenticated: false,
         loggedInUser: null,
+        loggedInUserRole: null,
       };
     default:
       return state;

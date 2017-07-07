@@ -11,7 +11,6 @@ class App extends Component {
       <div className="container-fluid">
         <Header />
         {this.props.children}
-        {/*<Login />*/}
         <Footer />
       </div>
     );

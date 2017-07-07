@@ -14,6 +14,7 @@ class Header extends Component {
     };
 
     this.onLogout = this.onLogout.bind(this);
+    this.resetState = this.resetState.bind(this);
   }
 
   onLogout(event) {
@@ -26,9 +27,14 @@ class Header extends Component {
     this.setState({ redirect: true });
   }
 
+  resetState() {
+    this.setState({ redirect: true });
+  }
+
   render() {
     const { redirect } = this.state;
     if (redirect) {
+      this.resetState();
       return <Redirect to="/login" />;
     }
     const linkColor = {
@@ -44,8 +50,8 @@ class Header extends Component {
               <li><a href="sass.html"><Link style={linkColor} to="/dashboard"> My Dashboard</Link></a></li>
               <li><a href="badges.html"><Link style={linkColor} to="/document">Create a Document</Link></a></li>
               <li><a href="collapsible.html"><Link style={linkColor} to="/documents">All Documents</Link></a></li>
-              <li><a href="sass.html"><Link to="/users" style={linkColor}> All Users</Link></a></li>
-              <li><a href="collapsible.html"><Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link></a></li>
+              <li><a href="sass.html">{this.props.isAdmin === 1 ? <Link to="/users" style={linkColor}> All Users</Link> : '' }</a></li>
+              <li><a href="collapsible.html">{this.props.isAuthenticated === true ? <Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link> : '' }</a></li>
             </ul>
           </div>
         </nav>
@@ -54,7 +60,14 @@ class Header extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return ({
+    isAuthenticated: state.isAuth.isAuthenticated,
+    isAdmin: state.isAuth.loggedInUserRole,
+  });
+};
+
 const mapDispatchToProps = dispatch => ({
   userActions: bindActionCreators(userActions, dispatch),
 });
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

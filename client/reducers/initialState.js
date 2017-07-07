@@ -6,6 +6,7 @@ export default {
   isAuth: {
     isAuthenticated: false,
     loggedInUser: null,
+    loggedInUserRole: null,
   },
   document: {},
   message: null,

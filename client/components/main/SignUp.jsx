@@ -61,7 +61,7 @@ class Signup extends Component {
     })
     .catch(() => {
       this.setState({ isLoading: false });
-      toastr.error(this.props.message);
+      toastr.error('Cannot create a user kindly check your user details');
     });
   }
 

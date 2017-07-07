@@ -58,12 +58,13 @@ class Signin extends Component {
     this.props.userActions.login(this.state.user)
     .then(() => {
       this.setState({ isLoading: false });
-      this.setState({ redirect: true });
       toastr.success(this.props.message);
-          // console.log('errors', errors);
+      // toastr.error(this.props.message);
+      this.setState({ redirect: true });
     })
     .catch(() => {
       this.setState({ isLoading: false });
+      // this.setState({ redirect: false });
       toastr.error(this.props.message);
     });
   }
