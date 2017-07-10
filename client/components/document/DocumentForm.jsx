@@ -15,25 +15,27 @@ const DocumentForm = ({ document, onSave, onChange, saving }) =>
             <form>
               <div className="row">
                 <h5 className="col l1 m1 s12">Title:</h5>
-                <div className="input-field col l7 m7 s12">
+                <div className="input-field">
                   <input
                     name="title"
                     type="text"
                     value={document.title}
                     onChange={onChange}
-                    placeholder="Document title goes here"
+                    placeholder="Enter your document title here"
                   />
                 </div>
+              </div>
 
 
+              <div className="row">
                 <h5 className="col l1 m1 s12">Access:</h5>
-                <div className="input-field col l3 m1 s12">
+                <div className="input-field">
                   <select name="access"
                     className="browser-default"
                     value={document.access}
                     onChange={onChange}
                   >
-                    <option value="">Choose your option</option>
+                    <option value="">Choose the document access level</option>
                     <option value="private">Private</option>
                     <option value="public">Public</option>
                     <option value="role">Role</option>

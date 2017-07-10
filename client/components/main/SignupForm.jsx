@@ -49,21 +49,12 @@ const SignupForm = ({ onChange, onSubmit, loading, errors }) =>
         </div>
       </div>
       <div className="row">
-        <div className="col s4 offset-s2">
+        <div className="col s4 offset-s4">
           <input
             name="password"
             type="password"
             onChange={onChange}
             placeholder="Your password here"
-            required
-          />
-        </div>
-        <div className="col s4">
-          <input
-            name="confirmPassword"
-            type="password"
-            onChange={onChange}
-            placeholder="Confirm your password"
             required
           />
         </div>
