@@ -27,7 +27,7 @@ export default (ComposedComponent) => {
     componentWillMount() {
       const isAuthenticated = this.props.isAuthenticated;
       let isAdmin;
-      if (this.props.isAdmin !== 1) {
+      if (this.props.isAdmin !== 'admin') {
         toastr.error('Unauthorized Access Denied. You need to be an admin to access this page.');
         this.setState({ redirect: true });
       }
@@ -61,7 +61,7 @@ export default (ComposedComponent) => {
    */
   RequireAuth.propTypes = {
     isAuthenticated: PropTypes.bool.isRequired,
-    isAdmin: PropTypes.number,
+    isAdmin: PropTypes.string,
   };
 
   /**

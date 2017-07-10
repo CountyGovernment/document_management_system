@@ -27,7 +27,7 @@ describe('before login', () => {
 describe('documents contoller methods', () => {
   chai.request(server)
   .post('/api/users')
-  .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roleId: '1' })
+  .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roletitle: 'admin' })
   .then((res) => {
     // console.log('got here');
     // console.log('res >>>>', res.body);

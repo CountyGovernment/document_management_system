@@ -31,7 +31,7 @@ class UserController {
         secondName: req.body.secondName,
         password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
-        roleId: req.body.roleId || 2,
+        roletitle: req.body.roletitle || 'regular',
       })
       .then((user) => {
         res.status(201).json({
@@ -62,11 +62,12 @@ class UserController {
             return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
           } else if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-              const token = jwt.sign({ data: user.roleId, id: user.id }, secretKey, {
+              const token = jwt.sign({ data: user.roletitle, id: user.id }, secretKey, {
                 expiresIn: '24hr',
               });
+              // console.log(user.roletitle, 'role');
               return res.status(201).json(Object.assign({},
-                { id: user.id, data: user.roleId, username: user.username, email: user.email, message: 'You are logged in' },
+                { id: user.id, data: user.roletitle, username: user.username, email: user.email, message: 'You are logged in' },
                 { token }));
             }
             // return error: Password is incorrect

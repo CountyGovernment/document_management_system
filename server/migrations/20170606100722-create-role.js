@@ -6,11 +6,12 @@ module.exports = {
       id: {
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      roletitle: {
         type: Sequelize.STRING,
+        primaryKey: true,
+        unique: true,
       },
       createdAt: {
         allowNull: false,

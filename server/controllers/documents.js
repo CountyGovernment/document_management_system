@@ -43,7 +43,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   findByTitle(req, res) {
-    if (req.decoded.data === 1) {
+    if (req.decoded.data === 'admin') {
       if (req.query.q) {
         return Document
           .findAll({
@@ -108,7 +108,7 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    if (req.decoded.data === 1) {
+    if (req.decoded.data === 'admin') {
       if (req.query.limit || req.query.offset) {
         return Document
           .findAll({
@@ -131,12 +131,18 @@ class DocController {
           .catch(error => res.status(400).json(error));
       }
     } else if (req.query.limit || req.query.offset) {
+      let accessDoc;
+      if (!req.query.role) {
+        accessDoc = 'public' || req.decoded.data;
+      } else {
+        accessDoc = req.query.role;
+      }
       return Document
           .findAll({
             limit: req.query.limit,
             offset: req.query.offset,
             where: {
-              access: 'public',
+              access: accessDoc,
             },
           })
           .then((document) => {

@@ -14,7 +14,7 @@ let token = '';
 describe('Users controller methods', () => {
   chai.request(server)
     .post('/api/users')
-    .send({ username: 'tester2', firstName: 'tester2', secondName: 'tester2', email: 'tester2@gmail.com', password: 'tester2', roleId: '1' })
+    .send({ username: 'tester2', firstName: 'tester2', secondName: 'tester2', email: 'tester2@gmail.com', password: 'tester2', roletitle: 'admin' })
     .then((res) => {
       // console.log('got here');
       // console.log('res >>>>', res.body);
@@ -67,7 +67,7 @@ describe('Users controller methods', () => {
           res.body.should.have.property('secondName');
           res.body.should.have.property('email');
           res.body.should.have.property('password');
-          res.body.should.have.property('roleId');
+          res.body.should.have.property('roletitle');
           done();
         });
     });

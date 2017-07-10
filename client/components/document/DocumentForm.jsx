@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 /**
  * @desc component used to display the document form
  */
-const DocumentForm = ({ document, onSave, onChange, saving }) =>
+const DocumentForm = ({ document, onSave, role, onChange, saving }) =>
   (<div className="container">
     <div className="row">
       <div className="col s12 m12">
@@ -38,7 +38,7 @@ const DocumentForm = ({ document, onSave, onChange, saving }) =>
                     <option value="">Choose the document access level</option>
                     <option value="private">Private</option>
                     <option value="public">Public</option>
-                    <option value="role">Role</option>
+                    <option value={role}>Role</option>
                   </select>
                 </div>
               </div>

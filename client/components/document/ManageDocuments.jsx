@@ -130,6 +130,7 @@ class ManageDocument extends Component {
             onSave={isUpdate ? this.updateDocument : this.createDocument}
             errors={this.state.errors}
             saving={this.state.saving}
+            role={this.props.loggedInUserRole}
           />
         </div>
       </div>
@@ -143,6 +144,7 @@ class ManageDocument extends Component {
 ManageDocument.propTypes = {
   actions: PropTypes.object,
   document: PropTypes.object,
+  loggedInUserRole: PropTypes.string,
 };
 
 /**
@@ -151,10 +153,12 @@ ManageDocument.propTypes = {
  * @returns {*} props
  */
 const mapStateToProps = (state) => {
+  console.log(state, 'state');
   return {
     document: state.document,
     documents: state.documents,
     loggedInUserID: state.isAuth.loggedInUser,
+    loggedInUserRole: state.isAuth.loggedInUserRole,
     loggedInUserDocuments: state.loggedInUserDocuments,
   };
 };
