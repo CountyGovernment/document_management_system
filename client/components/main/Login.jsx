@@ -59,13 +59,12 @@ class Signin extends Component {
     .then(() => {
       this.setState({ isLoading: false });
       toastr.success(this.props.message);
-      // toastr.error(this.props.message);
       this.setState({ redirect: true });
     })
     .catch(() => {
       this.setState({ isLoading: false });
-      // this.setState({ redirect: false });
       toastr.error(this.props.message);
+      this.setState({ redirect: false });
     });
   }
 

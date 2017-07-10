@@ -23,7 +23,7 @@ class DocController {
       .create({
         title: req.body.title,
         content: req.body.content,
-        access: req.body.access || 'public',
+        access: req.body.access,
         userId: req.decoded.id,
       })
       .then((document) => {

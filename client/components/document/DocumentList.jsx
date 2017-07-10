@@ -16,7 +16,7 @@ class DocumentList extends Component {
             <h4>{this.props.document.title}</h4>
             <hr />
             <div className="col s12 light">
-              <b>Content:</b>{this.props.document.content.slice(0, 200)}
+              <b>Content:</b>{this.props.document.content}
             </div>
             <div className="col s12 light">
               <b>Published on:</b> {this.props.document.createdAt.slice(0, 10)}

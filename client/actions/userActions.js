@@ -71,6 +71,7 @@ export function createUser(user) {
     .catch((error) => {
       console.log('Error: ', error);
       dispatch(passFailureMessage(error.response.data.message));
+      console.log('Error Message', error.response.data.message);
     });
 }
 
