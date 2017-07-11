@@ -69,12 +69,12 @@ class DocumentTasks extends Component {
         <span>
           <Link
             to={`/document/${this.props.documentId}`}
-            className="waves-effect waves-light btn green"
+            className="waves-effect waves-light btn #1b5e20 green darken-4"
           >Edit
         </Link>
         &nbsp;&nbsp;
           <a
-            className="waves-effect waves-light btn red"
+            className="waves-effect waves-light btn #b71c1c red darken-4"
             onClick={this.deleteDocument}
           >
         Delete

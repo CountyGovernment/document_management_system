@@ -14,7 +14,7 @@ const DocumentForm = ({ document, onSave, role, onChange, saving }) =>
           <div className="card-content">
             <form>
               <div className="row">
-                <h5 className="col l1 m1 s12">Title:</h5>
+                <h5 className="col l1 m1 s12">TITLE:</h5>
                 <div className="input-field">
                   <input
                     name="title"
@@ -28,7 +28,7 @@ const DocumentForm = ({ document, onSave, role, onChange, saving }) =>
 
 
               <div className="row">
-                <h5 className="col l1 m1 s12">Access:</h5>
+                <h5 className="col l1 m1 s12">ACCESS:</h5>
                 <div className="input-field">
                   <select name="access"
                     className="browser-default"
@@ -45,7 +45,7 @@ const DocumentForm = ({ document, onSave, role, onChange, saving }) =>
 
 
               <div className="row">
-                <h5 className="col l1 m1 s12">Content:</h5>
+                <h5 className="col l1 m1 s12">CONTENT:</h5>
                 <div className="input-field">
                   <textarea
                     rows="100"
@@ -64,11 +64,11 @@ const DocumentForm = ({ document, onSave, role, onChange, saving }) =>
                 type="submit"
                 disabled={saving}
                 value={saving ? 'Saving...' : 'Save'}
-                className="btn btn-primary"
+                className="btn btn-primary #1b5e20 green darken-4"
                 onClick={onSave}
               />
 
-              <Link to="/dashboard" className="right btn red">
+              <Link to="/dashboard" className="right btn #b71c1c red darken-4">
                 Cancel
               </Link>
             </form>

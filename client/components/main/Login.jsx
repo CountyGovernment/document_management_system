@@ -91,7 +91,6 @@ class Signin extends Component {
     }
     return (
       <div>
-        <h1 className="center">Shelf</h1>
         <div className="container">
           <div className="row">
             <SigninForm

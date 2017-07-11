@@ -131,18 +131,26 @@ class DocController {
           .catch(error => res.status(400).json(error));
       }
     } else if (req.query.limit || req.query.offset) {
-      let accessDoc;
-      if (!req.query.role) {
-        accessDoc = 'public' || req.decoded.data;
-      } else {
-        accessDoc = req.query.role;
-      }
+      console.log('role docs>>>>>>', req.decoded.data);
       return Document
           .findAll({
             limit: req.query.limit,
             offset: req.query.offset,
             where: {
-              access: accessDoc,
+              // access: req.decoded.data || 'public',
+              $or: [
+                {
+                  access:
+                  {
+                    $eq: req.decoded.data,
+                  },
+                },
+                {
+                  access: {
+                    $eq: 'public',
+                  },
+                },
+              ],
             },
           })
           .then((document) => {

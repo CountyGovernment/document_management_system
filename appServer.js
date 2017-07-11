@@ -14,7 +14,7 @@ const app = express();
 const compiler = webpack(config);
 let port;
 if (process.env.NODE_ENV === 'test') {
-  port = 3003;
+  port = 3002;
 } else {
   port = 3002;
 }

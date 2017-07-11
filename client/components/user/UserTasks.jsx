@@ -64,11 +64,11 @@ class UserTasks extends Component {
       <span>
         <Link
           to={`/users/${this.props.userId}`}
-          className="waves-effect waves-light btn green"
+          className="waves-effect waves-light btn #1b5e20 green darken-4"
         >Edit
         </Link>
         &nbsp;&nbsp;
-        <a className="waves-effect waves-light btn red"
+        <a className="waves-effect waves-light btn red darken-4"
           onClick={this.deleteUser}
         >Delete
         </a>

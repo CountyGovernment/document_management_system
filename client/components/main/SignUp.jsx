@@ -87,8 +87,6 @@ class Signup extends Component {
     }
     return (
       <div>
-        <h1 className="center">Shelf</h1>
-        <p className="center">Shelf Document manager</p>
         <div className="container">
           <div className="row">
             <div className="grey lighten-3 col s12 z-depth-5 card">

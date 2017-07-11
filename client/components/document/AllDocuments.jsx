@@ -34,7 +34,7 @@ class AllDocuments extends Component {
       search: '',
       offset: 0,
       activePage: 1,
-      limit: 3,
+      limit: 6,
     };
   }
 

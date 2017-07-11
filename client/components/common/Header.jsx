@@ -46,7 +46,7 @@ class Header extends Component {
               <li><a href="sass.html"><Link style={linkColor} to="/dashboard"> My Dashboard</Link></a></li>
               <li><a href="badges.html"><Link style={linkColor} to="/document">Create a Document</Link></a></li>
               <li><a href="collapsible.html"><Link style={linkColor} to="/documents">All Documents</Link></a></li>
-              <li><a href="sass.html">{this.props.isAdmin === 1 ? <Link to="/users" style={linkColor}> All Users</Link> : '' }</a></li>
+              <li><a href="sass.html">{this.props.isAdmin === 'admin' ? <Link to="/users" style={linkColor}> All Users</Link> : '' }</a></li>
               <li><a href="collapsible.html">{this.props.isAuthenticated === true ? <Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link> : '' }</a></li>
             </ul>
           </div>

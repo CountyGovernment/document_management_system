@@ -105,7 +105,7 @@ class EditUserProfile extends Component {
             <div className="card">
               <div className="card-image" />
               <div className="card-content">
-                <h1 className="center">Edit User profile</h1>
+                <h1 className="center">User Profile</h1>
                 <form>
                   <div className="row">
                     <div className="col s6 offset-s3">
@@ -170,7 +170,7 @@ class EditUserProfile extends Component {
                           id="updateProfile"
                           type="submit"
                           onClick={this.updateProfile}
-                          className="btn waves-effect waves-light col s2 offset-s5 green darken-1"
+                          className="btn waves-effect waves-light col s2 offset-s5 #1b5e20 green darken-4"
                         />
                       </div>
                     </div>
