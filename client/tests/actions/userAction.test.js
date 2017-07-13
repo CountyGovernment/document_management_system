@@ -29,31 +29,36 @@ describe('sync actions', () => {
     nock.cleanAll();
   });
 
-  it('get all users', () => {
-    const expectedAction = [{ type: types.GET_USER_SUCCESS, body: { users: [{ id: 1, username: 'run', firstName: 'the' }] } }];
-    const store = mockStore({ users: [] }, expectedAction);
+  it('get all users', (done) => {
+    nock('http://localhost:80/api')
+    .get('/users')
+    .reply(200, { data: { users: [{ id: 1, username: 'run', firstName: 'the' }] } });
+    const store = mockStore({ users: [] });
     store.dispatch(userAction.getAllUsers()).then(() => {
-      const action = store.getAction();
-      expect(action[0].type).toEqual(types.GET_USER_SUCCESS);
+      const action = store.getActions();
+      // console.log('action.....', action[0].users.data.users[0]);
+      // console.log('actiontype.....', action[0].type);
+      expect(action[0].type).toEqual(types.GET_ALL_USERS_SUCCESS);
+      expect(action[0].users.data.users[0]).toEqual({ id: 1, username: 'run', firstName: 'the' });
       done();
     });
   });
 
-  it('get one user', () => {
-    const user = 2;
+  it('get one user', (done) => {
+    const user = { id: 7, username: 'ice' };
     const expectedAction = [{ type: types.GET_ONE_USER_SUCCESS, body: { users: [{ id: 7, username: 'ice' }] } }];
-    const store = mockStore({ users: [] }, expectedAction);
+    const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.getOneUser(user)).then(() => {
-      const action = store.getAction();
+      const action = store.getActions();
       expect(action[0].type).toEqual(types.GET_ONE_USER_SUCCESS);
       done();
     });
   });
 
-  it('handles search for a user', () => {
+  it('handles search for a user', (done) => {
     const searchValue = 1;
-    const expectedAction = [{ type: types.SEARCH_USERS_SUCCESS, body: { users: [{ id: 7, username: 'ice' }] } }];
-    const store = mockStore({ users: [] }, expectedAction);
+    const expectedAction = [{ type: types.SEARCH_USERS_SUCCESS, data: { users: [{ id: 7, username: 'ice' }] } }];
+    const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.search(searchValue)).then(() => {
       const action = store.getAction();
       expect(action[0].type).toEqual(types.SEARCH_USERS_SUCCESS);
@@ -61,10 +66,10 @@ describe('sync actions', () => {
     });
   });
 
-  it('handles deleting a user', () => {
+  it('handles deleting a user', (done) => {
     const deletedUser = 1;
-    const expectedAction = [{ type: types.DELETE_USER_SUCCESS, body: { users: [] } }];
-    const store = mockStore({ users: [] }, expectedAction);
+    const expectedAction = [{ type: types.DELETE_USER_SUCCESS, data: { users: [] } }];
+    const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.deleteUser(deletedUser)).then(() => {
       const action = store.getAction();
       expect(action[0].type).toEqual(types.DELETE_USER_SUCCESS);
@@ -72,13 +77,26 @@ describe('sync actions', () => {
     });
   });
 
-  it('handles updating a user', () => {
+  it('handles updating a user', (done) => {
     const updatedUser = { id: 1 };
-    const expectedAction = [{ type: types.UPDATE_USER_SUCCESS, body: { users: [{ id: 1 }] } }];
-    const store = mockStore({ users: [] }, expectedAction);
+    const expectedAction = [{ type: types.UPDATE_USER_SUCCESS, data: { users: [{ id: 1 }] } }];
+    const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.updateUser(updatedUser)).then(() => {
       const action = store.getAction();
       expect(action[0].type).toEqual(types.UPDATE_USER_SUCCESS);
+      done();
+    });
+  });
+
+  it('should log a user successfully', (done) => {
+    const user = { username: 'run', firstName: 'the', secondName: 'world', email: 'isending@gmail.com', password: 'password' };
+    const expectedActions = [
+      { type: types.LOGGEDIN_USER, user },
+      { type: types.SUCCESS_MESSAGE, message: 'user login successful' },
+    ];
+    const store = mockStore({}, expectedActions, done());
+    store.dispatch(userAction.login(user)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
       done();
     });
   });

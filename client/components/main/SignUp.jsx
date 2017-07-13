@@ -37,11 +37,11 @@ class Signup extends Component {
    * @desc handles the triggering of the necessary action
    * @returns {null} returns no value
    */
-  // componentWillMount() {
-  //   if (this.props.isAuthenticated) {
-  //     toastr.error('Already logged in');
-  //   }
-  // }
+  componentWillMount() {
+    if (this.props.isAuthenticated) {
+      toastr.error('Already logged in');
+    }
+  }
 
   /**
    * @desc handles signup form actions

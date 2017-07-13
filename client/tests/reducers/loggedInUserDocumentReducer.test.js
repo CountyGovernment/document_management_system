@@ -10,10 +10,7 @@ describe('LoggedInUserDocuments Reducer', () => {
   it('should return a list of all documents by the user', () => {
     const store = createStore(rootReducer, initialState);
 
-    const loggedInUserDocuments = [
-      { title: 'title 3' },
-      { title: 'title 5' },
-    ];
+    const loggedInUserDocuments = [];
 
     const action = documentActions.getUserDocumentSuccess(loggedInUserDocuments);
     store.dispatch(action);
@@ -22,6 +19,21 @@ describe('LoggedInUserDocuments Reducer', () => {
     const expected = loggedInUserDocuments;
 
     expect(actual).toEqual(expected);
-    expect(typeof actual).toBe('array');
+    expect(typeof actual).toBe('object');
+  });
+
+  it('delete a document', () => {
+    const store = createStore(rootReducer, initialState);
+
+    const loggedInUserDocuments = [];
+
+    const action = documentActions.deleteDocumentSuccess(loggedInUserDocuments);
+    store.dispatch(action);
+
+    const actual = store.getState().loggedInUserDocuments;
+    const expected = loggedInUserDocuments;
+
+    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('object');
   });
 });

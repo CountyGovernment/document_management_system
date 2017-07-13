@@ -47,9 +47,8 @@ describe('User reducer', () => {
   it('should update a user.', () => {
     const store = createStore(rootReducer, initialState);
 
-    const user =
-      { username: 'tv' }
-    ;
+    const user = {}
+;
 
     const action = actions.updateUserSuccess(user);
     store.dispatch(action);

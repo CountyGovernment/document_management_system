@@ -131,7 +131,7 @@ class DocController {
           .catch(error => res.status(400).json(error));
       }
     } else if (req.query.limit || req.query.offset) {
-      console.log('role docs>>>>>>', req.decoded.data);
+      // console.log('role docs>>>>>>', req.decoded.data);
       return Document
           .findAll({
             limit: req.query.limit,
