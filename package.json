@@ -16,6 +16,7 @@
     "test:client": "NODE_ENV=test istanbul cover _mocha --require ./client/tests/TestSetup.js -R client/tests/**/*.js",
     "test:server": "NODE_ENV=test istanbul cover _mocha --report lcovonly -- -R spec ./server/tests --timeout 20000",
     "travis:test": "istanbul cover _mocha client/tests/**/*.js -- -R spec",
+    "test": "npm run test:client && npm run test:server",
     "script": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "seed": "npm run migrate && sequelize db:seed:all",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",

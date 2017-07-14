@@ -54,6 +54,10 @@ Add additional notes about how to deploy this on a live system
 * Sequelize
 * React
 
+## Agile
+
+This project was managed using [Pivotal Tracker]()
+
 
 ## Authors
 
