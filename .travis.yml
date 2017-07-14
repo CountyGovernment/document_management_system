@@ -10,7 +10,7 @@ cache:
     - node_modules
 
 before_success:
-- npm run test:client
+- npm run test
 - npm run test:server
 
 after_success:
