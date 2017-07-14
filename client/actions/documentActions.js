@@ -4,46 +4,19 @@
 import axios from 'axios';
 import * as types from './ActionTypes';
 
-/**
- *
- * @desc passSuccessMessage
- * @export
- * @param {string} successMessage  returned success message from api call
- * @returns {*} action, action types and message
- */
+
 export function passSuccessMessage(successMessage) {
   return { type: types.SUCCESS_MESSAGE, successMessage };
 }
 
-/**
- *
- * @desc passFailureMessage
- * @export
- * @param {string} errorMessage  returned error message from api call
- * @returns {*} action, action types and message
- */
 export function passFailureMessage(errorMessage) {
   return { type: types.ERROR_MESSAGE, errorMessage };
 }
 
-/**
- *
- * @desc searchDocumentsSuccess
- * @export
- * @param {*} documents  returned documents from search api call
- * @returns {*} action, action types and documents
- */
 export function searchDocumentsSuccess(documents) {
   return { type: types.SEARCH_DOCUMENTS_SUCCESS, documents };
 }
 
-/**
- *
- * @desc getDocumentSuccess
- * @export
- * @param {*} documents  returned documents from getDocuments api call
- * @returns {*} action, action types and documents
- */
 export function getDocumentSuccess(documents) {
   return { type: types.GET_ALL_DOCUMENTS_SUCCESS, documents };
 }
@@ -64,24 +37,9 @@ export function deleteDocumentSuccess(documentId) {
   return { type: types.DELETE_DOCUMENT_SUCCESS, documentId };
 }
 
-/**
- *
- * @desc createDocumentSuccess
- * @export
- * @param {*} document returned newly created document
- * @returns {*} action, action types and document
- */
 export function createDocumentSuccess(document) {
   return { type: types.CREATE_DOCUMENT_SUCCESS, document };
 }
-
-/**
- *
- * @desc updateDocumentSuccess
- * @export
- * @param {*} documents  returned updated document
- * @returns {*} action, action types and document
- */
 
 export function updateDocumentSuccess(document) {
   return { type: types.UPDATE_DOCUMENT_SUCCESS, document };
