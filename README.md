@@ -1,4 +1,6 @@
 [![Coverage Status](https://coveralls.io/repos/github/jm-wanja/document_management_system/badge.svg?branch=feature%2F%23146368967%2Ffrontend-structure)](https://coveralls.io/github/jm-wanja/document_management_system?branch=feature%2F%23146368967%2Ffrontend-structure)
+
+[![Build Status](https://travis-ci.org/jm-wanja/document_management_system.svg?branch=master)](https://travis-ci.org/jm-wanja/document_management_system)
 # Project Title
 
 Shelf is a document management system. That allows users to create documents and save documents.Each User has a role while documents have users and access. The Administrator can view all documents, however users can only view their own documents and public ones. The default permission for documents is public. To make a document private toggle the button at the bottom of the form. 
