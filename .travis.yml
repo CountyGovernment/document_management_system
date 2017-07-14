@@ -10,8 +10,8 @@ cache:
     - node_modules
 
 before_success:
-- npm run test
-- npm run test:server
+- npm run travis:test
+# - npm run test:server
 
 after_success:
 - npm run coveralls
