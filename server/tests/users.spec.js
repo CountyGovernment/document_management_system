@@ -1,7 +1,6 @@
 // Change to test environment
 process.env.NODE_ENV = 'test';
 
-// Dev Dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../../app');
@@ -14,28 +13,26 @@ let token = '';
 describe('Users controller methods', () => {
   chai.request(server)
     .post('/api/users')
-    .send({ username: 'tester2', firstName: 'tester2', secondName: 'tester2', email: 'tester2@gmail.com', password: 'tester2', roletitle: 'admin' })
+    .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roletitle: 'admin' })
     .then((res) => {
-      // console.log('got here');
       // console.log('res >>>>', res.body);
     });
 
 
   beforeEach('login', (done) => {
     const admin = {
-      email: 'tester2@gmail.com',
-      password: 'tester2',
+      email: 'tester@gmail.com',
+      password: 'tester',
     };
     chai.request(server)
       .post('/api/users/login')
       .send(admin)
       .end((err, res) => {
-        // console.log('res >>>>>>>>>', res.body);
         token = res.body.token;
-        // console.log('token', token);
         done();
       });
   });
+
   /*
    * Test the /GET route
    */

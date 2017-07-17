@@ -1,10 +1,7 @@
-// Change to test environment
 process.env.NODE_ENV = 'test';
 
-// Dev Dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-// const expect = require('chai');
 const expect = require('expect');
 const server = require('../../app');
 
@@ -33,7 +30,6 @@ describe('documents contoller methods', () => {
     // console.log('res >>>>', res.body);
   });
 
-
   beforeEach('login', (done) => {
     const admin = {
       email: 'tester@gmail.com',
@@ -43,25 +39,10 @@ describe('documents contoller methods', () => {
       .post('/api/users/login')
       .send(admin)
       .end((err, res) => {
-        // console.log('res >>>>>>>>>', res.body);
         token = res.body.token;
-        // console.log('token', token);
         done();
       });
   });
-
-    // const regular = {
-    //   email: 'blackpanther@gmail.com',
-    //   password: 'blackpanther33',
-    // };
-  //   chai.request(server)
-  //   .get('/api/users/login')
-  //   .send(regular)
-  //   .end((err, res) => {
-  //     token = res.body.token;
-  //     done();
-  //   });
-  // });
 
   /*
    * Test the /GET route
@@ -108,7 +89,7 @@ describe('documents contoller methods', () => {
   describe('/GET/:id document', () => {
     it('it should GET a document by the given id', (done) => {
       chai.request(server)
-        .get('/api/documents/7')
+        .get('/api/documents/4')
         .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
@@ -143,7 +124,7 @@ describe('documents contoller methods', () => {
         title: 'Girl with the dragon tattoo update',
       };
       chai.request(server)
-        .put('/api/documents/7')
+        .put('/api/documents/4')
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
@@ -159,7 +140,7 @@ describe('documents contoller methods', () => {
         title: 'Girl with the dragon tattoo update',
       };
       chai.request(server)
-        .put('/api/documents/7')
+        .put('/api/documents/4')
         .set('authorization', token)
         .send(document)
         .end((err, res) => {
@@ -187,17 +168,6 @@ describe('documents contoller methods', () => {
    * Test the /GET/?title route
    */
   describe('/GET/?title search documents', () => {
-    // it('it should not GET a document by the given title', (done) => {
-    //   chai.request(server)
-    //     .get('/api/search/documents/?q=people')
-    //     .set('authorization', token)
-    //     .end((err, res) => {
-    //       res.should.have.status(401);
-    //       res.body.should.have.property('message').eql('Document is not available');
-    //       done();
-    //     });
-    // });
-
     it('it should GET a document by the given title', (done) => {
       chai.request(server)
         .get('/api/search/documents/?q=Girl with the dragon tattoo')

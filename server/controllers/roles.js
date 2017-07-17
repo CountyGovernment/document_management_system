@@ -1,5 +1,4 @@
 const { Role } = require('../models');
-const controllerHelpers = require('../helpers/controllerHelpers');
 
 /* Defines Role Controller methods */
 class RolesController {
@@ -14,7 +13,7 @@ class RolesController {
   create(req, res) {
     return Role
     .create({
-      title: req.body.title,
+      roletitle: req.body.roletitle,
     })
       .then((role) => {
         res.status(201).json({

@@ -1,10 +1,8 @@
 // Change to test environment
 process.env.NODE_ENV = 'test';
 
-// Dev Dependencies
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-// const expect = require('chai');
 const expect = require('expect');
 const server = require('../../app');
 
@@ -19,7 +17,6 @@ describe('role contoller methods', () => {
   .post('/api/users')
   .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roletitle: 'admin' })
   .then((res) => {
-    // console.log('got here');
     // console.log('res >>>>', res.body);
   });
 
@@ -33,9 +30,7 @@ describe('role contoller methods', () => {
       .post('/api/users/login')
       .send(admin)
       .end((err, res) => {
-        // console.log('res >>>>>>>>>', res.body);
         token = res.body.token;
-        // console.log('token', token);
         done();
       });
   });
@@ -61,7 +56,7 @@ describe('role contoller methods', () => {
   describe('/POST roles', () => {
     it('it should create a role', (done) => {
       const role = {
-        title: 'staff',
+        roletitle: 'staff9',
       };
       chai.request(server)
         .post('/api/roles')

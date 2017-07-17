@@ -1,6 +1,5 @@
 const { User } = require('../models');
 const { Document } = require('../models');
-const controllerHelpers = require('../helpers/controllerHelpers');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
@@ -19,12 +18,7 @@ class UserController {
     * @return { object } - A res to the user
   */
   create(req, res) {
-    if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({
-        message: 'Please fill your user details',
-      });
-    } else {
-      return User
+    return User
       .create({
         username: req.body.username,
         firstName: req.body.firstName,
@@ -44,51 +38,34 @@ class UserController {
           message: 'Please fill in user details',
         });
       });
-    }
   }
 
   // Login a user
   login(req, res) {
-    if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({
-        message: 'Email and Password are required',
-      });
-    } else {
-      return User
-        .findOne(
-        { where: { email: req.body.email } })
-        .then((user) => {
-          if (!user) {
-            return res.status(401).send(error, { success: false, message: 'Authentication failed. User not found.' });
-          } else if (user) {
-            if (bcrypt.compareSync(req.body.password, user.password)) {
-              const token = jwt.sign({ data: user.roletitle, id: user.id }, secretKey, {
-                expiresIn: '24hr',
-              });
-              return res.status(201).json(Object.assign({},
-                { id: user.id, data: user.roletitle, username: user.username, email: user.email, message: 'You are logged in' },
-                { token }));
-            }
-            // return error: Password is incorrect
-            else {
-              return res.status(401).json(error, {
-                message: 'Could not log in kindly check your login details',
-              });
-            }
+    return User
+      .findOne(
+      { where: { email: req.body.email } })
+      .then((user) => {
+        if (!user) {
+          return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
+        } else if (user) {
+          if (bcrypt.compareSync(req.body.password, user.password)) {
+            const token = jwt.sign({ data: user.roletitle, id: user.id }, secretKey, {
+              expiresIn: '24hr',
+            });
+            return res.status(201).json(Object.assign({},
+              { id: user.id, data: user.roletitle, username: user.username, email: user.email, message: 'You are logged in' },
+              { token }));
           }
-        })
-        .catch(error => res.status(400).json(error));
-    }
-  }
-
-  // logout a user
-  logout(req, res) {
-    res.setHeader.authorization = ' ';
-    res.status(200)
-      .json({
-        success: true,
-        message: 'User logged out',
-      });
+          // return error: Password is incorrect
+          else {
+            return res.status(401).json({
+              message: 'Could not log in kindly check your login details',
+            });
+          }
+        }
+      })
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -106,11 +83,6 @@ class UserController {
           offset: req.query.offset,
         })
         .then((user) => {
-          if (!user) {
-            return res.status(404).json({
-              message: 'There are no users yet!',
-            });
-          }
           res.status(200).json(user);
         })
         .catch(error => res.status(400).json(error));
@@ -134,11 +106,6 @@ class UserController {
     return User
       .findById(req.params.id)
       .then((user) => {
-        if (!user) {
-          return res.status(404).json({
-            message: 'We could not find this user :(',
-          });
-        }
         return res.status(200).json(user);
       })
       .catch(error => res.status(400).json(error));
@@ -160,11 +127,6 @@ class UserController {
         }],
       })
       .then((user) => {
-        if (!user) {
-          return res.status(404).json({
-            message: 'We could not find this user profile :(',
-          });
-        }
         return res.status(200).send(user);
       })
       .catch(error => res.status(400).json(error));
@@ -233,11 +195,6 @@ class UserController {
           },
         })
         .then((user) => {
-          // if (user.length === 0) {
-          //   return res.status(404).json({
-          //     message: 'We could not find this user',
-          //   });
-          // }
           return res.status(200).json(user);
         })
         .catch(error => res.status(400).json(error));

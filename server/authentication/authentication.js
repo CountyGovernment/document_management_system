@@ -42,13 +42,14 @@ class Authenticate {
     return Role.findById(req.decoded.data)
 
       .then((role) => {
+        // console.log(role.roletitle, 'role>>>>>>>>>>>');
         if (!role) {
           return res.status(404).send({
             message: 'Role does not exist!',
           });
         }
         //  if not admin
-        if (role.title !== 'admin') {
+        if (role.roletitle !== 'admin') {
           return res.status(403).send({
             message: 'You are not permitted to perform this action',
           });

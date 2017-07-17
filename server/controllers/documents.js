@@ -1,6 +1,5 @@
 const { Document } = require('../models');
 const { User } = require('../models');
-const controllerHelpers = require('../helpers/controllerHelpers');
 
 /* Defines  Document Controller methods */
 class DocController {
@@ -13,12 +12,6 @@ class DocController {
     * @return { object } - A response to the user
   */
   create(req, res) {
-    if (controllerHelpers.validateInput(req.body)) {
-      return res.status(403).json({
-        message: 'Please fill the required fields!',
-      });
-    }
-
     return Document
       .create({
         title: req.body.title,
@@ -43,47 +36,36 @@ class DocController {
    * @return { object } - A response to the user
  */
   findByTitle(req, res) {
-    if (req.decoded.data === 'admin') {
-      if (req.query.q) {
-        return Document
-          .findAll({
-            where: {
-              title: { $iLike: `%${req.query.q}%` },
-            },
-          })
-          .then((document) => { res.status(200).json(document); })
-          .catch(error => res.status(400).json(error));
-      }
-    } else if (req.query.q) {
-      return Document
-          .findAll({
-            where: {
-              title: { $iLike: `%${req.query.q}%` },
-              $or: [
-                {
-                  access:
-                  {
-                    $eq: req.decoded.data,
-                  },
-                },
-                {
-                  access: {
-                    $eq: 'public',
-                  },
-                },
-              ],
-            },
-          })
-          .then((document) => {
-            if (!document) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            return res.status(200).json(document);
-          })
-          .catch(error => res.status(400).json(error));
+    // ensure we have q
+    if (!req.query.q) {
+      return res.status(400).json({
+        message: 'Please provide a title for search',
+      });
     }
+
+    // generate query dynamicaly
+
+    const query = { title: { $iLike: `%${req.query.q}%` } };
+
+    if (req.decoded.data !== 'admin') {
+      const regularQuery = {
+        $or: [
+          { access: { $eq: req.decoded.data } },
+          { access: { $eq: 'public' } },
+        ],
+      };
+
+      Object.assign(query, regularQuery);
+    }
+
+    return Document
+      .findAll({
+        where: query,
+      })
+      .then((document) => {
+        return res.status(200).json(document);
+      })
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -120,70 +102,26 @@ class DocController {
    * @return { object } - A response to the user
  */
   list(req, res) {
-    if (req.decoded.data === 'admin') {
-      if (req.query.limit || req.query.offset) {
-        return Document
-          .findAll({
-            limit: req.query.limit,
-            offset: req.query.offset,
-          })
-          .then((document) => {
-            if (!document) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            res.status(200).json({ document });
-          })
-          .catch(error => res.status(400).json(error));
-      } else {
-        return Document
-          .findAll()
-          .then(document => res.status(200).json({ document }))
-          .catch(error => res.status(400).json(error));
-      }
-    } else if (req.query.limit || req.query.offset) {
-      // console.log('role docs>>>>>>', req.decoded.data);
-      return Document
-          .findAll({
-            limit: req.query.limit,
-            offset: req.query.offset,
-            where: {
-              // access: req.decoded.data || 'public',
-              $or: [
-                {
-                  access:
-                  {
-                    $eq: req.decoded.data,
-                  },
-                },
-                {
-                  access: {
-                    $eq: 'public',
-                  },
-                },
-              ],
-            },
-          })
-          .then((document) => {
-            if (!document) {
-              return res.status(404).json({
-                message: 'Document is not available',
-              });
-            }
-            res.status(200).json({ document });
-          })
-          .catch(error => res.status(400).json(error));
-    } else {
-      return Document
-          .findAll({
-            where: {
-              access: 'public',
-            },
-          })
-          .then(document => res.status(200).json({ document }))
-          .catch(error => res.status(400).json(error));
+    const { limit, offset } = req.query;
+
+    const query = { limit, offset };
+
+    if (req.decoded.data !== 'admin') {
+      const regularQuery = {
+        $or: [
+          { access: { $eq: req.decoded.data } },
+          { access: { $eq: 'public' } },
+        ],
+      };
+
+      Object.assign(query, { where: regularQuery });
     }
+    return Document
+      .findAll(query)
+      .then((document) => {
+        return res.status(200).json({ document });
+      })
+      .catch(error => res.status(400).json(error));
   }
 
   /**
@@ -204,11 +142,11 @@ class DocController {
         plain: true,
       })
       .then(result =>
-      res.status(201).json({
-        document: result[1].dataValues,
-        message: 'Document Successfully updated!',
-      }),
-      )
+        res.status(201).json({
+          document: result[1].dataValues,
+          message: 'Document Successfully updated!',
+        }),
+    )
       .catch(error => res.status(400).json(error));
   }
 
