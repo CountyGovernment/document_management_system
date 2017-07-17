@@ -81,6 +81,7 @@ class AllDocuments extends Component {
    */
   render() {
     const totalItems = this.props.documents;
+    // const totalItems = this.props.paginatedDocuments;
     const paginatedDocuments = this.props.paginatedDocuments;
     const { documents, metaData } = this.props;
     if (!documents || this.props.message === 'no document found') {

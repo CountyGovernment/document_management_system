@@ -56,21 +56,4 @@ describe('Document Reducer', () => {
 
     expect(actual).toEqual(expected);
   });
-
-  it('should return a list of all searched documents.', () => {
-    const store = createStore(rootReducer, initialState);
-
-    const documents = [
-      { title: ' title 1' },
-      { title: 'title 2' },
-    ];
-
-    const action = documentActions.searchDocumentsSuccess(documents);
-    store.dispatch(action);
-
-    const actual = store.getState().documents;
-    const expected = documents;
-
-    expect(actual).toEqual(expected);
-  });
 });

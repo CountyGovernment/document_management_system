@@ -24,9 +24,6 @@ export default (state = [initialState.documents], action) => {
       });
       return state;
 
-    case types.SEARCH_DOCUMENTS_SUCCESS:
-      return action.documents;
-
     default:
       return state;
   }

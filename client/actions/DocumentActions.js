@@ -13,8 +13,8 @@ export function passFailureMessage(errorMessage) {
   return { type: types.ERROR_MESSAGE, errorMessage };
 }
 
-export function searchDocumentsSuccess(documents) {
-  return { type: types.SEARCH_DOCUMENTS_SUCCESS, documents };
+export function searchDocumentsSuccess(paginatedDocuments) {
+  return { type: types.SEARCH_DOCUMENTS_SUCCESS, paginatedDocuments };
 }
 
 export function getDocumentSuccess(documents) {
