@@ -69,7 +69,7 @@ export function createUser(user) {
       dispatch(setCurrentUser(response.data.user));
     })
     .catch((error) => {
-      console.log('Error: ', error);
+      console.log('Error: >>>>>>>>>', error);
       dispatch(passFailureMessage(error.response.data.message));
       console.log('Error Message', error.response.data.message);
     });
@@ -83,15 +83,15 @@ export function login(user) {
       localStorage.setItem('shelftoken', stringyToken);
       const storedToken = localStorage.shelftoken;
       dispatch(passSuccessMessage(response.data.message));
-      dispatch(passFailureMessage(response.data.message));
+      // dispatch(passFailureMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
-      console.log('Error', error);
+      // console.log('Error', error);
       dispatch(passFailureMessage(error.response.data.message));
-      console.log('Error Message', error.response.data.message);
+      // console.log('Error Message', error.response.data.message);
       // console.log('Error', response.data.message);
     });
 }

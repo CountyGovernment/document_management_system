@@ -65,4 +65,34 @@ describe('Message reducer', () => {
     expect(actual).toEqual(expected);
     expect(typeof actual).toBe('string');
   });
+
+  it('should add a success message when a user is updated.', () => {
+    const store = createStore(rootReducer, initialState);
+
+    const successMessage = 'User Successfully updated!';
+
+    const action = userActions.passSuccessMessage(successMessage);
+    store.dispatch(action);
+
+    const actual = store.getState().message;
+    const expected = successMessage;
+
+    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('string');
+  });
+
+  it('should add a success message when a document is updated.', () => {
+    const store = createStore(rootReducer, initialState);
+
+    const successMessage = 'Document Successfully updated!';
+
+    const action = userActions.passSuccessMessage(successMessage);
+    store.dispatch(action);
+
+    const actual = store.getState().message;
+    const expected = successMessage;
+
+    expect(actual).toEqual(expected);
+    expect(typeof actual).toBe('string');
+  });
 });

@@ -28,10 +28,14 @@ class UserController {
         roletitle: req.body.roletitle || 'regular',
       })
       .then((user) => {
-        res.status(201).json({
-          message: 'User created successfully!',
-          user,
-        });
+        if (!user) {
+          return res.status(401).send({ success: false, message: 'Please fill in user details' });
+        } else {
+          res.status(201).json({
+            message: 'User created successfully!',
+            user,
+          });
+        }
       })
       .catch((error) => {
         res.status(400).json(error, {
@@ -47,7 +51,7 @@ class UserController {
       { where: { email: req.body.email } })
       .then((user) => {
         if (!user) {
-          return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
+          return res.status(401).send({ success: false, message: 'User not found! Check if your login credentials are correct' });
         } else if (user) {
           if (bcrypt.compareSync(req.body.password, user.password)) {
             const token = jwt.sign({ data: user.roletitle, id: user.id }, secretKey, {
@@ -60,7 +64,7 @@ class UserController {
           // return error: Password is incorrect
           else {
             return res.status(401).json({
-              message: 'Could not log in kindly check your login details',
+              message: 'Incorrect password!',
             });
           }
         }

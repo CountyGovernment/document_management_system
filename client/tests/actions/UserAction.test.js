@@ -60,7 +60,7 @@ describe('sync actions', () => {
     const expectedAction = [{ type: types.SEARCH_USERS_SUCCESS, data: { users: [{ id: 7, username: 'ice' }] } }];
     const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.search(searchValue)).then(() => {
-      const action = store.getAction();
+      const action = store.getActions();
       expect(action[0].type).toEqual(types.SEARCH_USERS_SUCCESS);
       done();
     });
@@ -71,7 +71,7 @@ describe('sync actions', () => {
     const expectedAction = [{ type: types.DELETE_USER_SUCCESS, data: { users: [] } }];
     const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.deleteUser(deletedUser)).then(() => {
-      const action = store.getAction();
+      const action = store.getActions();
       expect(action[0].type).toEqual(types.DELETE_USER_SUCCESS);
       done();
     });
@@ -82,21 +82,33 @@ describe('sync actions', () => {
     const expectedAction = [{ type: types.UPDATE_USER_SUCCESS, data: { users: [{ id: 1 }] } }];
     const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.updateUser(updatedUser)).then(() => {
-      const action = store.getAction();
+      const action = store.getActions();
       expect(action[0].type).toEqual(types.UPDATE_USER_SUCCESS);
       done();
     });
   });
 
-  it('should log a user successfully', (done) => {
-    const user = { username: 'run', firstName: 'the', secondName: 'world', email: 'isending@gmail.com', password: 'password' };
-    const expectedActions = [
+  it('should login a user successfully', (done) => {
+    const user = { email: 'isendi@gmail.com', password: 'password' };
+    const expectedAction = [
       { type: types.LOGGEDIN_USER, user },
       { type: types.SUCCESS_MESSAGE, message: 'user login successful' },
     ];
-    const store = mockStore({}, expectedActions, done());
+    const store = mockStore({ users: [] }, expectedAction, done());
     store.dispatch(userAction.login(user)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
+      expect(store.getActions()).toEqual(expectedAction);
+      done();
+    });
+  });
+
+  it('should logout a user successfully', (done) => {
+    const user = { email: 'isendi@gmail.com', password: 'password' };
+    const expectedAction = [
+      { type: types.LOGOUT_USER, user },
+    ];
+    const store = mockStore({ users: [] }, expectedAction, done());
+    store.dispatch(userAction.logout(user)).then(() => {
+      expect(store.getActions()).toEqual(expectedAction);
       done();
     });
   });
