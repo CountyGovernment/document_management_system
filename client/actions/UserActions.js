@@ -83,6 +83,7 @@ export function login(user) {
       localStorage.setItem('shelftoken', stringyToken);
       const storedToken = localStorage.shelftoken;
       dispatch(passSuccessMessage(response.data.message));
+      dispatch(passFailureMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
       dispatch(setCurrentUser(response.data));

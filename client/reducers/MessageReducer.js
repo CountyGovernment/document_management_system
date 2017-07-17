@@ -18,6 +18,7 @@ export default (state = initialState.message, action) => {
     // console.log('getting here');
       // console.log(action.errorMessage, 'action.errorMessage');
       return action.errorMessage;
+      // return null;
 
     default:
       return state;

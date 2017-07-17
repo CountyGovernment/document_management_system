@@ -66,17 +66,16 @@ class Dashboard extends Component {
       return (<div className="section">
         <div className="container">
           <div className="col s12 m8 offset-m2 l6 offset-l3">
-            <div className="card-panel blue lighten-3 z-depth-1">
+            <div className="card-panel grey lighten-3 z-depth-1">
               <div className="row valign-wrapper">
                 <div className="col s10">
-                  <h3>Add a Document</h3>
+                  <h3>You have not created any documents</h3>
                   <div className="row">
                     <div className="col l4 m4 s1 offset-l3">
                       <a
                         onClick={this.redirectToManageDocument}
-                        className="waves-effect waves-light btn-large pink"
-                      >
-                        <i className="material-icons left">add</i>Add New Document
+                        className="waves-effect waves-light btn #1b5e20 green darken-4"
+                      > ADD
                       </a>
                     </div>
                   </div>

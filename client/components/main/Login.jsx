@@ -63,7 +63,7 @@ class Signin extends Component {
     })
     .catch(() => {
       this.setState({ isLoading: false });
-      toastr.error(this.props.message);
+      toastr.error('Could not login kindly check your login details');
       this.setState({ redirect: false });
     });
   }

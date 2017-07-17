@@ -59,21 +59,22 @@ class UserController {
         { where: { email: req.body.email } })
         .then((user) => {
           if (!user) {
-            return res.status(401).send({ success: false, message: 'Authentication failed. User not found.' });
+            return res.status(401).send(error, { success: false, message: 'Authentication failed. User not found.' });
           } else if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
               const token = jwt.sign({ data: user.roletitle, id: user.id }, secretKey, {
                 expiresIn: '24hr',
               });
-              // console.log(user.roletitle, 'role');
               return res.status(201).json(Object.assign({},
                 { id: user.id, data: user.roletitle, username: user.username, email: user.email, message: 'You are logged in' },
                 { token }));
             }
             // return error: Password is incorrect
-            return res.status(401).json({
-              message: 'Could not log in kindly check your login details',
-            });
+            else {
+              return res.status(401).json(error, {
+                message: 'Could not log in kindly check your login details',
+              });
+            }
           }
         })
         .catch(error => res.status(400).json(error));

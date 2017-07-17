@@ -59,7 +59,19 @@ class DocController {
           .findAll({
             where: {
               title: { $iLike: `%${req.query.q}%` },
-              access: 'public',
+              $or: [
+                {
+                  access:
+                  {
+                    $eq: req.decoded.data,
+                  },
+                },
+                {
+                  access: {
+                    $eq: 'public',
+                  },
+                },
+              ],
             },
           })
           .then((document) => {

@@ -31,7 +31,7 @@ class Header extends Component {
   render() {
     const { redirect } = this.state;
     if (redirect) {
-      return <Redirect to="/login" />;
+      return <Redirect to="/" />;
     }
     const linkColor = {
       color: 'white',

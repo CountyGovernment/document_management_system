@@ -27,6 +27,7 @@ class AllDocuments extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
+    this.redirectToAllDocuments = this.redirectToAllDocuments.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
 
     this.state = {
@@ -75,6 +76,10 @@ class AllDocuments extends Component {
     return <Redirect to="/document" />;
   }
 
+  redirectToAllDocuments() {
+    return <Redirect to="/documents" />;
+  }
+
   /**
    * @desc Renders the Document holder
    * @return {*} render the Document holder
@@ -89,7 +94,7 @@ class AllDocuments extends Component {
         <div className="section">
           <div className="container">
             <div className="col s12 m8 offset-m2 l6 offset-l3">
-              <div className="card-panel orange lighten-3 z-depth-1">
+              <div className="card-panel grey lighten-3 z-depth-1">
                 <div className="row valign-wrapper">
                   <div className="col s10">
                     <h3>You have not created any documents</h3>
@@ -97,9 +102,8 @@ class AllDocuments extends Component {
                       <div className="col l4 m4 s1 offset-l3">
                         <a
                           onClick={this.redirectToManageDocument}
-                          className="waves-effect waves-light btn-large green"
-                        >
-                          <i className="material-icons left">add</i>Add New Document
+                          className="waves-effect waves-light btn #1b5e20 green darken-4"
+                        >ADD
                       </a>
                       </div>
                     </div>
@@ -124,7 +128,7 @@ class AllDocuments extends Component {
             </div>
 
             <DocumentSearch
-              onViewAccessChange={this.onViewAccessChange}
+              redirectToAllDocuments={this.redirectToAllDocuments}
               onSearchChange={this.onSearchChange}
             />
 
