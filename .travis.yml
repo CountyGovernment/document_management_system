@@ -10,6 +10,6 @@ addons:
 before_install:
   - npm install sequelize-cli -g
 script:
-  - npm test:server
+  - npm test
 after_script:
   - npm run coverage
