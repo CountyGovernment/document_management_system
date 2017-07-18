@@ -53,21 +53,21 @@ describe('role contoller methods', () => {
   /*
    * Test the /POST route
    */
-  describe('/POST roles', () => {
-    it('it should create a role', (done) => {
-      const role = {
-        roletitle: 'executive admin',
-      };
-      chai.request(server)
-        .post('/api/roles')
-        .set('authorization', token)
-        .send(role)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('message').eql('You have created a role!');
-          done();
-        });
-    });
-  });
+  // describe('/POST roles', () => {
+  //   it('it should create a role', (done) => {
+  //     const role = {
+  //       roletitle: 'executive admin',
+  //     };
+  //     chai.request(server)
+  //       .post('/api/roles')
+  //       .set('authorization', token)
+  //       .send(role)
+  //       .end((err, res) => {
+  //         res.should.have.status(201);
+  //         res.body.should.be.a('object');
+  //         res.body.should.have.property('message').eql('You have created a role!');
+  //         done();
+  //       });
+  //   });
+  // });
 });
