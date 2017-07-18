@@ -11,7 +11,7 @@ before_install:
   - npm install sequelize-cli -g
 before_script:
   - psql -c "CREATE DATABASE database_test;" -U postgres
-  - psql -c “CREATE USER juliemugira;” -U postgres
+  - psql -c "CREATE USER juliemugira;" -U postgres
   - NODE_ENV=test
 script:
   - npm test
