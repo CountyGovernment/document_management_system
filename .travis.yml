@@ -1,0 +1,17 @@
+language: node_js
+sudo: required  
+dist: trusty
+node_js:
+  - stable
+services:
+  - postgresql
+addons:
+  postgresql: “9.4"
+before_install:
+  - npm install sequelize-cli -g
+before_script:
+psql -c 'create database travis_ci_test;' -U postgres
+script:
+  - npm test
+after_script:
+  - npm run coverage
