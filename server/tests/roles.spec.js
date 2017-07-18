@@ -56,7 +56,7 @@ describe('role contoller methods', () => {
   describe('/POST roles', () => {
     it('it should create a role', (done) => {
       const role = {
-        roletitle: 'staff9',
+        roletitle: 'executive admin',
       };
       chai.request(server)
         .post('/api/roles')

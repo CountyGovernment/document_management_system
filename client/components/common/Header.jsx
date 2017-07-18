@@ -41,13 +41,13 @@ class Header extends Component {
       <div className="navbar-fixed">
         <nav>
           <div className="nav-wrapper">&nbsp;
-            <a href="#" className="brand-logo"> SHELFDMS </a>
+            <a href="sass.html" className="brand-logo"> SHELFDMS </a>
             <ul className="right hide-on-med-and-down">
               <li><a href="sass.html"><Link style={linkColor} to="/dashboard"> My Dashboard</Link></a></li>
-              <li><a href="badges.html"><Link style={linkColor} to="/document">Create a Document</Link></a></li>
-              <li><a href="collapsible.html"><Link style={linkColor} to="/documents">All Documents</Link></a></li>
+              <li><a href="sass.html"><Link style={linkColor} to="/document">Create a Document</Link></a></li>
+              <li><a href="sass.html"><Link style={linkColor} to="/documents">All Documents</Link></a></li>
               <li><a href="sass.html">{this.props.isAdmin === 'admin' ? <Link to="/users" style={linkColor}> All Users</Link> : '' }</a></li>
-              <li><a href="collapsible.html">{this.props.isAuthenticated === true ? <Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link> : '' }</a></li>
+              <li><a href="sass.html">{this.props.isAuthenticated === true ? <Link style={linkColor} to="#" onClick={this.onLogout}>Logout</Link> : '' }</a></li>
             </ul>
           </div>
         </nav>

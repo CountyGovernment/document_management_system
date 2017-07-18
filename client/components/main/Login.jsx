@@ -39,8 +39,8 @@ class Signin extends Component {
    * @returns {null} returns no value
    */
   // componentWillMount() {
-  //   if (this.props.isAuthenticated) {
-  //     toastr.error('Login required');
+  //   if (this.props.user) {
+  //     this.setState({ redirect: true });
   //   }
   // }
 
@@ -113,7 +113,7 @@ class Signin extends Component {
 Signin.propTypes = {
   user: PropTypes.object,
   message: PropTypes.string,
-  isAuthenticated: PropTypes.bool.isRequired,
+  // isAuthenticated: PropTypes.bool.isRequired,
   userActions: PropTypes.object.isRequired,
 };
 

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 /**
  * @desc component used to display the document actionBar
  */
-const DocumentSearch = ({ redirectToAllDocuments, onSearchChange }) =>
+const DocumentSearch = ({ onSearchChange }) =>
   (<div className="card-panel">
     <div className="row">
       <div className="col l1 m1 s1">
@@ -20,17 +20,7 @@ const DocumentSearch = ({ redirectToAllDocuments, onSearchChange }) =>
               onKeyUp={onSearchChange}
               placeholder="Search documents"
             />
-            {/* <Link
-              to={"/documents"}
-              className="waves-effect waves-light btn #1b5e20 green darken-4"
-            >Close
-        </Link> */}
-            <a
-              onClick={redirectToAllDocuments}
-              className="waves-effect waves-light btn #1b5e20 green darken-4"
-            >
-              <i className="material-icons">close</i>
-            </a>
+            <i className="material-icons">search</i>
           </div>
         </form>
       </div>

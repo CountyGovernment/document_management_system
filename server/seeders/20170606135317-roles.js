@@ -6,6 +6,7 @@ module.exports = {
       { roletitle: 'admin', createdAt: new Date(), updatedAt: new Date() },
       { roletitle: 'regular', createdAt: new Date(), updatedAt: new Date() },
       { roletitle: 'guest', createdAt: new Date(), updatedAt: new Date() },
+      { roletitle: 'facilitator', createdAt: new Date(), updatedAt: new Date() },
     ]);
   },
 

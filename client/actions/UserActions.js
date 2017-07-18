@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import jwtDecode from 'jwt-decode';
 import * as types from './ActionTypes';
 import setAuthorizationToken from '../utils/Authentication';
 
@@ -54,7 +53,6 @@ export function getAllUsers(users) {
 export function getOneUser(id) {
   return dispatch => axios.get(`/api/users/${id}`)
   .then((response) => {
-    console.log('response', response);
     dispatch(getOneUserSuccess(response.data));
   })
   .catch((error) => {
@@ -69,9 +67,8 @@ export function createUser(user) {
       dispatch(setCurrentUser(response.data.user));
     })
     .catch((error) => {
-      console.log('Error: >>>>>>>>>', error);
       dispatch(passFailureMessage(error.response.data.message));
-      console.log('Error Message', error.response.data.message);
+      console.log('Error Message', response.data.message);
     });
 }
 
@@ -83,16 +80,13 @@ export function login(user) {
       localStorage.setItem('shelftoken', stringyToken);
       const storedToken = localStorage.shelftoken;
       dispatch(passSuccessMessage(response.data.message));
-      // dispatch(passFailureMessage(response.data.message));
       setAuthorizationToken(token);
       axios.defaults.headers.common.Authorization = token;
       dispatch(setCurrentUser(response.data));
     })
     .catch((error) => {
-      // console.log('Error', error);
       dispatch(passFailureMessage(error.response.data.message));
-      // console.log('Error Message', error.response.data.message);
-      // console.log('Error', response.data.message);
+      console.log('Error >>>>>>>', response.data.message);
     });
 }
 
@@ -100,7 +94,6 @@ export function logout() {
   console.log('logout');
   return (dispatch) => {
     localStorage.removeItem('shelftoken');
-    // setAuthorizationToken(false);
     dispatch(logoutUser({}));
   };
 }

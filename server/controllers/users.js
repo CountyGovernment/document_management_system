@@ -25,22 +25,17 @@ class UserController {
         secondName: req.body.secondName,
         password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
-        roletitle: req.body.roletitle || 'regular',
+        roletitle: req.body.roletitle || 'facilitator',
       })
       .then((user) => {
-        if (!user) {
-          return res.status(401).send({ success: false, message: 'Please fill in user details' });
-        } else {
-          res.status(201).json({
-            message: 'User created successfully!',
-            user,
-          });
-        }
+        res.status(201).json({
+          message: 'User created successfully!',
+          user,
+        });
       })
       .catch((error) => {
-        res.status(400).json(error, {
-          message: 'Please fill in user details',
-        });
+        res.status(400).json(error,
+        );
       });
   }
 

@@ -27,7 +27,6 @@ class AllDocuments extends Component {
 
     this.redirectToManageDocument = this.redirectToManageDocument.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.redirectToAllDocuments = this.redirectToAllDocuments.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
 
     this.state = {
@@ -36,6 +35,8 @@ class AllDocuments extends Component {
       offset: 0,
       activePage: 1,
       limit: 6,
+      redirect: false,
+      isLoading: false,
     };
   }
 
@@ -56,16 +57,22 @@ class AllDocuments extends Component {
    * @returns {*} no return value
    */
   onSearchChange(event) {
+    event.preventDefault();
+    this.setState({ isLoading: true });
     this.setState({ search: event.target.value });
     this.props.actions.search(event.target.value)
+    .then(() => {
+      this.setState({ isLoading: false });
+    })
     .catch(() => {
+      this.setState({ isLoading: false });
       toastr.error(this.props.message);
     });
   }
 
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (this.state.activePage - 1)));
+    this.props.actions.paginateDocuments(this.state.limit, (this.state.limit * (pageNumber - 1)));
   }
 
   /**
@@ -76,17 +83,12 @@ class AllDocuments extends Component {
     return <Redirect to="/document" />;
   }
 
-  redirectToAllDocuments() {
-    return <Redirect to="/documents" />;
-  }
-
   /**
    * @desc Renders the Document holder
    * @return {*} render the Document holder
    */
   render() {
     const totalItems = this.props.documents;
-    // const totalItems = this.props.paginatedDocuments;
     const paginatedDocuments = this.props.paginatedDocuments;
     const { documents, metaData } = this.props;
     if (!documents || this.props.message === 'no document found') {
@@ -128,7 +130,6 @@ class AllDocuments extends Component {
             </div>
 
             <DocumentSearch
-              redirectToAllDocuments={this.redirectToAllDocuments}
               onSearchChange={this.onSearchChange}
             />
 

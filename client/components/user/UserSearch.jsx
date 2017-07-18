@@ -18,7 +18,7 @@ const UserSearch = ({ onSearchChange }) =>
                   onKeyUp={onSearchChange}
                   placeholder="Search UserName"
                 />
-                <i className="material-icons">close</i>
+                <i className="material-icons">search</i>
               </div>
             </form>
           </div>

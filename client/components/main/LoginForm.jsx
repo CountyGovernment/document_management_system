@@ -51,10 +51,10 @@ const SigninForm = ({ onChange, onSubmit, loading, errors }) =>
           </div>
           <div className="input-field col s12">
             <nav>
-            <p className="center medium-small sign-up">
+              <p className="center medium-small sign-up">
                 Do not have an account?
                  <Link to="/signup" >Signup</Link>
-            </p>
+              </p>
             </nav>
           </div>
         </div>
