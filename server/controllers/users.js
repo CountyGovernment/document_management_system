@@ -25,7 +25,7 @@ class UserController {
         secondName: req.body.secondName,
         password: bcrypt.hashSync(req.body.password, salt),
         email: req.body.email,
-        roletitle: req.body.roletitle || 'facilitator',
+        roletitle: req.body.roletitle || 'regular',
       })
       .then((user) => {
         res.status(201).json({
