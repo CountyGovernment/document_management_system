@@ -20,8 +20,7 @@
     "seed": "npm run migrate && sequelize db:seed:all",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
     "cover": "npm run test",
-    "coverage": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "coverage": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "author": "Julie Wanja",
   "license": "MIT",

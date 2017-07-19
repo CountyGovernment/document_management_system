@@ -1,0 +1,521 @@
+FORMAT: 1A
+
+# Shelf
+Shelf is a document management system. That allows users to create documents and save documents.Each User has a role while documents have users and access. The Administrator can view all documents, however users can only view their own documents and public ones and those that fall on their role level. The default permission for documents is public.
+
+## Specifics
+The endpoints of the API require authentication except login and signup. During login a user is given the role of a regular user unless they are created by the admin who then specifies their role level. The roles endpoints need one to be an admin.
+
+## Users Endpoints
+
+### Create a new user  [POST /api/users]
+
+- Creates a new user.
+- Called during sign up.
+
+- The following fields are required:
+
++ FirstName
++ SecondName
++ Username
++ Email address
++ Password
++ RoleTitle
+
++ Request (application/json)
+
+      {
+        "firstName": "T'challa",
+        "secondName": "Black",
+        "username": "Panther",
+        "email": "black@gmail.com",
+        "password": black
+      }
+
++ Response 201 (application/json)
+
+{
+  "message": "User created successfully!",
+  "user": {
+    "id": 4,
+    "username": "T'challa",
+    "firstName": "Black",
+    "secondName": "Panther",
+    "password": "$2a$07$/227apQwxs8zInk/RPMa4.ifp8a4bSgm0gI2vVMBITN.IxLsUtFC2",
+    "email": "black@gmail.com",
+    "roletitle": "regular",
+    "updatedAt": "2017-07-19T14:21:39.001Z",
+    "createdAt": "2017-07-19T14:21:39.001Z"
+  }
+}
+
+### Login a User [POST /api/users/login]
+
+- Logs in an existing user.
+
+- The following fields are required:
++ Email address
++ Password
+
++ Request (application/json)
+
+          {
+              "username": "batman@cave.com",
+              "password": "batman"
+          }
+
++ Response 200 (application/json)
+
+{
+  "id": 1,
+  "data": "admin",
+  "username": "Batman",
+  "email": "batman@cave.com",
+  "message": "You are logged in",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYWRtaW4iLCJpZCI6MSwiaWF0IjoxNTAwNDc0NTM2LCJleHAiOjE1MDA1NjA5MzZ9.McbYfn8FDB4sevNJkzgiABgdfDArNv2b9xWTToCoCLI"
+}
+
+### List all Users [GET /api/users]
+
+- Lists all existing users.
+- Requires authentication and admin access
+
++ Response 200 (application/json)
+
+[
+  {
+    "id": 1,
+    "username": "Batman",
+    "firstName": "Bruce",
+    "secondName": "Wayne",
+    "password": "$2a$07$mEx9E5aVax1S0RP2g1CMQ./qORitNJpl2L8CYy9Je98OWsXt8SPf.",
+    "email": "batman@cave.com",
+    "createdAt": "2017-07-19T13:18:50.092Z",
+    "updatedAt": "2017-07-19T13:18:50.092Z",
+    "roletitle": "admin"
+  },
+  {
+    "id": 2,
+    "username": "Riddler",
+    "firstName": "Edgar",
+    "secondName": "Nigma",
+    "password": "$2a$07$.uKmDdz9d47qGhCJ75/BG.U0Xn6POYOlBla6X4o.fdU7d.KpQ96ia",
+    "email": "riddler@gmail.com",
+    "createdAt": "2017-07-19T13:18:50.101Z",
+    "updatedAt": "2017-07-19T13:18:50.101Z",
+    "roletitle": "guest"
+  },
+  {
+    "id": 3,
+    "username": "Superman",
+    "firstName": "Clark",
+    "secondName": "Kent",
+    "password": "$2a$07$eGvWLnegVpSyvfYVVTw8fuFoWfnHDnsKhhg7eIEice4JFVKODCuiO",
+    "email": "super@man.com",
+    "createdAt": "2017-07-19T13:18:50.110Z",
+    "updatedAt": "2017-07-19T13:18:50.110Z",
+    "roletitle": "regular"
+  },
+  {
+    "id": 4,
+    "username": "T'challa",
+    "firstName": "Black",
+    "secondName": "Panther",
+    "password": "$2a$07$/227apQwxs8zInk/RPMa4.ifp8a4bSgm0gI2vVMBITN.IxLsUtFC2",
+    "email": "black@gmail.com",
+    "createdAt": "2017-07-19T14:21:39.001Z",
+    "updatedAt": "2017-07-19T14:21:39.001Z",
+    "roletitle": "regular"
+  }
+]
+
+### Pagination for Users [GET /api/users/?limit={integer}&offset={integer}]
+
+- Gives a list of existing users displaying dependent on the limit and offset given
+- For example:`/api/users/?limit=2&offset=0`
+
+- Requires authentication and admin access
+
++ Response 200 (application/json)
+
+[
+  {
+    "id": 1,
+    "username": "Batman",
+    "firstName": "Bruce",
+    "secondName": "Wayne",
+    "password": "$2a$07$mEx9E5aVax1S0RP2g1CMQ./qORitNJpl2L8CYy9Je98OWsXt8SPf.",
+    "email": "batman@cave.com",
+    "createdAt": "2017-07-19T13:18:50.092Z",
+    "updatedAt": "2017-07-19T13:18:50.092Z",
+    "roletitle": "admin"
+  },
+  {
+    "id": 2,
+    "username": "Riddler",
+    "firstName": "Edgar",
+    "secondName": "Nigma",
+    "password": "$2a$07$.uKmDdz9d47qGhCJ75/BG.U0Xn6POYOlBla6X4o.fdU7d.KpQ96ia",
+    "email": "riddler@gmail.com",
+    "createdAt": "2017-07-19T13:18:50.101Z",
+    "updatedAt": "2017-07-19T13:18:50.101Z",
+    "roletitle": "guest"
+  }
+]
+
+### Get a specific User [GET /api/users/:id]
+
+- Displays a specific user i.e, `/api/users/4`
+- Requires authentication
+
++ Response 200 (application/json)
+
+{
+  "id": 4,
+  "username": "T'challa",
+  "firstName": "Black",
+  "secondName": "Panther",
+  "password": "$2a$07$/227apQwxs8zInk/RPMa4.ifp8a4bSgm0gI2vVMBITN.IxLsUtFC2",
+  "email": "black@gmail.com",
+  "createdAt": "2017-07-19T14:21:39.001Z",
+  "updatedAt": "2017-07-19T14:21:39.001Z",
+  "roletitle": "regular"
+}
+
+### Updates User information [PUT /api/users/:id]
+
+- Update details of a user whose id is specified, i.e `/api/users/4`
+- Requires authentication
+
++ Request (application/json)
+
+        {
+           firstName: "Black",
+           username: "T'challa update"
+        }
+
++ Response 201 (application/json)
+{
+  "user": {
+  "id": 4,
+  "username": "T'challa update",
+  "firstName": "Black",
+  "secondName": "Panther",
+  "password": "$2a$07$/227apQwxs8zInk/RPMa4.ifp8a4bSgm0gI2vVMBITN.IxLsUtFC2",
+  "email": "black@gmail.com",
+  "createdAt": "2017-07-19T14:21:39.001Z",
+  "updatedAt": "2017-07-19T14:21:39.001Z",
+  "roletitle": "regular"
+},
+  "message": "User Successfully updated!"
+}
+
+
+### Delete a user [DELETE /api/users/:id]
+
+- Deletes a user whose id is specified, i.e `/api/users/6`
+- Requires authentication and Admin access
+
+- If the user does not exist:
++ Response 404 (application/json)
+          {
+            "message": "User not Found"
+          }
+
+- If the user exists:
++ Response 200 (application/json)
+{
+  "message": "User successfully deleted"
+}
+
+### Search for a User [GET /api/search/users/?q={}]
+
+- Search a user by their username, i.e `/api/search/users/?q=m`
+- Requires authentication
+
++ Response 200 (application/json)
+[
+  {
+    "id": 1,
+    "username": "Batman",
+    "firstName": "Bruce",
+    "secondName": "Wayne",
+    "password": "$2a$07$mEx9E5aVax1S0RP2g1CMQ./qORitNJpl2L8CYy9Je98OWsXt8SPf.",
+    "email": "batman@cave.com",
+    "createdAt": "2017-07-19T13:18:50.092Z",
+    "updatedAt": "2017-07-19T13:18:50.092Z",
+    "roletitle": "admin"
+  },
+  {
+    "id": 3,
+    "username": "Superman",
+    "firstName": "Clark",
+    "secondName": "Kent",
+    "password": "$2a$07$eGvWLnegVpSyvfYVVTw8fuFoWfnHDnsKhhg7eIEice4JFVKODCuiO",
+    "email": "super@man.com",
+    "createdAt": "2017-07-19T13:18:50.110Z",
+    "updatedAt": "2017-07-19T13:18:50.110Z",
+    "roletitle": "regular"
+  }
+]
+
+## Documents Endpoints
+
+- All documents endpoints require authentication. They are specific to the user. 
+- The admin can view all documents belonging to all users.
+- Other users only have access to public documents and their own private documents.
+
+### Create a Document [POST /api/documents]
+- Creates a new document specific to the user.
+- Requires authentication.
+
+- The following fields are required:
+
++ title
++ content
++ access
++ userId
+
++ Request (application/json)
+
+          {
+            title: 'title',
+            content: 'content',
+            access: 'public'
+          }
+
++ Response 201 (application/json)
+{
+  "message": "Document created successfully!",
+  "document": {
+    "id": 4,
+    "title": "title",
+    "content": "content",
+    "access": "public",
+    "userId": 1,
+    "updatedAt": "2017-07-19T14:44:55.754Z",
+    "createdAt": "2017-07-19T14:44:55.754Z"
+  }
+}
+
+### List Documents [GET /api/documents]
+
+- Lists all existing documents. Users can view all documents they created, public documents and those that fall under their role level. Admin logged in can view all documents.
+- Requires authentication
+
++ Response 200 (application/json)
+{
+  "document": [
+    {
+      "id": 1,
+      "title": "elixir",
+      "content": "truth of life",
+      "access": "public",
+      "createdAt": "2017-07-19T13:18:50.117Z",
+      "updatedAt": "2017-07-19T13:18:50.117Z",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "title": "merchant",
+      "content": "a seller traveller",
+      "access": "private",
+      "createdAt": "2017-07-19T13:18:50.117Z",
+      "updatedAt": "2017-07-19T13:18:50.117Z",
+      "userId": 2
+    },
+    {
+      "id": 3,
+      "title": "light",
+      "content": "the thing that makes you see",
+      "access": "public",
+      "createdAt": "2017-07-19T13:18:50.117Z",
+      "updatedAt": "2017-07-19T13:18:50.117Z",
+      "userId": 3
+    },
+    {
+      "id": 4,
+      "title": "title",
+      "content": "content",
+      "access": "public",
+      "createdAt": "2017-07-19T14:44:55.754Z",
+      "updatedAt": "2017-07-19T14:44:55.754Z",
+      "userId": 1
+    }
+  ]
+}
+
+### Find a Document by it's id [GET /api/documents/:id]
+
+- Find a document by id.
+- Requires authentication
+
++ Response 200 (application/json)
+
+{
+  "id": 4,
+  "title": "title",
+  "content": "content",
+  "access": "public",
+  "createdAt": "2017-07-19T14:44:55.754Z",
+  "updatedAt": "2017-07-19T14:44:55.754Z",
+  "userId": 1
+}
+
+### Pagination for Documents [GET /api/documents/?limit={integer}&offset={integer}]
+
+- Gives a list of existing documents displaying dependent on the limit and offset given
+- For example:`/api/users/?limit=2&offset=0`
+
+- Requires authentication
+
++ Response 200 (application/json)
+
+{
+  "document": [
+    {
+      "id": 1,
+      "title": "elixir",
+      "content": "truth of life",
+      "access": "public",
+      "createdAt": "2017-07-19T13:18:50.117Z",
+      "updatedAt": "2017-07-19T13:18:50.117Z",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "title": "merchant",
+      "content": "a seller traveller",
+      "access": "private",
+      "createdAt": "2017-07-19T13:18:50.117Z",
+      "updatedAt": "2017-07-19T13:18:50.117Z",
+      "userId": 2
+    }
+  ]
+}
+
+### Updates a Document [GET /api/documents/:id]
+
+- Updates a document by id.
+- Requires authentication
+
++ Request (application/json)
+
+        {
+           "title": "title"
+        }
++ Response 201 (application/json)
+
+{
+  "document": {
+    "id": 4,
+    "title": "title update",
+    "content": "content",
+    "access": "public",
+    "createdAt": "2017-07-19T14:44:55.754Z",
+    "updatedAt": "2017-07-19T14:57:14.552Z",
+    "userId": 1
+  },
+  "message": "Document Successfully updated!"
+}
+
+
+### Delete a Document [DELETE /api/documents/:id]
+
+- Deletes a user whose id is specified, i.e `/api/documents/4`
+- Requires authentication
+
++ Response 200 (application/json)
+{
+  "message": "Document successfully deleted!"
+}
+
+### Search for a document [GET /api/search/documents/?q={}]
+
+Search a user by their username, i.e `/api/search/documents/?q=e`
+- Requires authentication
+
++ Response 200 (application/json)
+[
+  {
+    "id": 1,
+    "title": "elixir",
+    "content": "truth of life",
+    "access": "public",
+    "createdAt": "2017-07-19T13:18:50.117Z",
+    "updatedAt": "2017-07-19T13:18:50.117Z",
+    "userId": 1
+  },
+  {
+    "id": 2,
+    "title": "merchant",
+    "content": "a seller traveller",
+    "access": "private",
+    "createdAt": "2017-07-19T13:18:50.117Z",
+    "updatedAt": "2017-07-19T13:18:50.117Z",
+    "userId": 2
+  }
+]
+
+## Role Endpoints
+
+- All role endpoints need authentication and admin access.
+
+### Creates a Role [POST /api/roles]
+- Creates a new role.
+- Admin access is required.
+
+- The following fields are required:
++ roletitle
+
+
++ Request (application/json)
+
+          {
+            roletite: "fellow"
+          }
+
++ Response 201 (application/json)
+{
+  "message": "You have created a role!",
+  "role": {
+    "roletitle": "fellow",
+    "updatedAt": "2017-07-19T15:11:13.328Z",
+    "createdAt": "2017-07-19T15:11:13.328Z",
+    "id": 5
+  }
+}
+
+### List all Roles [GET /api/roles]
+
+- Lists all existing roles.
++ Requires authentication
+
++ Response 200 (application/json)
+[
+  {
+    "roletitle": "admin",
+    "createdAt": "2017-07-19T13:18:49.995Z",
+    "updatedAt": "2017-07-19T13:18:49.995Z"
+  },
+  {
+    "roletitle": "regular",
+    "createdAt": "2017-07-19T13:18:49.995Z",
+    "updatedAt": "2017-07-19T13:18:49.995Z"
+  },
+  {
+    "roletitle": "guest",
+    "createdAt": "2017-07-19T13:18:49.995Z",
+    "updatedAt": "2017-07-19T13:18:49.995Z"
+  },
+  {
+    "roletitle": "facilitator",
+    "createdAt": "2017-07-19T13:18:49.995Z",
+    "updatedAt": "2017-07-19T13:18:49.995Z"
+  },
+  {
+    "roletitle": "fellow",
+    "createdAt": "2017-07-19T15:11:13.328Z",
+    "updatedAt": "2017-07-19T15:11:13.328Z"
+  }
+]

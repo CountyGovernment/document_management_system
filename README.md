@@ -3,7 +3,7 @@
 
 # Project Title
 
-Shelf is a document management system. That allows users to create documents and save documents.Each User has a role while documents have users and access. The Administrator can view all documents, however users can only view their own documents and public ones. The default permission for documents is public. To make a document private toggle the button at the bottom of the form. 
+Shelf is a document management system. That allows users to create documents and save documents.Each User has a role while documents have users and access. The Administrator can view all documents, however users can only view their own documents and public ones and those that fall on their role level. The default permission for documents is public.
 
 ### Prerequisites
 
