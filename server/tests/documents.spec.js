@@ -19,6 +19,21 @@ describe('before login', () => {
         done();
       });
   });
+
+  it('asserts that documents cannot be posted not logged in', (done) => {
+    chai.request(server)
+      .post('/api/documents')
+      .send({
+        title: 'G',
+        content: 'Be',
+        access: 'public',
+        userId: 4,
+      })
+      .end((err, res) => {
+        expect(res.body.message).toBe('Token required to access this route');
+        done();
+      });
+  });
 });
 
 describe('documents contoller methods', () => {
