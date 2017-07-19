@@ -20,7 +20,7 @@
     "script": "sequelize db:migrate:undo:all && sequelize db:migrate && sequelize db:seed:all",
     "seed": "npm run migrate && sequelize db:seed:all",
     "migrate": "sequelize db:migrate:undo:all && sequelize db:migrate",
-    "cover": "istanbul cover _mocha -R ./server/tests && ./client/tests/**/*.js",
+    "cover": "npm run test",
     "coverage": "npm run cover -- --report lcovonly && cat ./coverage/lcov.info | coveralls",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },

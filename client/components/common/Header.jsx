@@ -19,6 +19,7 @@ class Header extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (!prevState.redirect && this.state.redirect) {
       this.setState({ redirect: false });
+      window.location.reload();
     }
   }
 
