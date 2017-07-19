@@ -6,7 +6,7 @@ export default (state = [initialState.paginatedDocuments], action) => {
 
     case types.GET_PAGINATE_DOCUMENTS_SUCCESS:
       const paginatedDocuments = action.paginatedDocuments.document;
-      return Object.assign([], state, paginatedDocuments);
+      return paginatedDocuments;
 
     case types.SEARCH_DOCUMENTS_SUCCESS:
       return action.paginatedDocuments;
