@@ -13,13 +13,24 @@ chai.use(chaiHttp);
 let token = '';
 
 describe('role contoller methods', () => {
-  // chai.request(server)
-  // .post('/api/users')
-  // .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester3@gmail.com', password: 'tester', roletitle: 'regular' })
-  // .then((res) => {
-  //   // console.log('res >>>>', res.body);
-  // });
-
+  describe('only admin can access roles', () => {
+    it('asserts that roles cannot be accessed if not admin', (done) => {
+      chai.request(server)
+        .post('/api/users/login')
+        .send({ email: 'riddler@gmail.com', password: 'riddler' })
+        .end((err, res) => {
+          token = res.body.token;
+          done();
+        });
+      chai.request(server)
+        .get('/api/roles')
+        .set('authorization', token)
+        .end((err, res) => {
+          expect(res.body.message).toBe('You are not permitted to perform this action');
+          done();
+        });
+    });
+  });
 
   beforeEach('login', (done) => {
     const admin = {
@@ -53,21 +64,21 @@ describe('role contoller methods', () => {
   /*
    * Test the /POST route
    */
-  // describe('/POST roles', () => {
-  //   it('it should create a role', (done) => {
-  //     const role = {
-  //       roletitle: 'executive admin',
-  //     };
-  //     chai.request(server)
-  //       .post('/api/roles')
-  //       .set('authorization', token)
-  //       .send(role)
-  //       .end((err, res) => {
-  //         res.should.have.status(201);
-  //         res.body.should.be.a('object');
-  //         res.body.should.have.property('message').eql('You have created a role!');
-  //         done();
-  //       });
-  //   });
-  // });
+  describe('/POST roles', () => {
+    it('it should create a role', (done) => {
+      const role = {
+        roletitle: 'super admin',
+      };
+      chai.request(server)
+        .post('/api/roles')
+        .set('authorization', token)
+        .send(role)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('You have created a role!');
+          done();
+        });
+    });
+  });
 });

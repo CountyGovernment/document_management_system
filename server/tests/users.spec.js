@@ -11,13 +11,22 @@ chai.use(chaiHttp);
 
 let token = '';
 describe('Users controller methods', () => {
-  // chai.request(server)
-  //   .post('/api/users')
-  //   .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester3@gmail.com', password: 'tester', roletitle: 'regular' })
-  //   .then((res) => {
-  //     // console.log('res >>>>', res.body);
-  //   });
 
+  describe('/POST user', () => {
+    it('it should CREATE a user', (done) => {
+      const user = { username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester3@gmail.com', password: 'tester', roletitle: 'regular' };
+      chai.request(server)
+        .post('/api/users')
+        .set('authorization', token)
+        .send(user)
+        .end((err, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('message').eql('User created successfully!');
+          done();
+        });
+    });
+  });
 
   beforeEach('login', (done) => {
     const admin = {

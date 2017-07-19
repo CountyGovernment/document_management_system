@@ -22,14 +22,6 @@ describe('before login', () => {
 });
 
 describe('documents contoller methods', () => {
-  // chai.request(server)
-  // .post('/api/users')
-  // .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester3@gmail.com', password: 'tester', roletitle: 'regular' })
-  // .then((res) => {
-  //   // console.log('got here');
-  //   // console.log('res >>>>', res.body);
-  // });
-
   beforeEach('login', (done) => {
     const admin = {
       email: 'batman@cave.com',
