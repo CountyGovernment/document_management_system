@@ -170,12 +170,12 @@ describe('documents contoller methods', () => {
   describe('/GET/?title search documents', () => {
     it('it should GET a document by the given title', (done) => {
       chai.request(server)
-        .get('/api/search/documents/?q=Girl with the dragon tattoo')
+        .get('/api/search/documents/?q=Girl with the dragon tattoo update')
         .set('authorization', token)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.be.a('array');
-          res.body[0].should.have.property('title').eql('Girl with the dragon tattoo');
+          res.body[0].should.have.property('title').eql('Girl with the dragon tattoo update');
           done();
         });
     });
