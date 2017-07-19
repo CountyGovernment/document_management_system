@@ -16,5 +16,5 @@ before_script:
   - NODE_ENV=test
 script:
   - npm test
-after_script:
-  - npm run coveralls
+after_script: 
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
