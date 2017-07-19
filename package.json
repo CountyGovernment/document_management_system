@@ -7,7 +7,7 @@
     "node": "6.11.1"
   },
   "scripts": {
-    "start": "nodemon bin/www",
+    "start": "node bin/www",
     "open:client": "node bin/www",
     "lint": "node_modules/.bin/esw webpack.config.* client server",
     "lint:watch": "npm run lint -- --watch",
