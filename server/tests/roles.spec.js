@@ -13,18 +13,18 @@ chai.use(chaiHttp);
 let token = '';
 
 describe('role contoller methods', () => {
-  chai.request(server)
-  .post('/api/users')
-  .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester@gmail.com', password: 'tester', roletitle: 'admin' })
-  .then((res) => {
-    // console.log('res >>>>', res.body);
-  });
+  // chai.request(server)
+  // .post('/api/users')
+  // .send({ username: 'tester', firstName: 'tester', secondName: 'tester', email: 'tester3@gmail.com', password: 'tester', roletitle: 'regular' })
+  // .then((res) => {
+  //   // console.log('res >>>>', res.body);
+  // });
 
 
   beforeEach('login', (done) => {
     const admin = {
-      email: 'tester@gmail.com',
-      password: 'tester',
+      email: 'batman@cave.com',
+      password: 'batman',
     };
     chai.request(server)
       .post('/api/users/login')
