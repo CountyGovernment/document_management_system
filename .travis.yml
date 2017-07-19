@@ -13,8 +13,9 @@ before_script:
   - psql -c "drop database if exists database_test;" -U postgres
   - psql -c "create database database_test;" -U postgres
   - psql -c "CREATE USER juliemugira;" -U postgres
-  - NODE_ENV=test
 script:
   - npm test
 after_script: 
   - npm run coverage
+.env:
+  - NODE_ENV=test
