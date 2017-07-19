@@ -16,14 +16,11 @@
     "dialect": "postgres"
   },
 "production": {
-    "use_env_variable": "DATABASE_URL",
+    "username": "nzxzbtzbabbfbl",
+    "password": "eda0fa8dfa1ba3b0b4131e5fd15f5b2bb9a6708e22ee5c3b0322d6e4dd89cf09",
+    "database": "do0j3kudaf8jd",
+    "host": "ec2-23-21-220-152.compute-1.amazonaws.com",
     "port": 5432,
-    "dialect": "postgres",
-    "ssl": true,
-    "dialectOptions": {
-      "ssl": {
-        "require": true
-      }
-    }
+    "dialect": "postgres"
   }
 }
