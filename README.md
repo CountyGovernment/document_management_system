@@ -7,29 +7,12 @@ Shelf is a document management system. That allows users to create documents and
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
-
-```
-Give examples
-```
+First ensure that you have [Node.js](https://nodejs.org/en/) and [Postgresql](https://www.postgresql.org/) installed.  
 
 ### Installing
 
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+* Clone this [repository](https://github.com/jm-wanja/document_management_system.git)
+* Install the necessary packages by running the following command: `npm install`
 
 ## Models
 
@@ -45,7 +28,7 @@ The routes are defined using `react-router`.
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Find this app on [heroku](https://shelfdms.herokuapp.com/)
 
 ## Built With
 
@@ -53,20 +36,14 @@ Add additional notes about how to deploy this on a live system
 * Express
 * Sequelize
 * React
+* Redux
 
 ## Agile
 
-This project was managed using [Pivotal Tracker]()
+This project was managed using [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2036865)
 
 
 ## Authors
 
-* **Julie Wanja** - *Initial work* - [Shelf](https://github.com/jm-wanja/document_management_system)
+* **Julie Wanja** [Shelf](https://github.com/jm-wanja/document_management_system)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* 
