@@ -13,25 +13,6 @@ chai.use(chaiHttp);
 let token = '';
 
 describe('role contoller methods', () => {
-  describe('only admin can access roles', () => {
-    it('asserts that roles cannot be accessed if not admin', (done) => {
-      chai.request(server)
-        .post('/api/users/login')
-        .send({ email: 'riddler@gmail.com', password: 'riddler' })
-        .end((err, res) => {
-          token = res.body.token;
-          done();
-        });
-      chai.request(server)
-        .get('/api/roles')
-        .set('authorization', token)
-        .end((err, res) => {
-          expect(res.body.message).toBe('You are not permitted to perform this action');
-          done();
-        });
-    });
-  });
-
   beforeEach('login', (done) => {
     const admin = {
       email: 'batman@cave.com',
