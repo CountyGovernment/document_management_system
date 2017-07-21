@@ -36,10 +36,18 @@ describe('sync actions', () => {
     const store = mockStore({ users: [] });
     store.dispatch(userAction.getAllUsers()).then(() => {
       const action = store.getActions();
-      // console.log('action.....', action[0].users.data.users[0]);
-      // console.log('actiontype.....', action[0].type);
       expect(action[0].type).toEqual(types.GET_ALL_USERS_SUCCESS);
       expect(action[0].users.data.users[0]).toEqual({ id: 1, username: 'run', firstName: 'the' });
+      done();
+    });
+  });
+
+  it('create a user', (done) => {
+    const expectedAction = [{ type: types.SET_LOGGEDIN_USER, body: { username: 'run', firstName: 'the', secondName: 'world', email: 'isending@gmail.com', password: 'password' } }];
+    const store = mockStore({ users: [] }, expectedAction, done());
+    store.dispatch(userAction.createUser()).then(() => {
+      const action = store.getAction();
+      expect(action[0].type).toEqual(types.SET_LOGGEDIN_USER);
       done();
     });
   });

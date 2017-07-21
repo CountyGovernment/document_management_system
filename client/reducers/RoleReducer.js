@@ -6,11 +6,11 @@ export default (state = initialState.roles, action) => {
     case types.GET_ALL_ROLES_SUCCESS:
       return action.roles;
 
-    // case types.CREATE_ROLE_SUCCESS:
-    //   return [
-    //     ...state,
-    //     Object.assign({}, action.role),
-    //   ];
+    case types.CREATE_ROLES_SUCCESS:
+      return [
+        ...state,
+        Object.assign({}, action.roles),
+      ];
 
     default:
       return state;

@@ -7,9 +7,9 @@ export function getRoleSuccess(roles) {
 export function passFailureMessage(errorMessage) {
   return { type: types.ERROR_MESSAGE, errorMessage };
 }
-// export function createRoleSuccess(roles) {
-//   return { type: types.CREATE_ROLES_SUCCESS, roles };
-// }
+export function createRoleSuccess(roles) {
+  return { type: types.CREATE_ROLES_SUCCESS, roles };
+}
 
 export function getAllRoles() {
   return dispatch => axios.get('/api/roles')
@@ -21,12 +21,12 @@ export function getAllRoles() {
   });
 }
 
-// export function createRole(role) {
-//   return dispatch => axios.post('api/documents', role)
-//   .then((response) => {
-//     dispatch(createRoleSuccess(response.data.role));
-//   })
-//   .catch((error) => {
-//     dispatch(passFailureMessage(error.response.data.message));
-//   });
-// }
+export function createRole(role) {
+  return dispatch => axios.post('api/documents', role)
+  .then((response) => {
+    dispatch(createRoleSuccess(response.data.role));
+  })
+  .catch((error) => {
+    dispatch(passFailureMessage(error.response.data.message));
+  });
+}

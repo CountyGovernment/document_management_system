@@ -21,18 +21,18 @@ describe('Role Reducer', () => {
     expect(typeof actual).toBe('object');
   });
 
-//   it('Should handle creating roles', () => {
-//     const store = createStore(rootReducer, initialState);
-//     const role = {
-//       title: 'roletest',
-//     };
+  it('Should handle creating roles', () => {
+    const store = createStore(rootReducer, initialState);
+    const roles = {
+      roletitle: 'roletest',
+    };
 
-//     const action = roleActions.createRoleSuccess(role);
-//     store.dispatch(action);
+    const action = roleActions.createRoleSuccess(roles);
+    store.dispatch(action);
 
-//     const actual = store.getState().roles[0];
-//     const expected = role;
+    const actual = store.getState().roles[0];
+    const expected = roles;
 
-//     expect(actual).toEqual(expected);
-//   });
+    expect(actual).toEqual(expected);
+  });
 });

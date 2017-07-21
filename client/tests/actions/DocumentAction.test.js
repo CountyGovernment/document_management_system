@@ -103,4 +103,14 @@ describe('sync actions', () => {
       done();
     });
   });
+
+  it('handles fetching documents for the loggedin user', (done) => {
+    const expectedAction = [{ type: types.GET_USER_DOCUMENTS_SUCCESS, body: { documents: [{ id: 1 }] } }];
+    const store = mockStore({ users: [] }, expectedAction, done());
+    store.dispatch(documentAction.getUserDocuments()).then(() => {
+      const action = store.getAction();
+      expect(action[0].type).toEqual(types.GET_USER_DOCUMENTS_SUCCESS);
+      done();
+    });
+  });
 });

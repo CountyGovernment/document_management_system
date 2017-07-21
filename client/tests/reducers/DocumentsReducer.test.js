@@ -4,7 +4,6 @@ import DocumentReducer from '../../reducers/DocumentsReducer';
 import rootReducer from '../../reducers/RootReducer';
 import initialState from '../../reducers/InitialState';
 import * as documentActions from '../../actions/DocumentActions';
-import * as userActions from '../../actions/UserActions';
 
 describe('Document Reducer', () => {
   it('should return a list of all documents.', () => {
