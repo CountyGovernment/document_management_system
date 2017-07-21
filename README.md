@@ -13,6 +13,8 @@ First ensure that you have [Node.js](https://nodejs.org/en/) and [Postgresql](ht
 
 * Clone this [repository](https://github.com/jm-wanja/document_management_system.git)
 * Install the necessary packages by running the following command: `npm install`
+* Run the command `npm start` to start the app on the commandline
+* Open your browser on `localhost:3002` to open the app
 
 ## Models
 
