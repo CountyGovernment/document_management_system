@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Redirect } from 'react-router';
 import toastr from 'toastr';
-import SigninForm from './LoginForm';
+import SigninForm from './SigninForm';
 import * as userActions from '../../actions/UserActions';
 
 /**

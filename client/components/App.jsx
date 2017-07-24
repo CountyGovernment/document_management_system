@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from './common/Header';
 import SignUp from './main/SignUp';
-import Login from './main/Login';
+import Login from './main/Sigin';
 import Footer from './common/Footer';
 
 class App extends Component {
